@@ -1,0 +1,31 @@
+ <html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Hotel Reservation</title>
+<%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+ 	 
+</head>
+<body bgcolor="#CCCCCC">	
+	<div id="main_1" >
+          <div style="background-color: #666666"><h3>Please Confirm Your Payment Details</h3></div>
+
+<table align="center">
+  <tr><td>Name</td><td><%= @address['name'] %></td></tr>
+  <tr><td>Company</td><td><%= @address['company'] %></td></tr>
+  <tr><td>Address 1</td><td><%= @address['address1'] %></td></tr>
+  <tr><td>Address 2</td><td><%= @address['address2'] %></td></tr>
+  <tr><td>City</td><td><%= @address['city'] %></td></tr>
+  <tr><td>State</td><td><%= @address['state'] %></td></tr>
+  <tr><td>Country</td><td><%= @address['country'] %></td></tr>
+  <tr><td>Zip</td><td><%= @address['zip'] %></td></tr>
+  <tr><td>Amount</td><td><%= session[:amount] %>&nbsp;&nbsp;&nbsp;Rs.</td></tr>
+  
+</table>
+
+<%= form_tag :action => 'complete', :token => params[:token], :payer_id => params[:PayerID] do %>
+   <%= token_tag(nil) %>
+  <%= submit_tag 'Complete Payment' %>
+<% end %>
+</div>
+</body>
+</html>

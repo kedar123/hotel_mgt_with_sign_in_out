@@ -1,0 +1,15 @@
+
+<%=form_tag "/reservations/show_availability_of_rooms",{:onSubmit => 'return check_date()'}%>
+<label>
+  Check In
+</label>
+ <%= text_field_tag "checkin",params[:checkin],:size =>"30" %>
+<br/>
+<label>
+  Check out
+</label>
+ <%= text_field_tag "checkout",params[:checkin],:size =>"30" %>
+<br/>
+<%=hidden_field_tag "company_id",params[:company_id]%>
+<%=submit_tag "Check Availability Of Rooms"%>
+</form>

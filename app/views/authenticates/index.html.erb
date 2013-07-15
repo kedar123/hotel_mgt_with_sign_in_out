@@ -1,0 +1,21 @@
+<h1>Listing authenticates</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @authenticates.each do |authenticate| %>
+  <tr>
+    <td><%= link_to 'Show', authenticate %></td>
+    <td><%= link_to 'Edit', edit_authenticate_path(authenticate) %></td>
+    <td><%= link_to 'Destroy', authenticate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Authenticate', new_authenticate_path %>

@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+		 
+                <%=javascript_include_tag "jquery-ui-timepicker-addon.js"%>
+                <%=javascript_include_tag "jquery-ui-sliderAccess.js"%>
+                <link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+                <%=stylesheet_link_tag "jquery-ui-timepicker-addon"%>
+  <script>   
+    $(function() {	
+      $("#checkout").datetimepicker();
+      $("#checkin").datetimepicker();
+    });
+    function check_date(){
+     datevalid = true;
+     if($("#checkin").datetimepicker("getDate") === null) {
+         alert("Select check-in date");
+         datevalid = false;    
+      }
+    if($("#checkout").datetimepicker("getDate") === null) {
+        alert("Select your departure date");
+        datevalid = false;
+    }
+     var checkout= new Date($('#checkout').val());
+     var checkin = new Date($('#checkin').val());
+    if(checkout<checkin)
+   {
+     alert("Checkin date should be smaller than Checkout Date");
+     datevalid = false;
+   }
+    year = new Date().getFullYear();
+    month = new Date().getMonth();
+    day = new Date().getDate();
+    var today = new Date(year,month,day);;
+   if(  checkin < today)
+   {
+     alert("It should not be less than the current datol");
+     datevalid = false;
+   }
+   return datevalid;
+}
+    
+ 
+ function checkroomisselected(){
+   
+   var checkedAtLeastOne = false;
+    $('input[type="checkbox"]').each(function() {
+     if ($(this).is(":checked")) {
+               checkedAtLeastOne = true;
+           }
+         });
+     if( checkedAtLeastOne == false )
+       {
+         alert("Please Select At Least One Room");
+       }
+          return checkedAtLeastOne;
+    }
+    
+    
+  </script>
+    </head>
+    <body>
+      <%=yield%>
+     </body>
+  </html>
+  

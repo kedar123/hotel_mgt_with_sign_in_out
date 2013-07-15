@@ -1,0 +1,45 @@
+ 
+
+ 
+ 
+ 
+ <div id="main">
+  <div id="login-box">
+    <h1>Online Hotel Reservation</h1>
+    <h3 class="flashnotice"> <%=flash[:notice]%></h3>
+    
+    <%=form_tag(authenticates_sign_in_auth_path)%>
+      <div style="margin:0;padding:0;display:inline">
+        <input type="hidden" value="?" name="utf8">
+        <input type="hidden" value="+vIafhuKAUKVbyu0tqOi+jPIQY21mNxBXdp8ZjeTY9Q=" name="authenticity_token">
+      </div>
+      <table width="400px" cellspacing="4" cellpadding="2" border="0"style="padding:0px 0px 0px 0px ">
+        <tbody>
+          <tr>
+            
+            <td align="center"><b><font size="+0.80">Email </font></b> </td>
+            <!--<td  align="center"></td> -->
+            <td>  <%=text_field_tag "useremail"%> </td>
+          </tr>
+          <tr>
+             <td align="center"><b><font size="+0.80">Password </font></b> </td>
+            <!--<td  align="center"></td> -->
+            <td>  <%=password_field_tag "userpassword"%> </td>
+          </tr>
+          <tr>
+               
+            <!--<td  align="center"></td> -->
+            <td>  <%=submit_tag "Sign In"%> </td>
+          </tr>
+          
+          <tr>
+            <td>
+              <%=link_to "Sign Up",authenticates_sign_up_path()%>
+            </td>
+            </tr>
+        </tbody>
+      </table>
+    </form>
+    
+  </div>
+</div>
