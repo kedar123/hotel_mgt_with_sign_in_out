@@ -110,11 +110,66 @@ class AuthenticatesController < ApplicationController
      end
    end
    
-   
+   #so this is my sign upppp method and now i am just creating a form for the same
+   #after filling up a form an user gets created and redirected to sign up. the minimum field he needs to enter is name
    def sign_up
      
    end
    
+   
+   def forgot_password
+     
+   end
+   
+   def forgot_password_auth
+     p params
+     @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
+     logger.info "ffffffffffffffffffff"
+         res = ResPartner.search([["email","=", params[:useremail] ]]) 
+          if res.blank?
+            redirect_to :back ,:notice=>"This Email Id Is Not Registered With Us"
+          else
+            res = ResPartner.find(res[0]) 
+             
+            Notifier.forgot_password(res.login_password,res.name,res.email).deliver
+            #redirect_to authenticates_sign_in_path() ,:notice=>"Please Check Your Email"
+          end
+   end
+   
+   #here i just need to check if respartner is already exist or not. if its already exist then redirect to sign in page
+   #if not then register and redirect to sign in page. 
+   #this is an authentication sign up method which will create an respartner record in openerp 
+   def sign_up_auth
+ 
+@ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
+ 
+  
+      if !params[:email].blank?
+        res = ResPartner.search([["email","=", params[:email] ]]) 
+          if res.blank?
+            @respart = ResPartner.new 
+            @respart.name = params[:name]
+            @respart.type = 'invoice'
+            @respart.email = params[:email]
+            @respart.phone = params[:phone]
+            @respart.street = params[:street]
+            @respart.city = params[:city]
+            @respart.zip = params[:zip]
+            @respart.login_password = params[:userpassword]
+            @respart.save   
+            #after sign up need to send an email saying that a sign up is done successfully.
+            username = params[:name]
+            emailid = params[:email]
+            password = params[:userpassword]
+            Notifier.welcome(@respart.email,username,emailid,password).deliver
+           redirect_to authenticates_sign_in_path() ,:notice=>"Your Account Is Created Please Login"
+         else
+           redirect_to authenticates_sign_in_path() ,:notice=>"An Account Is Exist With This Email Please SignIn"
+         end
+     end  
+     
+     
+   end
    
   
 end

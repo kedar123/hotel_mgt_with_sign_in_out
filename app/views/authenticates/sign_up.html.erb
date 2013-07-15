@@ -1,6 +1,96 @@
-<%#
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-%>
+ 
 
-<%= "sign_up.html" %>
+ 
+ 
+ 
+ <div id="main">
+  <div id="login-box">
+    <h1>Online Hotel Reservation</h1>
+    <%=form_tag('/authenticates/sign_up_auth' ,{:onSubmit=>"return check_validation()"})%>
+      <div style="margin:0;padding:0;display:inline">
+        <input type="hidden" value="?" name="utf8">
+        <input type="hidden" value="+vIafhuKAUKVbyu0tqOi+jPIQY21mNxBXdp8ZjeTY9Q=" name="authenticity_token">
+      </div>
+      <table width="400px" cellspacing="4" cellpadding="2" border="0"style="padding:0px 0px 0px 0px ">
+        <tbody>
+           
+                <tr>
+                  <td class="text"><b><i>Contact Name * </i></b></td>
+                 
+                  <td class="text"><%= text_field_tag "name","",:size =>"15" %></td>
+                   
+                  
+                </tr>
+                <tr>
+                   <td class="text"><b><i>Email *</i></b></td>
+                  
+                  <td class="text"><%= text_field_tag "email","",:size =>"15" %></td>
+                   
+                </tr>
+                <tr>
+                  <td class="text"><b><i>Adresse *</i></b> </td>
+                  
+                 
+                 <td class="text"><%= text_field_tag "street" ,"" , :size =>"15" %></td>
+                
+                 
+                </tr>
+                <tr>
+                  <td class="text"><b><i>City </i></b> </td>
+                  
+                 <td class="text"><%= text_field_tag "city","" , :size =>"15" %></td>
+                 
+                 
+                </tr>
+                <tr>
+                  <td class="text"><b><i>Postal Code </i></b> </td>
+                  
+                 <td class="text"><%= text_field_tag "zip","" , :size =>"15" %></td>
+                 
+                </tr>
+                <tr>
+                  <td class="text"><b><i>Telephone </i></b></td>
+                  
+                  <td class="text"><%= text_field_tag "phone","" , :size =>"15" %></td>
+                   
+                  
+                </tr>
+          <tr>
+             <td class="text"><i><b>  Password  </b></i> </td>
+            <!--<td  align="center"></td> -->
+            <td class="text">  <%=password_field_tag "userpassword","" , :size =>"15"%>
+              
+              
+              <%#i am keeping here the database name as static %>
+              
+            </td>
+          </tr>
+          <tr>
+             <td class="text"><i><b>Confirm Password  </b></i> </td>
+            <!--<td  align="center"></td> -->
+            <td class="text">  <%=password_field_tag "userpassword_confirm","" , :size =>"15"%>
+              
+              
+              <%#i am keeping here the database name as static %>
+                <%=hidden_field_tag "database_name", 'hotel_kedar_1'%>
+            </td>
+          </tr>
+          
+          
+          <tr>
+              
+            <!--<td  align="center"></td> -->
+            <td class="text">  <%=submit_tag "Create Account"%> </td>
+          </tr>
+          
+          <tr>
+            <td>
+              <%=link_to "Sign In",authenticates_sign_in_path%>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </form>
+    
+  </div>
+</div>

@@ -3,18 +3,18 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   post "reservations/show_dates"
   post "reservations/show_availability_of_rooms"
   resources :reservations
-
-
+  
+  
   get "payments/preview_payment"
   
   #post "payment/payment_check"
   post "payments/checkout"
   get "payments/confirm"
   get "payments/cancel"
-post "payments/complete"
+  post "payments/complete"
   resources :payments
-
   
+   
   
   
    
@@ -24,6 +24,10 @@ post "payments/complete"
   get  "authenticates/sign_up"
   post "authenticates/sign_up"
   post "authenticates/sign_in_auth"
+  post "/authenticates/sign_up_auth"
+  get "/authenticates/forgot_password"
+  post "/authenticates/forgot_password_auth"
+  
   
   
   resources :authenticates
