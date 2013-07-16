@@ -1,31 +1,73 @@
- <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>Hotel Reservation</title>
-<%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
- 	 
-</head>
-<body bgcolor="#CCCCCC">	
-	<div id="main_1" >
-          <div style="background-color: #666666"><h3>Please Confirm Your Payment Details</h3></div>
+ 
 
-<table align="center">
-  <tr><td>Name</td><td><%= @address['name'] %></td></tr>
-  <tr><td>Company</td><td><%= @address['company'] %></td></tr>
-  <tr><td>Address 1</td><td><%= @address['address1'] %></td></tr>
-  <tr><td>Address 2</td><td><%= @address['address2'] %></td></tr>
-  <tr><td>City</td><td><%= @address['city'] %></td></tr>
-  <tr><td>State</td><td><%= @address['state'] %></td></tr>
-  <tr><td>Country</td><td><%= @address['country'] %></td></tr>
-  <tr><td>Zip</td><td><%= @address['zip'] %></td></tr>
-  <tr><td>Amount</td><td><%= session[:amount] %>&nbsp;&nbsp;&nbsp;Rs.</td></tr>
-  
-</table>
 
-<%= form_tag :action => 'complete', :token => params[:token], :payer_id => params[:PayerID] do %>
-   <%= token_tag(nil) %>
-  <%= submit_tag 'Complete Payment' %>
-<% end %>
+
+
+
+
+
+
+
+
+
+<div class="signup_bg">
+
+<div class=" signupheadingbg">
+
+<div class="signuptext">Payment<span class="signuptextcolor"> Preview</span> </div>
 </div>
-</body>
-</html>
+
+<table width="431" border="0" align="center">
+  <tr>
+    <td width="138" height="49"><span class="listening_eventstext"> Name :</span></td>
+    <td width="283"><span class="listening_eventstext"><%= @address['name'] %></span></td>
+  </tr>
+  <tr>
+    <td height="42"><span class="listening_eventstext">Company :</span></td>
+    <td class="listening_eventstext"><%= @address['company'] %></td>
+  </tr>
+  <tr>
+    <td height="41"><span class="listening_eventstext">Address 1 :</span></td>
+    <td class="listening_eventstext"><%= @address['address1'] %></td>
+  </tr>
+  <tr>
+    <td height="47" class="listening_eventstext">Address 2 </td>
+    <td class="listening_eventstext"><%= @address['address2'] %></td>
+  </tr>
+   <tr>
+    <td height="45" class="listening_eventstext">City</td>
+    <td class="listening_eventstext"><%= @address['city'] %></td>
+  </tr>
+   <tr>
+    <td height="45" class="listening_eventstext">State</td>
+    <td class="listening_eventstext"><%= @address['state'] %></td>
+  </tr>
+   <tr>
+    <td height="45" class="listening_eventstext">Country</td>
+    <td class="listening_eventstext"><%= @address['country'] %></td>
+  </tr>  
+  
+  <tr>
+    <td height="45" class="listening_eventstext">Zip</td>
+    <td class="listening_eventstext"><%= @address['zip'] %></td>
+  </tr>
+  <tr>
+    <td height="45" class="listening_eventstext">Amount</td>
+    <td class="listening_eventstext"><%= session[:amount] %></td>
+  </tr>
+  
+  <tr>
+     
+    <td>
+      <%= form_tag :action => 'complete', :token => params[:token], :payer_id => params[:PayerID] do %>
+   <%= token_tag(nil) %>
+  <%= submit_tag 'Complete Payment' ,:id=>'Checkavailabilitybutton'%>
+<% end %>
+      
+    </td>
+  </tr>
+   
+</table>
+ 
+</div>
+

@@ -1,96 +1,60 @@
- 
-
- 
- 
- 
- <div id="main">
-  <div id="login-box">
-    <h1>Online Hotel Reservation</h1>
     <%=form_tag('/authenticates/sign_up_auth' ,{:onSubmit=>"return check_validation()"})%>
-      <div style="margin:0;padding:0;display:inline">
-        <input type="hidden" value="?" name="utf8">
-        <input type="hidden" value="+vIafhuKAUKVbyu0tqOi+jPIQY21mNxBXdp8ZjeTY9Q=" name="authenticity_token">
-      </div>
-      <table width="400px" cellspacing="4" cellpadding="2" border="0"style="padding:0px 0px 0px 0px ">
-        <tbody>
-           
-                <tr>
-                  <td class="text"><b><i>Contact Name * </i></b></td>
-                 
-                  <td class="text"><%= text_field_tag "name","",:size =>"15" %></td>
-                   
-                  
-                </tr>
-                <tr>
-                   <td class="text"><b><i>Email *</i></b></td>
-                  
-                  <td class="text"><%= text_field_tag "email","",:size =>"15" %></td>
-                   
-                </tr>
-                <tr>
-                  <td class="text"><b><i>Adresse *</i></b> </td>
-                  
-                 
-                 <td class="text"><%= text_field_tag "street" ,"" , :size =>"15" %></td>
-                
-                 
-                </tr>
-                <tr>
-                  <td class="text"><b><i>City </i></b> </td>
-                  
-                 <td class="text"><%= text_field_tag "city","" , :size =>"15" %></td>
-                 
-                 
-                </tr>
-                <tr>
-                  <td class="text"><b><i>Postal Code </i></b> </td>
-                  
-                 <td class="text"><%= text_field_tag "zip","" , :size =>"15" %></td>
-                 
-                </tr>
-                <tr>
-                  <td class="text"><b><i>Telephone </i></b></td>
-                  
-                  <td class="text"><%= text_field_tag "phone","" , :size =>"15" %></td>
-                   
-                  
-                </tr>
-          <tr>
-             <td class="text"><i><b>  Password  </b></i> </td>
-            <!--<td  align="center"></td> -->
-            <td class="text">  <%=password_field_tag "userpassword","" , :size =>"15"%>
-              
-              
-              <%#i am keeping here the database name as static %>
-              
-            </td>
-          </tr>
-          <tr>
-             <td class="text"><i><b>Confirm Password  </b></i> </td>
-            <!--<td  align="center"></td> -->
-            <td class="text">  <%=password_field_tag "userpassword_confirm","" , :size =>"15"%>
-              
-              
-              <%#i am keeping here the database name as static %>
-                <%=hidden_field_tag "database_name", 'hotel_kedar_1'%>
-            </td>
-          </tr>
-          
-          
-          <tr>
-              
-            <!--<td  align="center"></td> -->
-            <td class="text">  <%=submit_tag "Create Account"%> </td>
-          </tr>
-          
-          <tr>
-            <td>
-              <%=link_to "Sign In",authenticates_sign_in_path%>
-              </td>
-            </tr>
-        </tbody>
-      </table>
-    </form>
-    
-  </div>
+<div class="signup_bg">
+
+<div class=" signupheadingbg">
+
+<div class="signuptext">SIGN UP<span class="signuptextcolor"> ACCOUNT</span> </div>
 </div>
+
+<table width="400" border="0" align="center">
+  <tr>
+    <td width="193" height="45" class="listening_eventstext">Contact Name* </td>
+    <td width="197">
+      <label>
+         
+        <%= text_field_tag "name","",:size =>"30" %>
+        </label>
+        </td>
+  </tr>
+  <tr>
+    <td height="38" class="listening_eventstext">Email*</td>
+    <td><%= text_field_tag "email","",:size =>"30" %></td>
+  </tr>
+  <tr>
+    <td height="40" class="listening_eventstext">Address* </td>
+    <td>
+      <%= text_field_tag "street" ,"" , :size =>"30" %>
+     </td>
+  </tr>
+  <tr>
+    <td height="37" class="listening_eventstext">City </td>
+    <td><%= text_field_tag "city","" , :size =>"30" %></td>
+  </tr>
+  <tr>
+    <td height="39" class="listening_eventstext">Postal Code </td>
+    <td><%= text_field_tag "zip","" , :size =>"30" %></td>
+  </tr>
+  <tr>
+    <td height="44" class="listening_eventstext">Telephone </td>
+    <td><%= text_field_tag "phone","" , :size =>"30" %></td>
+  </tr>
+  <tr>
+    <td height="35" class="listening_eventstext">Password </td>
+    <td> <%=password_field_tag "userpassword","" , :size =>"30"%></td>
+  </tr>
+  <tr>
+    <td height="48" class="listening_eventstext">Confirm Password  </td>
+    <td><%=password_field_tag "userpassword_confirm","" , :size =>"30"%></td>
+    <%=hidden_field_tag "database_name", 'hotel_kedar_1'%>
+  </tr>
+  <tr>
+  <td></td>
+  <td>
+    <%=submit_tag "Sign Up" ,:id=>'signup'%>
+  
+  
+  </td>
+  </tr>
+</table>
+ </div>
+</form>

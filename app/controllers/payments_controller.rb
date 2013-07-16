@@ -370,7 +370,7 @@ class PaymentsController < ApplicationController
   end
     
   @address = details_response.address
-  render :layout=>false
+  
   end
   
   

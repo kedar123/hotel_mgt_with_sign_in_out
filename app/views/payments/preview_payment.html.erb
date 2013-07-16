@@ -1,120 +1,52 @@
-<div>
-  your preview details
+  <form action="<%=payments_checkout_path%>" method="post">
+<div class="signup_bg">
+
+<div class=" signupheadingbg">
+
+<div class="signuptext">Payment<span class="signuptextcolor"> Preview</span> </div>
 </div>
 
-<div>
-  name = <%=@respartner.name%>
+            <%= token_tag(nil) %>  
+<table width="431" border="0" align="center">
+  <tr>
+    <td width="138" height="49"><span class="listening_eventstext">Contact Name :</span></td>
+    <td width="283"><span class="listening_eventstext"><%=@respartner.name%></span></td>
+  </tr>
+  <tr>
+    <td height="42"><span class="listening_eventstext">Check in Date :</span></td>
+    <td class="listening_eventstext"><%=@newres.checkin%></td>
+  </tr>
+  <tr>
+    <td height="41"><span class="listening_eventstext">Check Out Date :</span></td>
+    <td class="listening_eventstext"><%=@newres.checkout%></td>
+  </tr>
+  <tr>
+    <td height="47" class="listening_eventstext">Room Name </td>
+    <td class="listening_eventstext"><%=@roombarname.join(",")%></td>
+  </tr>
+   <tr>
+    <td height="45" class="listening_eventstext">Amount </td>
+    <td> 
+    <%=text_field_tag :amount,session[:amount],:readonly=>true%>
+    </td>
+  </tr>
+  <tr>
+    <td height="31">&nbsp; </td>
+    <td><%=image_submit_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif')%></td>
+  </tr>
   
-</div>
-<div>
-  checkin = <%=@newres.checkin%>
+   <%=hidden_field_tag :newlysavedreservationid, session[:newlysavedreservationid]%>  
   
-</div>
-
-<div>
-  checkout = <%=@newres.checkout%>
   
+  
+  
+  
+</table>
+
+
+
+
+
 </div>
 
-<div>
-   rooms = 
-              <div>
-                  <%=@roombarname.join(",")%>
-              </div>
-</div>
-
-<!-
-now here i need to copy a paypal code
---->
-
-
-
-<div id="main_1">	
-  <table width="900px" cellspacing="2" cellpadding="2" border="0" align="center">
-    <tbody>
-      <tr>
-        <td bgcolor="#666666"><h3>For Payment Please Enter the valid Details.</h3></td>
-      </tr>
-      <tr align="center">
-        <td class = "error_messages1"><%= flash.now[:notice] %></h2></td>
-      </tr>
-
-     </tbody>
-   </table>
-    <div id="main_2">
-       <div id="pay_box">
-   
-   <div id="paymenttype1" style="display:none">
-     Authorise.net
-    
-     <form action="<%#=payment_payment_check_path%>" method="post">
-       
-       <p>
-         <label>Credit Card No</label>
-       <%=text_field_tag :credit_card,"4111111111111111"%>
-       </p>     
-       <br/>
-       <p>
-         <label>Verification No</label>
-       <%=text_field_tag :varification_no,"1120"%>
-       </p>
-       <br/>
-       <p>
-         <label>Amount</label>
-         <span style="padding-left:48px;">
-       <%=text_field_tag :amount,session[:amount],:readonly=>true%>
-           </span>
-       </p>
-       <br/>
-       <p>
-          
-       <%#=hidden_field_tag :room_no,@room_no%>
-       <%#=hidden_field_tag :res_part,@res_part%>  
-       <%#=hidden_field_tag :res_part_add,@res_part_add%>  
-           <%=hidden_field_tag :newlysavedreservationid, session[:newlysavedreservationid]%>  
-     
-       </p>
-       <%= token_tag nil %>
-       <%=submit_tag "Pay"%>
-       </form>
-  </div>
-
-  <br/><br/>
-   <div id="paymenttype2" style="display:block">
-    Paypal Payment 
-    <br/><br/>
-    <p>
-       <%#= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), :action => 'checkout',:controller=>"payment" %>
-    </p>
-     <form action="<%=payments_checkout_path%>" method="post">
-       
-           <%= token_tag(nil) %>  
-        
-       <p>
-         <label>Amount</label>
-       <%=text_field_tag :amount,session[:amount],:readonly=>true%>&nbsp;&nbsp;Rs.
-       </p>
-       <br/>
-       <p>
-          
-       <%#=hidden_field_tag :room_no,@room_no%>
-       <%#=hidden_field_tag :res_part,@res_part%>  
-       <%#=hidden_field_tag :res_part_add,@res_part_add%>  
-       <%=hidden_field_tag :newlysavedreservationid, session[:newlysavedreservationid]%>  
-         
-          
-       </p>
-       <br/>
-       <%=image_submit_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif')%>
-       </form>
-        
-  </div>
-   <br/><br/>
-   <p>Select Payment Getway
-     </p>
-  <%=radio_button("payment", "type", "paypal")%>  Paypal
-  <!--<%=radio_button("payment", "type", "authorise")%> Authorise.net-->
-  </div>
-         </div>   
-  </div>
-
+</form>

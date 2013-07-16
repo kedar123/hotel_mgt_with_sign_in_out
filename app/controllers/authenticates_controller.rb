@@ -122,7 +122,7 @@ class AuthenticatesController < ApplicationController
    end
    
    def forgot_password_auth
-     p params
+     
      @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
      logger.info "ffffffffffffffffffff"
          res = ResPartner.search([["email","=", params[:useremail] ]]) 

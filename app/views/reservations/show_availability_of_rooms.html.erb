@@ -1,53 +1,78 @@
 <%=form_tag "/reservations/show_availability_of_rooms",{:onSubmit => 'return check_date()'}%>
-<label>
-  Check In
-</label>
- <%= text_field_tag "checkin",params['checkin'],:size =>"30" %>
-<br/>
-<label>
-  Check out
-</label>
- <%= text_field_tag "checkout",params['checkout'],:size =>"30" %>
-<br/>
-<%=hidden_field_tag "company_id",params['company_id']%>
-<%=submit_tag "Check Availability Of Rooms"%>
+<div class="registerform_bg">
+<div class="headingbg">
+
+<div class="headingtext">Please enter the dates of your stay to check availability</div>
+</div>
+
+<table width="auto" height="121" border="0" align="center" class="tables" >
+  <tr>
+    <td width="121" height="40" class="listening_eventstext">Check in Date:</td>
+    <td width="159"><%= text_field_tag "checkin",params[:checkin],:size =>"30" %></td>
+  </tr>
+  <tr>
+    <td height="36" class="listening_eventstext">Check Out Date: </td>
+    <td><%= text_field_tag "checkout",params[:checkin],:size =>"30" %></td>
+    <%=hidden_field_tag "company_id",params[:company_id]%>
+  </tr>
+  <tr>
+       <td>&nbsp;</td> 
+      <td>  <%=submit_tag "Check Availability",:id=>"Checkavailabilitybutton"%></td>
+   </tr>
+</table>
+ </div>
+
 </form>
 
 <%=form_tag "/authenticates/sign_in" ,{:onSubmit=>"return checkroomisselected()"}%>
+                  <div class="roomsavailable_bg">
+                  <div class="">
+
 
                      <%hidecount=1%>
                      <%if !@category.blank?%>
-                      <% for build in @category.uniq!%><br/>
-                       <%hidecount=hidecount + 1%>
-                       <span id="hidelabel<%=hidecount%>">
-                         <label ><b><i>
-                              Which rooms you want to book in <%= build[0]%></i></b><br/> 
-                        </label>
-                       </span>
+                      <% for build in @category.uniq!%> 
+                     <%hidecount=hidecount + 1%>
+                      <fieldset id="hidelabel<%=hidecount%>">
+                      
+                        
+                            <p> <legend class="rooms_availabilitytext"> Which rooms you want to book in <%= build[0]%></i></b>
+                            </legend></p>
+                         
                          <%hidelabel = true%>
                             <% for room in @room%>
-                                <% if room[2] == build[1]%>
+                                 <% if room[2] == build[1]%>
                                       <%if @book_room_array and  @book_room_array.include? room[0]%>
                                      <!-- <span style="color: red" >
                                          <%=check_box_tag "room[#{room[1]}]", "0", false, :disabled => true%><%= room[0]%>
                                        </span>-->
                                      <%else%> 
                                      <%hidelabel = false%>
-                                     <%= check_box_tag "room[#{room[1]}]","#{room[1]}"%><%= room[0]%>
+                                     <p> 
+                                     <%= check_box_tag "room[#{room[1]}]","#{room[1]}"%><label><%= room[0]%></label>
+                                       </p>
                                     <%end%>
                               <% end %>
                            <% end %>
                            <%if hidelabel%>
                                      <script>
-                                       $("#hidelabel<%=hidecount%>").hide()
+                                       $("#hidelabel<%=hidecount%>").hide();
+                                        
                                        </script>
                                      <%end%>
+                       
+</fieldset>                
                       <% end %>
                     <%end%>
            <div>                
-             <%=  hidden_field_tag "campany_id",params['company_id']%>
+             <%= hidden_field_tag "campany_id",params['company_id']%>
              <%= hidden_field_tag "checkin",params['checkin'] %>
              <%= hidden_field_tag "checkout",params['checkin']  %>
-             <%=submit_tag "Book Rooms"%>                           
+             <%= submit_tag "Book Rooms",:id=>"Checkavailabilitybutton"%>                           
            </div>  
+           </div>
+                    </div>
 </form>
+
+
+ 

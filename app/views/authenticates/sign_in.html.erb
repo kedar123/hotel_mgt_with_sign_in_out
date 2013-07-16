@@ -1,45 +1,32 @@
- 
 
- 
- 
- 
- <div id="main">
-  <div id="login-box">
-    <h1>Online Hotel Reservation</h1>
-    <h3 class="flashnotice"> <%=flash[:notice]%></h3>
-    
-    <%=form_tag(authenticates_sign_in_auth_path)%>
-      <div style="margin:0;padding:0;display:inline">
-        <input type="hidden" value="?" name="utf8">
-        <input type="hidden" value="+vIafhuKAUKVbyu0tqOi+jPIQY21mNxBXdp8ZjeTY9Q=" name="authenticity_token">
-      </div>
-      <table width="400px" cellspacing="4" cellpadding="2" border="0"style="padding:0px 0px 0px 0px ">
-        <tbody>
-          <tr>
-            
-            <td align="center"><b><font size="+0.80">Email </font></b> </td>
-            <!--<td  align="center"></td> -->
-            <td>  <%=text_field_tag "useremail"%> </td>
-          </tr>
-          <tr>
-             <td align="center"><b><font size="+0.80">Password </font></b> </td>
-            <!--<td  align="center"></td> -->
-            <td>  <%=password_field_tag "userpassword"%> </td>
-          </tr>
-          <tr>
-               
-            <!--<td  align="center"></td> -->
-            <td>  <%=submit_tag "Sign In"%> / <%=link_to "Forgot Password" ,authenticates_forgot_password_path%></td>
-          </tr>
-          
-          <tr>
-            <td>
-              <%=link_to "Sign Up",authenticates_sign_up_path()%>
-            </td>
-            </tr>
-        </tbody>
-      </table>
-    </form>
-    
-  </div>
-</div>
+  <%=form_tag(authenticates_sign_in_auth_path)%>
+<div class="login_bg">
+<div class="loginheadingbg">
+<div class="signuptext">SIGN IN <span class="signuptextcolor">ACCOUNT</span></div>
+ </div>
+ <table width="350" border="0" align="center">
+  <tr>
+<td height="20" colspan="2" class="invalid"> <%=flash[:notice]%></td>
+</tr>
+  <tr>
+    <td width="121" height="38" class="listening_eventstext">Email*</td>
+    <td width="269">
+     <%=text_field_tag "useremail" ,'',:size=>'30'%>
+    </td>
+  </tr>
+  <tr>
+    <td height="40" class="listening_eventstext">Password </td>
+    <td> 
+    <%=password_field_tag "userpassword",'',:size=>'30' %>
+    </td>
+  </tr>
+  <tr>
+  <td colspan="2">  
+      <%=link_to "Forgot Password" ,authenticates_forgot_password_path,:class=>'listening_eventstext'%>
+    <br/>
+     <%=link_to "Sign Up",authenticates_sign_up_path,:class=>'listening_eventstext'%>
+     <button id="signup" type="submit">Sign In</button></td>
+  </tr>
+ </table>
+ </div>
+ </form>
