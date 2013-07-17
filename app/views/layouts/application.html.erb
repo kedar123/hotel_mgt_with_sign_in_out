@@ -12,7 +12,11 @@
   <%= stylesheet_link_tag    "layout", :media => "all" %>
 
 <body>
-
+  <%if @resname%>
+  <div class="welcome">Welcome <%=@resname%></div>
+  <div class="welcome">  <%=link_to "Sign Out",authenticates_sign_out_path%></div>
+  
+  <%end%>
 <div class="container">
 
 <%= yield %>

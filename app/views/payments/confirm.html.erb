@@ -10,7 +10,7 @@
 
 
 
-<div class="signup_bg">
+<div class="signup_bg_con">
 
 <div class=" signupheadingbg">
 
@@ -22,10 +22,7 @@
     <td width="138" height="49"><span class="listening_eventstext"> Name :</span></td>
     <td width="283"><span class="listening_eventstext"><%= @address['name'] %></span></td>
   </tr>
-  <tr>
-    <td height="42"><span class="listening_eventstext">Company :</span></td>
-    <td class="listening_eventstext"><%= @address['company'] %></td>
-  </tr>
+  
   <tr>
     <td height="41"><span class="listening_eventstext">Address 1 :</span></td>
     <td class="listening_eventstext"><%= @address['address1'] %></td>
@@ -55,13 +52,31 @@
     <td height="45" class="listening_eventstext">Amount</td>
     <td class="listening_eventstext"><%= session[:amount] %></td>
   </tr>
+  <tr>
+    <td height="45" class="listening_eventstext">Check In </td>
+    <td class="listening_eventstext"><%= @checkin %></td>
+  </tr>
+  <tr>
+    <td height="45" class="listening_eventstext">Check Out </td>
+    <td class="listening_eventstext"><%= @checkout %></td>
+  </tr>
+  <tr>
+    <td height="45" class="listening_eventstext">Rooms </td>
+    <td class="listening_eventstext"><%= @room.join(",") %></td>
+  </tr>
+  
+  
+  
+  
   
   <tr>
      
     <td>
       <%= form_tag :action => 'complete', :token => params[:token], :payer_id => params[:PayerID] do %>
-   <%= token_tag(nil) %>
-  <%= submit_tag 'Complete Payment' ,:id=>'Checkavailabilitybutton'%>
+      <%= token_tag(nil) %>
+      <%= submit_tag 'Complete Payment' ,:id=>'Checkavailabilitybuttonconfirm'%>
+      <%= link_to 'Reject Payment' ,payments_rejected_payment_path({:token=>params[:token]}),:class=>"reject_payment"%>
+      
 <% end %>
       
     </td>

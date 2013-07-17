@@ -12,7 +12,7 @@
   </tr>
   <tr>
     <td height="36" class="listening_eventstext">Check Out Date: </td>
-    <td><%= text_field_tag "checkout",params[:checkin],:size =>"30" %></td>
+    <td><%= text_field_tag "checkout",params[:checkout],:size =>"30" %></td>
     <%=hidden_field_tag "company_id",params[:company_id]%>
   </tr>
   <tr>
@@ -40,17 +40,42 @@
                             </legend></p>
                          
                          <%hidelabel = true%>
-                            <% for room in @room%>
-                                 <% if room[2] == build[1]%>
-                                      <%if @book_room_array and  @book_room_array.include? room[0]%>
+                             
+                            <%@room.each_slice(2) do |room|%>
+                                 <% if room[0][2] == build[1]%>
+                                      <%if @book_room_array and  @book_room_array.include? room[0][0]%>
+                                           <%#here it may happen that the room[1] is not included that is why whatever is in else%>
+                                           <%#i need to put that in if also%>
+                                            <%if room[1]%>
+                                             <%if @book_room_array and  @book_room_array.include? room[1][0]%>
+                                             <%else%>
+                                                  <td width="208"><p><%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label></p></td>
+                                             <%end%>
+                                            <%end%>      
                                      <!-- <span style="color: red" >
                                          <%=check_box_tag "room[#{room[1]}]", "0", false, :disabled => true%><%= room[0]%>
                                        </span>-->
                                      <%else%> 
                                      <%hidelabel = false%>
-                                     <p> 
-                                     <%= check_box_tag "room[#{room[1]}]","#{room[1]}"%><label><%= room[0]%></label>
-                                       </p>
+                                    
+                                     <table width="400" border="0" align="center">
+                                       <tr>
+                                         <%if room[0]%>    
+                                         <td width="220"><p><%= check_box_tag "room[#{room[0][1]}]","#{room[0][1]}"%><label><%= room[0][0]%></label></p></td>
+                                          <%end%>
+                                         <%#here its because i am showing an room in two columns i need to do add %>
+                                         <%#room conditions again%>
+                                         <%#so i am putting here 2 conditions one in if and same condition for else%>
+                                         <%if room[1]%>
+                                         <%if @book_room_array and  @book_room_array.include? room[1][0]%>
+                                         <%else%>
+                                              <td width="208"><p><%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label></p></td>
+                                         
+                                          <%end%>
+                                         <%end%>
+                                         
+                                       </tr>
+                                     </table>                                     
                                     <%end%>
                               <% end %>
                            <% end %>
@@ -67,8 +92,8 @@
            <div>                
              <%= hidden_field_tag "campany_id",params['company_id']%>
              <%= hidden_field_tag "checkin",params['checkin'] %>
-             <%= hidden_field_tag "checkout",params['checkin']  %>
-             <%= submit_tag "Book Rooms",:id=>"Checkavailabilitybutton"%>                           
+             <%= hidden_field_tag "checkout",params['checkout']  %>
+             <%= submit_tag "Book Rooms",:id=>"Checkavailabilitybookbutton1"%>                           
            </div>  
            </div>
                     </div>

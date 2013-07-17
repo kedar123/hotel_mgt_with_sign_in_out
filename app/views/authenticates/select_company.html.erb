@@ -8,6 +8,9 @@
 
 <%=form_tag "/reservations/show_dates"%>
 <div class="selecthotel_bg">
+  <div id="notice" class="invalid">
+    <%=flash[:notice]%>
+    </div>
 <div class="selecthotelheadingbg">
 <div class="signuptext">Select <span class="signuptextcolor">HOTEL</span></div>
 
@@ -17,7 +20,7 @@
 <table width="300" border="0" align="center">
  
     <td width="76" height="45" class="listening_eventstext">Select Hotel</td>
-    <td width="214"><%= select_tag  "company_id", options_from_collection_for_select(@res,"id", "name" ),  :prompt => "" %></td>
+    <td width="214"><%= select_tag  "company_id", options_from_collection_for_select(@res,"id", "name" ),  :prompt => "",:class=>"select_company" %></td>
   </tr>
 
 

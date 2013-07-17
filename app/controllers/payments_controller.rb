@@ -90,6 +90,7 @@ class PaymentsController < ApplicationController
     #check dummy
         @roombarname = []
         @respartner = ResPartner.find(session[:user_id_avail])
+        @resname = @respartner.name
         session[:amount] = nil
         @newres = HotelReservation.new
         @newres.partner_id = session[:user_id_avail]
@@ -107,6 +108,13 @@ class PaymentsController < ApplicationController
         p session[:checkin]#mm-dd-yy
         
         DateTime.new#ymdh
+        if session[:checkin].blank?
+          redirect_to root_url ,:notice=>'Your Session Is Expired Please Select Room Again' and return;
+        end
+        logger.info "checkinnnnnnnnnnnnnnnnnnnnnnnnnnn"
+        logger.info session[:checkin]
+        logger.info session[:checkout]
+        
         checkindate = DateTime.new(session[:checkin].split(' ')[0].to_s.split('/')[2].to_i,session[:checkin].split(' ')[0].to_s.split('/')[0].to_i,session[:checkin].split(' ')[0].to_s.split('/')[1].to_i,session[:checkin].split(' ')[1].to_s.split(':')[0].to_i,session[:checkin].split(' ')[1].to_s.split(':')[1].to_i )
         checkoutdate = DateTime.new(session[:checkout].split(' ')[0].to_s.split('/')[2].to_i,session[:checkout].split(' ')[0].to_s.split('/')[0].to_i,session[:checkout].split(' ')[0].to_s.split('/')[1].to_i,session[:checkout].split(' ')[1].to_s.split(':')[0].to_i,session[:checkout].split(' ')[1].to_s.split(':')[1].to_i )
 
@@ -131,6 +139,10 @@ class PaymentsController < ApplicationController
            resline.reservation_id = @newres.id 
            logger.info resline.save
            logger.info "an reservation lineeeeeeeeeeeeeeeeeeeee"
+           logger.info checkoutdate
+           logger.info checkindate
+           logger.info (checkoutdate - checkindate).to_i
+           
              if ((checkoutdate - checkindate).to_i == 0) 
                  logger.info "some errporrrrrrrrrrrrrrrr as value is zero"
                   session[:amount] = session[:amount].to_i +   resline.price.to_i    
@@ -360,7 +372,24 @@ class PaymentsController < ApplicationController
   
   def confirm
     redirect_to :action => 'index' unless params[:token]
+   
+  session[:database_name] = Ipbasesdb.find_by_ipaddress(params[:token]).dbname 
+  logger.info "i just seen one error where the constant is uninitialize for session[:database_name] that is why makking "
+  logger.info "an connection again"
+  @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => session[:database_name], :username =>'admin', :password   => 'admin',:scope_prefix => session[:database_name].to_s.upcase.to_s)      #p "Connected to opererp database"
+ 
+  @hotel = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.find(session[:newlysavedreservationid])
+  #i am taking this into another variables because sometimes in view this ooor @hotel object is not availabel
+  @checkin = @hotel.checkin
+  @checkout = @hotel.checkout
+  @room = []
+  @hotel.reservation_line.each do |ersl|
+       @room <<   ersl.room_number.name
+  end
+  @resname = @hotel.partner_id.name
+   
   
+  session[:newlysavedreservationid]
   details_response = gateway.details_for(params[:token])
   
   if !details_response.success?
@@ -418,7 +447,8 @@ class PaymentsController < ApplicationController
        logger.info session[:newlysavedreservationid]
        @hotel = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.find(session[:newlysavedreservationid])
        #@hotel = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.find(@hotel.id)
-       logger.info @hotel.inspect
+       @resname = @hotel.partner_id.name
+         logger.info @hotel.inspect
          call_create_saleorder_and_invoice(@hotel)
         @reservation_no = @hotel.reservation_no
        flash[:notice] ="You Have Now Made A Successful Purchased. Your Booking Reference Is:"+@hotel.reservation_no if @hotel
@@ -447,7 +477,32 @@ class PaymentsController < ApplicationController
   end
   
   
-  
+  def rejected_payment
+      p "here the payment is rejected by person"
+      #what i have to do here is find the reservation id and destroy it. and redirect to root url.
+       session[:database_name] = Ipbasesdb.find_by_ipaddress(params[:token]).dbname 
+  logger.info "i just seen one error where the constant is uninitialize for session[:database_name] that is why makking "
+  logger.info "an connection again"
+  logger.info "the session valueeeeeeeeeeeee"
+  logger.info session[:database_name]
+  logger.info session[:checkout]
+  if session[:database_name].blank?
+     redirect_to root_url ,:notice=>"Your Session Is Expired Please Select Room Again" and return
+  end
+  @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => session[:database_name], :username =>'admin', :password   => 'admin',:scope_prefix => session[:database_name].to_s.upcase.to_s)      #p "Connected to opererp database"
+   @hotel = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.find(session[:newlysavedreservationid])
+  @hotel.destroy
+  logger.info "the session valueeeeeeeeeeeee"
+  logger.info session[:database_name]
+  logger.info session[:checkout]
+  reset_session
+  logger.info "the session valueeeeeeeeeeeee"
+  logger.info session[:database_name]
+  logger.info session[:checkout]
+   redirect_to root_url ,:notice=>"You Have Cancelled An Reservation"
+  end 
+   
+   
   
   private
 

@@ -12,6 +12,7 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   get "payments/confirm"
   get "payments/cancel"
   post "payments/complete"
+  get "payments/rejected_payment"
   resources :payments
   
    
@@ -27,6 +28,8 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   post "/authenticates/sign_up_auth"
   get "/authenticates/forgot_password"
   post "/authenticates/forgot_password_auth"
+  get "/authenticates/sign_out"
+  
   
   
   

@@ -10,6 +10,14 @@ class AuthenticatesController < ApplicationController
     end
   end
 
+  
+  def sign_out
+    reset_session
+    redirect_to root_url ,:notice=>"You Have Been Sign Out"
+  end
+  
+  
+  
   # GET /authenticates/1
   # GET /authenticates/1.json
   def show
@@ -95,17 +103,21 @@ class AuthenticatesController < ApplicationController
     session["checkin"] = params["checkin"]
     session["checkout"] = params["checkout"]
     session["selectedroom"] = params["room"]
+    logger.info "somessssssssssssssssssssssssssssssssss"
+    logger.info session["checkin"]
+    logger.info session["checkout"]
   end
   
   
    def sign_in_auth
      @useravailable  = ResPartner.search([ ["email","=", "#{params[:useremail]}"],["login_password","=","#{params[:userpassword]}" ] ] )
      if @useravailable.blank?
-         redirect_to authenticates_sign_in_path() ,:notice=>"Unsuccessful Login"
+         redirect_to authenticates_sign_in_path({:company_id=>session["campany_id"],:checkin=>session[:checkin],:checkout=>session[:checkout],:room=>session["selectedroom"]}) ,:notice=>"Unsuccessful Login"
      else
        #now i should redirect to a preview page which is similar to previous payment page.
        #here i am keeping a user id in session for future reference
        session[:user_id_avail] = @useravailable[0]
+       logger.info "after sign in auth"
        redirect_to   payments_preview_payment_path
      end
    end
@@ -162,7 +174,12 @@ class AuthenticatesController < ApplicationController
             emailid = params[:email]
             password = params[:userpassword]
             Notifier.welcome(@respart.email,username,emailid,password).deliver
-           redirect_to authenticates_sign_in_path() ,:notice=>"Your Account Is Created Please Login"
+            #here what i need to take care is if there is value in session for checkin and checkout 
+            #then i need to send it again to sign in method
+           
+         
+         
+           redirect_to authenticates_sign_in_path({:company_id=>session["campany_id"],:checkin=>session[:checkin],:checkout=>session[:checkout],:room=>session["selectedroom"]}) ,:notice=>"Your Account Is Created Please Login"
          else
            redirect_to authenticates_sign_in_path() ,:notice=>"An Account Is Exist With This Email Please SignIn"
          end
