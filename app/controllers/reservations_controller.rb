@@ -82,6 +82,11 @@ class ReservationsController < ApplicationController
   end
   
   def show_dates
+    @resname = ""
+    if !session[:user_id_avail].blank?
+      @partner_id = ResPartner.find(session[:user_id_avail])
+      @resname = @partner_id.name
+    end
       render :layout=>"show_dates"
   end
   
@@ -98,7 +103,11 @@ class ReservationsController < ApplicationController
     #actually because at first time i am connecting to openerp which according to me should be kept in memory. but still 
     #because of error i am connecting again
     @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
-  
+    @resname = ""
+    if !session[:user_id_avail].blank?
+      @partner_id = ResPartner.find(session[:user_id_avail])
+      @resname = @partner_id.name
+    end
     @book_room_array =  check_book_room_search(params)
     logger.info @room
     logger.info "roommmmmmm"

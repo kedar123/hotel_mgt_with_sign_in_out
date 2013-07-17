@@ -65,7 +65,15 @@
   </script>
     </head>
     <body>
-      <%=yield%>
+       <%if !@resname.blank?%>
+  <div class="welcome">Welcome <%=@resname%></div>
+  <div class="welcome">  <%=link_to "Sign Out",authenticates_sign_out_path%></div>
+  
+  <%end%>
+  
+       <%=yield%>
+ 
+      
      </body>
   </html>
   

@@ -12,7 +12,8 @@ class AuthenticatesController < ApplicationController
 
   
   def sign_out
-    reset_session
+    session[:user_id_avail] = nil
+     
     redirect_to root_url ,:notice=>"You Have Been Sign Out"
   end
   
@@ -93,6 +94,18 @@ class AuthenticatesController < ApplicationController
     @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
     @res = ResCompany.all 
     logger.info @res.inspect
+    @resname = ""
+    if !session[:user_id_avail].blank?
+      logger.info "888888888888888888888888"
+      logger.info session[:user_id_avail]
+      @partner_id = ResPartner.find(session[:user_id_avail])
+      @resname = @partner_id.name
+    else
+      logger.info "88888888888888888888888811111111111111"
+      logger.info session[:user_id_avail]
+      logger.info "222222222222222222"
+      logger.info @resname
+    end
   end
   
   #by this method 
@@ -106,6 +119,9 @@ class AuthenticatesController < ApplicationController
     logger.info "somessssssssssssssssssssssssssssssssss"
     logger.info session["checkin"]
     logger.info session["checkout"]
+    if !session[:user_id_avail].blank?
+        redirect_to   payments_preview_payment_path
+    end
   end
   
   
@@ -167,6 +183,7 @@ class AuthenticatesController < ApplicationController
             @respart.street = params[:street]
             @respart.city = params[:city]
             @respart.zip = params[:zip]
+            @respart.company_id = ''
             @respart.login_password = params[:userpassword]
             @respart.save   
             #after sign up need to send an email saying that a sign up is done successfully.

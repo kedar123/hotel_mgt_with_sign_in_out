@@ -455,6 +455,12 @@ class PaymentsController < ApplicationController
     
          logger.info "i am here after successful reservation"
           session[:amount] = nil
+          session[:newlysavedreservationid] = nil
+           session["campany_id"] =  nil
+    session["checkin"] = nil
+    session["checkout"] = nil
+    session["selectedroom"] = nil
+    session[:database_name] = nil
   #session[:room_no] = nil
   #session[:res_part] = nil
   #session[:res_part_add] = nil

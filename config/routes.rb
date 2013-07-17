@@ -1,6 +1,7 @@
 HotelMgtWithWorkflowChanged::Application.routes.draw do
   
   post "reservations/show_dates"
+  get  "reservations/show_dates"
   post "reservations/show_availability_of_rooms"
   resources :reservations
   
