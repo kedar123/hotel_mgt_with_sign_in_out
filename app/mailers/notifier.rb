@@ -16,4 +16,11 @@ class Notifier < ActionMailer::Base
     @username = username
     mail(to: emailaddress)
   end
+  
+  def complete_reservation(emailaddr, message)
+    @message = message
+    mail(to: emailaddr)
+  end
+  
+  
 end

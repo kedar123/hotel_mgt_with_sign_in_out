@@ -452,7 +452,7 @@ class PaymentsController < ApplicationController
          call_create_saleorder_and_invoice(@hotel)
         @reservation_no = @hotel.reservation_no
        #flash[:notice] ="You Have Now Made A Successful Purchased. Your Booking Reference Is:"+@hotel.reservation_no if @hotel
-    
+        Notifier.complete_reservation(@hotel.partner_id.email,"You Have Now Made A Successful Purchased. Your Booking Reference Is:"+@hotel.reservation_no).deliver if @hotel
          logger.info "i am here after successful reservation"
           session[:amount] = nil
           session[:newlysavedreservationid] = nil
