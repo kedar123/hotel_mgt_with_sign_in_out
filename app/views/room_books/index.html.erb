@@ -20,7 +20,7 @@
       <%=  check_box_tag 'gdshc[]' ,gdshc.id %>
       </td>
   <td>
-    <%=  link_to gdshc.name , "/updateavails/show_type/#{gdshc.id}"%>
+    <%=  link_to gdshc.name , "/room_books/show_type/#{gdshc.id}"%>
   </td>
   <td>
      <%=  gdshc.to_date%>
@@ -34,7 +34,9 @@
 <br/>
 <%=  submit_tag "Delete" %>
 <br/>
-<%=  link_to "Edit",updateavails_get_dates_path%>
+<%#=  link_to "Edit",updateavails_get_dates_path%>
+ 
+
 <br/>
 here before add what i need to check is in openerp i should have the rooms available means created with that type.the types
 are DBL and KING.otherwise after click to add there will not be a room available to add it.

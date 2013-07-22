@@ -1,0 +1,26 @@
+
+<%=form_tag('/room_books/available_for_gds' )%>
+Start Date<%=text_field_tag "start_date",@hrtgdsconf.name.strftime("%d/%m/%Y")%>dd/mm/yy
+<br/>
+End Date<%=text_field_tag "end_date",@hrtgdsconf.to_date.strftime("%d/%m/%Y")%>dd/mm/yy
+<br/>
+<h2>
+  Select Room Type
+</h2>
+<%for roomtype in @all_cat_name%>
+<div>
+<b><%=roomtype%></b>
+<%=radio_button_tag "avlfgds",roomtype%>
+</div>
+<br/>
+<%end%>
+ 
+<%=hidden_field_tag "gdsid",params[:id]%>
+<%=hidden_field_tag "checkin", @paramscheckin%>
+<%=hidden_field_tag "checkout", @paramscheckout%>
+
+<%=submit_tag "Show Allocated Rooms" %>
+<%=submit_tag "Save" %>
+  
+
+</form>

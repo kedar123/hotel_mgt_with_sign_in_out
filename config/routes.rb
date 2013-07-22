@@ -15,6 +15,9 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   
   post 'room_books/delete_gdsline'
   
+  get 'room_books/show_type/:id' => "room_books#show_type"
+  post "room_books/available_for_gds" => "room_books#available_for_gds"
+  
   
   resources :room_books
 

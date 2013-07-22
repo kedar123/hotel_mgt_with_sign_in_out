@@ -18,6 +18,30 @@ class RoomBooksController < ApplicationController
     end
   end
 
+  def show_type
+     logger.info "show typeeeeeeeeee"
+    @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:id])
+    logger.info "ssssssssssssssss"
+    @hrtgdsconf.reload
+    logger.info "77777777777777777777"
+    @paramscheckin = @hrtgdsconf.name
+    logger.info @paramscheckin
+    @paramscheckout = @hrtgdsconf.to_date
+    logger.info @paramscheckout
+    #from this i need to fetch 
+    @hrtgdsconf.line_ids.each do |elid|
+             elid.reload
+             elid.categ_id.reload
+    end
+    all_cat_name = []
+    @hrtgdsconf.line_ids.each do |elid|
+           all_cat_name << elid.categ_id.name
+    end
+    @all_cat_name = all_cat_name.uniq
+  end
+  
+  
+  
   def action_gds_conf
      if params[:commit] == "Delete"
        if !params[:gdshc].blank?
@@ -34,6 +58,7 @@ class RoomBooksController < ApplicationController
     if params[:commit] == "Add"
        redirect_to room_books_add_room_path
     end  
+   
      
   end
   
@@ -53,6 +78,14 @@ class RoomBooksController < ApplicationController
   # the date overlapping at first step only and not at second step. which i can differentiate be the submit button value
   
   def add_room_date
+      begin
+        logger.info "just checking here an if GDS is already there then means an user is logged in or not.if not loggedn in"
+        logger.info "then redirect to login page else nothing to do"
+        logger.info GDS
+        
+      rescue=>e
+        redirect_to gds_auths_path ,:notice=>"Your Session Has Been Expired" and return
+      end
       @prgcat = GDS::ProductCategory.find(:all,:domain=>[['isroomtype','=',true]])
       paramscheckin = "#{params[:start_date].split('/')[2]}-#{params[:start_date].split('/')[1]}-#{params[:start_date].split('/')[0]}"
       paramschekout = "#{params[:end_date].split('/')[2]}-#{params[:end_date].split('/')[1]}-#{params[:end_date].split('/')[0]}"
@@ -153,10 +186,13 @@ class RoomBooksController < ApplicationController
   
   #here i just need to find and delete that particular gdsline
   def check_an_delete_button(params)
+    if params[:hgdscline]
       params[:hgdscline].each do |ehdscl|
         hrl=GDS::HotelReservationThroughGdsLine.find(ehdscl)
         hrl.destroy
       end
+    end  
+    
   end
   
   #  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Q5t9TWEtLfBZMymrupzp+nIrp39sY+VFgvODY2LNDEg=", 
@@ -166,7 +202,12 @@ class RoomBooksController < ApplicationController
   def get_available_room_type
     if params[:commit] == 'delete'
        check_an_delete_button(params)
-       redirect_to :back,:notice=>"The Reservation Line Is Deleted"
+       if  params[:hgdscline]
+         redirect_to :back,:notice=>"The Reservation Line Is Deleted"
+       else
+         redirect_to :back ,:notice=>"You Have Not Selected Room Type For Deletion"
+       end
+       
     else
        @prgcat = GDS::ProductCategory.find(:all,:domain=>[['isroomtype','=',true]])
     #fetch all the product whoes isroom is true and category is according to params
@@ -269,6 +310,24 @@ class RoomBooksController < ApplicationController
      
   end 
   
+  
+  
+  def available_for_gds
+      #now here i need to fetch all the rooms allocated in this hrcgds
+    #so again i need to find gds configuration so that in view i can show all the room names by loop
+    @gdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:gdsid])
+    if params[:commit]=='Save'
+       paramscheckin = "#{params[:start_date].split('/')[2]}-#{params[:start_date].split('/')[1]}-#{params[:start_date].split('/')[0]}"
+       paramschekout = "#{params[:end_date].split('/')[2]}-#{params[:end_date].split('/')[1]}-#{params[:end_date].split('/')[0]}"
+    
+         @gdsconf.to_date = paramschekout
+         @gdsconf.name =   paramscheckin
+         @gdsconf.save
+         redirect_to :back ,:notice=>"The Values Has Been Updated"
+    end
+    
+    
+  end
   
   
   

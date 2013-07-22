@@ -1,0 +1,59 @@
+<%=form_tag "/delete_allocated_room"%>
+<h2>
+  Already Allocated Rooms
+</h2>
+
+<br/>
+
+<%for el in @gdsconf.line_ids%>
+  <%for rn in el.room_number%>
+  <div>
+     <%if rn.categ_id.name == params[:avlfgds] %>
+    <%
+    #yy/mm/dd
+    #here i need to add one more condition and that is if the room is booked within the period of user selected.
+    #then it can not be deleted hence i am not showing that room
+    #     HotelRoomBookingHistory
+    #i am copying here the logic for check weather the room is in the range of users selected date or not
+    #so here i need to fetch all the records of that particular room name. then in the loop need to check a date
+    #and if the rooms comes in the date range then append to particular array.if the array is blank then the room in not booked
+    #otherwise the room is booked i can check this by king3 room which should not be deleted
+        hrbh = GDS::HotelRoomBookingHistory.find(:all,:domain=>[['name','=',rn.name]])
+        paramscheckin = Date.civil(params[:checkin].split("-")[0].to_i,params[:checkin].split("-")[1].to_i,params[:checkin].split("-")[2].to_i)
+        paramschekout = Date.civil(params[:checkout].split("-")[0].to_i,params[:checkout].split("-")[1].to_i,params[:checkout].split("-")[2].to_i)
+        logger.info paramscheckin.inspect
+        logger.info paramschekout.inspect
+        logger.info "888888888888888"
+         viewbookedarray = []
+            hrbh.each do |ebr|  
+                if paramscheckin >= ebr.check_in_date  and paramschekout <= ebr.check_out_date
+               viewbookedarray << ebr 
+               elsif paramscheckin >= ebr.check_in_date  and paramschekout >= ebr.check_out_date  and paramscheckin <= ebr.check_out_date  and ebr.check_out_date >  paramschekout
+                 viewbookedarray << ebr 
+               elsif  paramscheckin <= ebr.check_in_date  and paramschekout <= ebr.check_out_date  and paramschekout >= ebr.check_in_date   
+                 viewbookedarray << ebr 
+               elsif  paramscheckin <= ebr.check_in_date  and paramschekout >= ebr.check_out_date  
+                 viewbookedarray << ebr 
+               elsif  ebr.check_in_date <= paramscheckin and ebr.check_out_date <= paramschekout  and paramscheckin <= ebr.check_out_date
+                 viewbookedarray << ebr 
+               end
+           end
+          %>
+     <%if viewbookedarray.blank?%>
+        <%=rn.name%>
+        <%#now for delete each room number i need a checkbox %>
+        <%#in the room name i need to show by underscore which gds configuration is this and which line id is this%>
+       <%=check_box "deleteroom" , rn.name.to_s + "_" + @gdsconf.id.to_s + "_"+el.id.to_s+ "_"+rn.id.to_s%>
+    <%end%>
+    
+    
+    <%end%>
+   </div>
+ <%end%>
+<%end%>
+<%=submit_tag "Delete Allocated Rooms"%>
+</form>
+
+<div>
+  Add A Room
+  </div>
