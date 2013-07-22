@@ -1,0 +1,21 @@
+<h1>Listing cancelbookings</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cancelbookings.each do |cancelbooking| %>
+  <tr>
+    <td><%= link_to 'Show', cancelbooking %></td>
+    <td><%= link_to 'Edit', edit_cancelbooking_path(cancelbooking) %></td>
+    <td><%= link_to 'Destroy', cancelbooking, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cancelbooking', new_cancelbooking_path %>

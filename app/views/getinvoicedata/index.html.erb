@@ -1,0 +1,21 @@
+<h1>Listing getinvoicedata</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @getinvoicedata.each do |getinvoicedatum| %>
+  <tr>
+    <td><%= link_to 'Show', getinvoicedatum %></td>
+    <td><%= link_to 'Edit', edit_getinvoicedatum_path(getinvoicedatum) %></td>
+    <td><%= link_to 'Destroy', getinvoicedatum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Getinvoicedatum', new_getinvoicedatum_path %>

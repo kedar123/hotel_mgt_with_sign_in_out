@@ -136,6 +136,7 @@ class ReservationsController < ApplicationController
         logger.info "888888888888888888888888"
         logger.info params["company_id"].to_s
         logger.info "55555555555555"
+        #so here checking of company id is proper because its related to room and not of respartner
        if hr.company_id.id.to_s ==  params["company_id"].to_s
          logger.info "inside a company is sameeeeeeeeeeeee"
         if hr.product_id

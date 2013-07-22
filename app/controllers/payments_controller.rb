@@ -106,18 +106,15 @@ class PaymentsController < ApplicationController
         @newres.dummy = session[:checkout]
         p "sssssssssssssssssssssssss"
         p session[:checkin]#mm-dd-yy
-        
-        DateTime.new#ymdh
+         DateTime.new#ymdh
         if session[:checkin].blank?
           redirect_to root_url ,:notice=>'Your Session Is Expired Please Select Room Again' and return;
         end
         logger.info "checkinnnnnnnnnnnnnnnnnnnnnnnnnnn"
         logger.info session[:checkin]
         logger.info session[:checkout]
-        
-        checkindate = DateTime.new(session[:checkin].split(' ')[0].to_s.split('/')[2].to_i,session[:checkin].split(' ')[0].to_s.split('/')[0].to_i,session[:checkin].split(' ')[0].to_s.split('/')[1].to_i,session[:checkin].split(' ')[1].to_s.split(':')[0].to_i,session[:checkin].split(' ')[1].to_s.split(':')[1].to_i )
+         checkindate = DateTime.new(session[:checkin].split(' ')[0].to_s.split('/')[2].to_i,session[:checkin].split(' ')[0].to_s.split('/')[0].to_i,session[:checkin].split(' ')[0].to_s.split('/')[1].to_i,session[:checkin].split(' ')[1].to_s.split(':')[0].to_i,session[:checkin].split(' ')[1].to_s.split(':')[1].to_i )
         checkoutdate = DateTime.new(session[:checkout].split(' ')[0].to_s.split('/')[2].to_i,session[:checkout].split(' ')[0].to_s.split('/')[0].to_i,session[:checkout].split(' ')[0].to_s.split('/')[1].to_i,session[:checkout].split(' ')[1].to_s.split(':')[0].to_i,session[:checkout].split(' ')[1].to_s.split(':')[1].to_i )
-
         doc_date = DateTime.new(session[:checkin].split(' ')[0].to_s.split('/')[2].to_i,session[:checkin].split(' ')[0].to_s.split('/')[0].to_i,session[:checkin].split(' ')[0].to_s.split('/')[1].to_i,session[:checkin].split(' ')[1].to_s.split(':')[0].to_i,session[:checkin].split(' ')[1].to_s.split('/')[1].to_i ).ago  14.days 
         doc_date = Date.today if doc_date < Date.today
         @newres.doc_date = doc_date
@@ -142,8 +139,7 @@ class PaymentsController < ApplicationController
            logger.info checkoutdate
            logger.info checkindate
            logger.info (checkoutdate - checkindate).to_i
-           
-             if ((checkoutdate - checkindate).to_i == 0) 
+              if ((checkoutdate - checkindate).to_i == 0) 
                  logger.info "some errporrrrrrrrrrrrrrrr as value is zero"
                   session[:amount] = session[:amount].to_i +   resline.price.to_i    
                   logger.info session[:amount]

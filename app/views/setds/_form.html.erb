@@ -1,0 +1,17 @@
+<%= form_for(@setd) do |f| %>
+  <% if @setd.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@setd.errors.count, "error") %> prohibited this setd from being saved:</h2>
+
+      <ul>
+      <% @setd.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

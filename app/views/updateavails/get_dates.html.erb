@@ -1,0 +1,39 @@
+
+<%=form_tag "/get_date_wise_available_room"%>
+
+
+
+Start Date<%=text_field_tag "start_date"%>dd/mm/yy
+<br/>
+End Date<%=text_field_tag "end_date"%>dd/mm/yy
+<br/>
+ 
+
+<%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name" ),  :prompt => "" %> 
+
+<%=submit_tag "Get Available Rooms"%>
+</form>
+
+
+
+ 
+<script>
+$(function() {
+$("#start_date" ).datepicker({dateFormat: "dd/mm/yy"});
+$("#end_date" ).datepicker({dateFormat: "dd/mm/yy"});
+ 
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+ 

@@ -1,0 +1,21 @@
+<h1>Listing getnotificationmessages</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @getnotificationmessages.each do |getnotificationmessage| %>
+  <tr>
+    <td><%= link_to 'Show', getnotificationmessage %></td>
+    <td><%= link_to 'Edit', edit_getnotificationmessage_path(getnotificationmessage) %></td>
+    <td><%= link_to 'Destroy', getnotificationmessage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Getnotificationmessage', new_getnotificationmessage_path %>

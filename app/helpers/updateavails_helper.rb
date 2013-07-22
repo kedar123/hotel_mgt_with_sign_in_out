@@ -1,0 +1,2 @@
+module UpdateavailsHelper
+end

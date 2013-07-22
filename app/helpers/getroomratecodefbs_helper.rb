@@ -1,0 +1,2 @@
+module GetroomratecodefbsHelper
+end

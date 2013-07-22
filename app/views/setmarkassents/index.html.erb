@@ -1,0 +1,21 @@
+<h1>Listing setmarkassents</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @setmarkassents.each do |setmarkassent| %>
+  <tr>
+    <td><%= link_to 'Show', setmarkassent %></td>
+    <td><%= link_to 'Edit', edit_setmarkassent_path(setmarkassent) %></td>
+    <td><%= link_to 'Destroy', setmarkassent, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Setmarkassent', new_setmarkassent_path %>

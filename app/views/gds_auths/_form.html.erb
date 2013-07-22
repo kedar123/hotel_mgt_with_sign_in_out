@@ -1,0 +1,17 @@
+<%= form_for(@gds_auth) do |f| %>
+  <% if @gds_auth.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@gds_auth.errors.count, "error") %> prohibited this authenticate from being saved:</h2>
+
+      <ul>
+      <% @gds_auth.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

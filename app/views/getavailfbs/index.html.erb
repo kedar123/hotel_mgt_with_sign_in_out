@@ -1,0 +1,21 @@
+<h1>Listing getavailfbs</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @getavailfbs.each do |getavailfb| %>
+  <tr>
+    <td><%= link_to 'Show', getavailfb %></td>
+    <td><%= link_to 'Edit', edit_getavailfb_path(getavailfb) %></td>
+    <td><%= link_to 'Destroy', getavailfb, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Getavailfb', new_getavailfb_path %>

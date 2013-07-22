@@ -1,0 +1,28 @@
+
+<%=form_tag "/add_to_gds"%>
+ start date :- <%=text_field_tag 'start_date',params[:start_date]%>
+  <br/>
+  end date :- <%=text_field_tag 'end_date',params[:end_date]%>
+  <br/><br/><br/>
+  <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name" ),  :prompt => "" %> 
+  <br/><br/>
+<div>
+  All Rooms
+  </div>
+<%for arm in @filteredroomarray%>
+<div>
+  <%=arm%>
+  <%=check_box "addroom" , arm%>
+</div>
+
+<%end%>
+<%if @bookedgdsc[0]%>
+<%=hidden_field_tag "gdscid",@bookedgdsc[0].id%>
+<%end%>
+ 
+<%=hidden_field_tag "checkin",@paramscheckin%>
+<%=hidden_field_tag "checkout",@paramschekout%>
+<%=submit_tag "Add to gds"%>
+</form>
+
+

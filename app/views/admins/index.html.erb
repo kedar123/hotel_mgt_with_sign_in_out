@@ -1,0 +1,23 @@
+
+<div>
+  <h3>Admin Page For Syncronizing the data between openerp and reconline</h3>
+</div>
+
+<div>
+  <%=link_to "Get Bookings",new_getbooking_path %>
+  This Link Is For Getting All The Rooms Booked In Reconline To Openerp
+</div>
+<div>
+  <%=link_to "Update Rates",new_updaterete_path %>
+</div>
+<div>
+  <%=link_to "Update Availabilities Of Rooms",updateavails_all_list_path %>
+  this method expects to do 2 things one is add a room in a particular date or it may delete a record in a 
+  particular date. then need to call update count method to update an count in reconline.com
+</div>
+
+<div>
+  <%=link_to "Update count Of Rooms to reconline",count_rooms_path %>
+  this will update a count on reconline.com
+</div>
+

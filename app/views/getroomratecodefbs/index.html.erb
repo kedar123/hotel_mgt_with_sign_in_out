@@ -1,0 +1,21 @@
+<h1>Listing getroomratecodefbs</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @getroomratecodefbs.each do |getroomratecodefb| %>
+  <tr>
+    <td><%= link_to 'Show', getroomratecodefb %></td>
+    <td><%= link_to 'Edit', edit_getroomratecodefb_path(getroomratecodefb) %></td>
+    <td><%= link_to 'Destroy', getroomratecodefb, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Getroomratecodefb', new_getroomratecodefb_path %>

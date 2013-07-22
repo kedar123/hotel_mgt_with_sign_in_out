@@ -1,0 +1,2 @@
+module GethotelstaticdatagdsHelper
+end

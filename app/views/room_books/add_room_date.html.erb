@@ -1,0 +1,28 @@
+
+ <%=form_tag room_books_get_available_room_type_path %>
+  start date11 :- <%=text_field_tag 'start_date',params[:start_date],:readonly=>true%>
+  <br/>
+  end date :- <%=text_field_tag 'end_date',params[:end_date],:readonly=>true%>
+  <br/><br/><br/>
+  <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name" ),  :prompt => "" %> 
+  <%=submit_tag "Add Room"%>
+  
+  
+  <%#the first loop i am creating here to just get an category ids and then count it %>
+  
+  <%if @hotelgdsconf && @hotelgdsconf.line_ids%>
+  <%@hotelgdsconf.line_ids.each do |hgdscline|%>
+    <div>
+     <%#here an delete checkbox should be there which will delete this gdsline%>
+        <%#=check%>
+         <%#the name should be as delete hrgdslin%>
+         <%=  check_box_tag 'hgdscline[]' ,hgdscline.id %>
+        <%=hgdscline.categ_id.name%> :- 
+        <%=hgdscline.room_number.count%>
+     </div>
+  <%end%>
+  <%end%>
+      <%=hidden_field_tag "gdscid",params[:gdscid]%>
+     <%=submit_tag 'delete' %>
+  </form>
+  

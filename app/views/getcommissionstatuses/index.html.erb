@@ -1,0 +1,21 @@
+<h1>Listing getcommissionstatuses</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @getcommissionstatuses.each do |getcommissionstatus| %>
+  <tr>
+    <td><%= link_to 'Show', getcommissionstatus %></td>
+    <td><%= link_to 'Edit', edit_getcommissionstatus_path(getcommissionstatus) %></td>
+    <td><%= link_to 'Destroy', getcommissionstatus, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Getcommissionstatus', new_getcommissionstatus_path %>

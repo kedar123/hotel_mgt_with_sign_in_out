@@ -1,0 +1,40 @@
+
+
+<%=form_tag room_books_action_gds_conf_path%>
+<table>
+  <tr>
+     <th>
+    Delete
+  </th>
+  <th>
+    From Date
+  </th>
+    <th>
+    To Date
+  </th>
+  </tr>
+  
+  <%for gdshc in @hrtgdsconf%>
+  <tr>
+    <td>
+      <%=  check_box_tag 'gdshc[]' ,gdshc.id %>
+      </td>
+  <td>
+    <%=  link_to gdshc.name , "/updateavails/show_type/#{gdshc.id}"%>
+  </td>
+  <td>
+     <%=  gdshc.to_date%>
+  </td>
+    
+  </tr>
+  <%end%>
+</table>
+<%#add a room should take me to a a page where first it should ask me for start and end date%>
+<%=  submit_tag "Add" %>
+<br/>
+<%=  submit_tag "Delete" %>
+<br/>
+<%=  link_to "Edit",updateavails_get_dates_path%>
+<br/>
+here before add what i need to check is in openerp i should have the rooms available means created with that type.the types
+are DBL and KING.otherwise after click to add there will not be a room available to add it.

@@ -1,0 +1,2 @@
+module GetratesHelper
+end

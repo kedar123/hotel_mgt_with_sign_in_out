@@ -89,10 +89,7 @@ class AuthenticatesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  #so when integrating these two apps what i need to check is everything is according to company. means whicheever is the company
-  #is selected that will be used for inserting and fetching an data.the session is also need to be created in 2 different
-  #ways.so in the session[:user_id_avail] the logged in user of webform booking is get stored.and i need to create an another
-  #session variable for the gds purpose. so there will not be an conflict.
+  
   def select_company
     @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
     @res = ResCompany.all 

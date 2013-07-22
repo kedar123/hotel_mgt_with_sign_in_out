@@ -1,0 +1,18 @@
+<%=form_tag('/updateavails/available_for_gds' )%>
+<h2>
+  Select Room Type
+</h2>
+<%for roomtype in @all_cat_name%>
+<div>
+<b><%=roomtype%></b>
+<%=radio_button_tag "avlfgds",roomtype%>
+</div>
+<br/>
+<%end%>
+ 
+<%=hidden_field_tag "gdsid",params[:id]%>
+<%=hidden_field_tag "checkin", @paramscheckin%>
+<%=hidden_field_tag "checkout", @paramscheckout%>
+
+<%=submit_tag "Show Allocated Rooms" %>
+</form>

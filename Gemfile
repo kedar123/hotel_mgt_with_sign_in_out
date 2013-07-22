@@ -38,3 +38,7 @@ gem 'jquery-rails'
 # gem 'debugger'
 gem 'ooor'
 gem 'activemerchant'
+gem 'xml-simple'
+#gem 'savon'
+gem 'savon_model'
+ 

@@ -1,0 +1,2 @@
+module GethotelsHelper
+end

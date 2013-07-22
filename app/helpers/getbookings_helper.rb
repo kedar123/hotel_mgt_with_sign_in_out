@@ -1,0 +1,2 @@
+module GetbookingsHelper
+end
