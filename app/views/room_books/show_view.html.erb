@@ -1,0 +1,20 @@
+
+<div>
+Start Date<%=@hrtgdsconf.name%>
+<br/>
+End Date<%=@hrtgdsconf.to_date%>
+<br/>
+
+</div>
+
+<%for lineid in @hrtgdsconf.line_ids%>
+<div>
+       <%=lineid.categ_id.name%>
+</div>  
+<div>
+       <%    lineid.room_number.each do |rn|%>
+  <%=rn.name%>
+        <%end%>
+</div>  
+
+<%end%>

@@ -17,9 +17,11 @@
         <%#=check%>
          <%#the name should be as delete hrgdslin%>
          <%=  check_box_tag 'hgdscline[]' ,hgdscline.id %>
-        <%=hgdscline.categ_id.name%> :- 
+        <%=link_to hgdscline.categ_id.name , "/room_books/available_for_gds/"+@hotelgdsconf.id.to_s%>
+           <%=link_to  'edit' , "/room_books/available_for_gds/"+@hotelgdsconf.id.to_s+"&&"+"avlfgds="+hgdscline.categ_id.name.to_s+"&&"+"checkin="+@hotelgdsconf.name.to_s+"&&"+"checkout="+@hotelgdsconf.to_date.to_s%>
+       
         <%=hgdscline.room_number.count%>
-     </div>
+    </div>
   <%end%>
   <%end%>
       <%=hidden_field_tag "gdscid",params[:gdscid]%>

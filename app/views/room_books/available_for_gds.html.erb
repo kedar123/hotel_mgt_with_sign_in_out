@@ -1,10 +1,26 @@
-<%=form_tag "/delete_allocated_room"%>
+<%=form_tag "/room_books/delete_allocated_room"%>
+<br/><br/>
+Start Date:-<%=params[:checkin]%>
+<br/><br/>
+End Date:-<%=params[:checkout]%>
+<%=hidden_field_tag 'start_date',params[:checkin]%>
+<%=hidden_field_tag 'end_date',params[:checkout]%>
+<%=hidden_field_tag 'room_type',params[:avlfgds]%>
+<%=hidden_field_tag 'gdscid',@gdsconf.id%>
+
+
+
+<br/><br/>
+<%=params[:avlfgds]%>
 <h2>
   Already Allocated Rooms
 </h2>
 
 <br/>
-
+note:-
+here i put a condition that is if the booking of room is done that means if the values i found in hotel room booking history
+then the room is not shown for delete
+<br/>
 <%for el in @gdsconf.line_ids%>
   <%for rn in el.room_number%>
   <div>
@@ -52,8 +68,10 @@
  <%end%>
 <%end%>
 <%=submit_tag "Delete Allocated Rooms"%>
-</form>
+
 
 <div>
-  Add A Room
+  
+  <%=submit_tag "Add A Room"%>
   </div>
+</form>

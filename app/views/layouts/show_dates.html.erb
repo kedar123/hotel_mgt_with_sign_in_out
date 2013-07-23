@@ -1,7 +1,14 @@
 <html>
   <head>
+    
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-		<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+ <%= javascript_include_tag "jquery-migrate-1.0.0" %>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+                <%= javascript_include_tag "thickbox" %>
+	  
+	 <%=javascript_include_tag 'jquery_ujs'%>
+	 
+               
 		 
                 <%=javascript_include_tag "jquery-ui-timepicker-addon.js"%>
                 <%=javascript_include_tag "jquery-ui-sliderAccess.js"%>
@@ -10,6 +17,9 @@
                 <%=stylesheet_link_tag "jquery-ui-timepicker-addon"%>
                 <%= stylesheet_link_tag    "layout", :media => "all" %>
                 <%= stylesheet_link_tag    "styles", :media => "all" %>
+                <%= stylesheet_link_tag    "thickbox" %>
+                <%= javascript_include_tag "thickbox" %>
+
                 
   <script>   
     $(function() {	

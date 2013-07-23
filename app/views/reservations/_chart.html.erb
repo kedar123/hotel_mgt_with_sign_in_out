@@ -1,0 +1,229 @@
+<script type="text/javascript">
+
+function daysInMonth(date_month, date_year)
+  {
+     return 32 - new Date(date_month, date_month, 32).getDate();
+  }
+    var canvas = document.getElementById("myCanvas");
+    var context = canvas.getContext("2d");
+    context.fillStyle="snow";
+    /// first rect
+    context.fillStyle = 'red';
+    context.fillRect(10, 10, 33, 15);  
+    context.fill();
+    //// text 
+    context.font = "12pt Calibri";
+    context.fillStyle = "black";
+    context.fillText("Booked", 45, 22); 
+    //// second rect
+    context.fillStyle = 'green';
+    context.fillRect(250, 10, 33, 15);    
+    // avliable text
+    context.fillStyle = "black";
+    context.fillText("Available", 285, 22);
+    context.font = "12pt Calibri";
+   // context.fillText(" Room Type 1", 32, 96);
+    context.font = "9pt Calibri";
+    context.font = "9pt Calibri";
+    context.fillStyle = "black"; 
+    context.fillText("<%= @date.strftime('%B')%>" +"," + "<%=@date.year%>",160, 70);
+    <%@x=55%>
+    <%logger.info "some error"%>
+      <%logger.info @room_hash.inspect%>
+      <%logger.info @room_hash.class%>
+       <%logger.info  "8888"%>
+   <%@room_hash.sort_by.each do |key,value|%>
+  <%logger.info "some erro1r this loop is for showing left side room panel"%>
+     context.fillText("<%=key%>", 25, <%=@x+60%>);
+     <%@x = @x+30%>    
+    <%end%>
+  <%logger.info "some error2"%>
+// above is room nameme
+     //context.fillText(" Room Type 2", 32, 150);
+      mydate = new Date();       
+    var xcord= 160;
+    var ycord= 75;
+    <%#this loop is for first 31 days only%>
+    for(var i=1;i<=<%=@date.day%>;i++)
+    {
+       //context.textAlign = 'right';
+            mydate.setFullYear(<%=@date.year%>,<%=@date.month-1%>,i);
+          if( (mydate.getDay() == 0) || (mydate.getDay() == 6))
+          {
+    	context.fillStyle = '#d1e7fb';
+          }
+          else
+            {
+    	context.fillStyle = 'lightblue';
+             }
+       //  context.fillRect(xcord, ycord, 10, 15);
+       //	 context.strokeText(xcord, ycord, 20, 22);
+        context.fillRect(xcord, ycord,18, 18);
+        context.font = "7pt Calibri";
+        context.fillStyle = "#3a3a3a";
+        //context.textAlign = 'center';
+        context.fillText(i, xcord+3, ycord +13);
+    	xcord+=20;
+    }
+ //above is first row of calender upto that month date which i have copied for the next seven days purpose
+     //at down
+    context.font = "9pt Calibri";
+    context.fillStyle = "black";
+    context.fillText("<%=@datenext.strftime('%B')%>" +"," + "<%=@datenext.year%>",xcord, 70);
+    for(var i=1;i<=<%=@datenext.day%>;i++)
+     {
+ <%logger.info "some error4"%>
+       //context.textAlign = 'right';
+            mydate.setFullYear(<%=@datenext.year%>,<%=@datenext.month-1%>,i);
+          if( (mydate.getDay() == 0) || (mydate.getDay() == 6))
+          {
+    	context.fillStyle = '#d1e7fb';
+          }
+          else
+            {
+    	context.fillStyle = 'lightblue';
+             }
+       //  context.fillRect(xcord, ycord, 10, 15);
+       //	 context.strokeText(xcord, ycord, 20, 22);
+        context.fillRect(xcord, ycord,18, 18);
+        context.font = "7pt Calibri";
+        context.fillStyle = "#3a3a3a";
+        //context.textAlign = 'center';
+        context.fillText(i, xcord+3, ycord +13);
+    	xcord+=20;
+        if (i==7)
+        {
+          break;
+        }
+    }
+
+    
+
+    
+
+    
+
+    //here copy paste is finished
+ 
+    ///line
+
+   // context.beginPath();
+
+   // context.moveTo(10, 150);
+
+    //context.lineTo(450, 10);
+
+   // context.stroke();
+
+   
+
+   /// room type 1 room 1 details
+
+   ////////////////////////////////////////
+
+     
+
+    var xcord= 160;
+
+    var ycord= 100;
+
+    
+
+    <%@room_hash.sort_by.each do |key,value|%>
+
+     for(var i=1;i<=<%=@date.day%>;i++)
+
+    {
+
+        mycolor = "green"
+
+        <%value.each do |vv|%>
+
+            if(i == <%=vv%>)
+
+        {
+
+    	mycolor = 'red';
+
+        }
+
+        else
+
+          {
+
+            
+
+          }
+
+         <%end%>   
+
+    	context.fillStyle = mycolor;
+
+        context.fillRect(xcord, ycord, 19, 14);
+
+        context.fillStyle = "#3a3a3a";
+
+      	xcord+=20;
+
+     }
+
+    var nxcord= xcord; 
+
+    var nnxcord= xcord; 
+
+    
+
+    var xcord= 160;
+
+    var ycord= ycord + 30;
+
+   <%end%>
+
+   
+
+  //above i am copyng for showing the next month days room selected color      
+
+    
+
+    
+
+    var nycord= 100;
+
+     
+
+     <%@room_hash_next_seven_day.sort_by.each do |key,value|%>
+      for(var i=1;i<=<%=@datenext.day%>;i++)
+    {
+        mycolor = "green"
+        <%value.each do |vv|%>
+            if(i == <%=vv%>)
+        {
+    	mycolor = 'red';
+        }
+        else
+          {
+          }
+         <%end%>   
+    	context.fillStyle = mycolor;
+        context.fillRect(nxcord, nycord, 18, 14);
+        context.fillStyle = "#3a3a3a";
+      	nxcord+=20;
+        if (i==7)
+          {
+            break;
+          }
+     }
+    var nxcord= nnxcord; 
+    var nycord= nycord + 30;
+    <%end%>
+
+   //copied complete
+
+  
+
+  
+
+</script> 
+
+<canvas id="myCanvas" width="950" height="1000"></canvas>
+

@@ -9,14 +9,28 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   get  "room_books/add_room"
   post "room_books/add_room_date"
   get "room_books/add_room_date"
+  #get "room_books/confirm_room"
+  
   
   post 'room_books/get_available_room_type'
+  get 'room_books/get_available_room_type'
+  
   post 'room_books/add_to_gds'
   
   post 'room_books/delete_gdsline'
   
   get 'room_books/show_type/:id' => "room_books#show_type"
   post "room_books/available_for_gds" => "room_books#available_for_gds"
+  post "room_books/available_for_gds/:id" => "room_books#available_for_gds"
+  
+  get "room_books/available_for_gds/:id" => "room_books#available_for_gds"
+  get "room_books/edit_available_for_gds/:id" => "room_books#edit_available_for_gds"
+  
+  post "room_books/delete_allocated_room" => "room_books#delete_allocated_room"
+  get "room_books/add_an_item"
+  post "room_books/add_an_item"
+  
+  get "room_books/show_view/:id" => "room_books#show_view"
   
   
   resources :room_books
@@ -25,6 +39,11 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   post "reservations/show_dates"
   get  "reservations/show_dates"
   post "reservations/show_availability_of_rooms"
+  get  "reservations/room_confirm/:id" => "reservations#room_confirm"
+  post  "reservations/room_confirm/" => "reservations#room_confirm"
+  
+  
+  
   resources :reservations
   
   

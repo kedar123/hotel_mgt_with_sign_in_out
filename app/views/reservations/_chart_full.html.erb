@@ -1,0 +1,412 @@
+<script type="text/javascript">
+
+function daysInMonth(date_month, date_year)
+  {
+     return 32 - new Date(date_month, date_month, 32).getDate();
+  }
+    var canvas = document.getElementById("myCanvas");
+    
+    var context = canvas.getContext("2d");
+    
+    context.fillStyle="snow";
+    /// first rect
+    context.fillStyle = 'red';
+    context.fillRect(10, 10, 33, 15);  
+    context.fill();
+    //// text 
+    context.font = "12pt Calibri";
+    context.fillStyle = "black";
+    context.fillText("Booked", 45, 22); 
+    //// second rect
+    context.fillStyle = 'green';
+    context.fillRect(250, 10, 33, 15);    
+    // avliable text
+    context.fillStyle = "black";
+    context.fillText("Available", 285, 22);
+    context.font = "12pt Calibri";
+   // context.fillText(" Room Type 1", 32, 96);
+    context.font = "9pt Calibri";
+    context.font = "9pt Calibri";
+    context.fillStyle = "black"; 
+    context.fillText("<%= @date_array[0].strftime('%B')%>" +"," + "<%=@date_array[0].year%>",160, 70);
+    <%@x=55%>
+    <%logger.info "some error"%>
+      <%logger.info @room_hash.inspect%>
+      <%logger.info @room_hash.class%>
+       <%logger.info  "8888"%>
+         <%@room_hash = @room_hash_array[0]%>
+   <%@room_hash.sort_by.each do |key,value|%>
+  <%logger.info "some erro1r this loop is for showing left side room panel"%>
+     context.fillText("<%=key%>", 25, <%=@x+60%>);
+      
+     <%@x = @x+30%>    
+    <%end%>
+  <%logger.info "some error2"%>
+// above is room nameme
+     //context.fillText(" Room Type 2", 32, 150);
+      mydate = new Date();       
+    var xcord= 160;
+    var ycord= 75;
+    <%#this loop is for first 31 days only%>
+   
+        <%for datearray in @date_array%>
+           context.font = "9pt Calibri";
+           context.font = "9pt Calibri";
+           context.fillStyle = "black"; 
+           context.fillText("<%= datearray.strftime('%B')%>" +"," + "<%=datearray.year%>",xcord, 70);
+
+    for(var i=1;i<=<%=datearray.day%>;i++)
+    {
+       //context.textAlign = 'right';
+            mydate.setFullYear(<%=datearray.year%>,<%=datearray.month-1%>,i);
+          if( (mydate.getDay() == 0) || (mydate.getDay() == 6))
+          {
+    	context.fillStyle = '#d1e7fb';
+          }
+          else
+            {
+    	context.fillStyle = 'lightblue';
+             }
+       //  context.fillRect(xcord, ycord, 10, 15);
+       //	 context.strokeText(xcord, ycord, 20, 22);
+        context.fillRect(xcord, ycord,18, 18);
+        context.font = "7pt Calibri";
+        context.fillStyle = "#3a3a3a";
+        //context.textAlign = 'center';
+        context.fillText(i, xcord+3, ycord +13);
+    	xcord+=20;
+    }
+         <%end%>
+ 
+     
+
+ //here my logic is xcords will grow and ycord will come to the point again as usual 
+    var xcord= 160;
+    var ycord= 100;
+    var nxcord = 160;
+    var nycord = 100;
+    var lastxcord = 160;
+    var lastycord = 100;
+     
+     <%@room_hash_array[0].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[0].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+     var nxcord = xcord; 
+     var xcord = lastxcord;
+     var ycord = ycord + 30;
+     var lastycord = ycord;
+  <%end%>
+    
+   xcord = nxcord;
+   lastxcord = nxcord;  
+   ycord = 100; 
+    <%@room_hash_array[1].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[1].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+      var nxcord = xcord; 
+      var xcord = lastxcord; 
+      var ycord = ycord + 30;
+   <%end%>
+   
+   xcord = nxcord;
+   lastxcord = nxcord;  
+   ycord = 100; 
+    <%@room_hash_array[2].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[2].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+      var nxcord = xcord; 
+      var xcord = lastxcord; 
+      var ycord = ycord + 30;
+   <%end%>
+   xcord = nxcord;
+   lastxcord = nxcord;  
+   ycord = 100; 
+    <%@room_hash_array[3].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[3].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+      var nxcord = xcord; 
+      var xcord = lastxcord; 
+      var ycord = ycord + 30;
+   <%end%>
+   
+    xcord = nxcord;
+   lastxcord = nxcord;  
+   ycord = 100; 
+    <%@room_hash_array[4].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[4].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+      var nxcord = xcord; 
+      var xcord = lastxcord; 
+      var ycord = ycord + 30;
+   <%end%>
+  
+ xcord = nxcord;
+   lastxcord = nxcord;  
+   ycord = 100; 
+    <%@room_hash_array[5].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[5].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+      var nxcord = xcord; 
+      var xcord = lastxcord; 
+      var ycord = ycord + 30;
+   <%end%>
+  
+   xcord = nxcord;
+   lastxcord = nxcord;  
+   ycord = 100; 
+    <%@room_hash_array[6].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[6].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+      var nxcord = xcord; 
+      var xcord = lastxcord; 
+      var ycord = ycord + 30;
+   <%end%>
+  
+  
+   xcord = nxcord;
+   lastxcord = nxcord;  
+   ycord = 100; 
+    <%@room_hash_array[7].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[7].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+      var nxcord = xcord; 
+      var xcord = lastxcord; 
+      var ycord = ycord + 30;
+   <%end%>
+  
+  
+   xcord = nxcord;
+   lastxcord = nxcord;  
+   ycord = 100; 
+    <%@room_hash_array[8].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[8].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+      var nxcord = xcord; 
+      var xcord = lastxcord; 
+      var ycord = ycord + 30;
+   <%end%>
+   xcord = nxcord;
+   lastxcord = nxcord;  
+   ycord = 100; 
+    <%@room_hash_array[9].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[9].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+      var nxcord = xcord; 
+      var xcord = lastxcord; 
+      var ycord = ycord + 30;
+   <%end%>
+   xcord = nxcord;
+   lastxcord = nxcord;  
+   ycord = 100; 
+    <%@room_hash_array[10].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[10].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+      var nxcord = xcord; 
+      var xcord = lastxcord; 
+      var ycord = ycord + 30;
+   <%end%>
+  
+   xcord = nxcord;
+   lastxcord = nxcord;  
+   ycord = 100; 
+    <%@room_hash_array[11].sort_by.each do |key,value|%>
+     for(var i=1;i<=<%=@date_array[11].day%>;i++)
+      {
+        mycolor = "green"
+         <%value.each do |vv|%>
+           if(i == <%=vv%>)
+              {
+                mycolor = 'red';
+              }
+          else
+             {
+             }
+         <%end%>   
+         context.fillStyle = mycolor;
+         context.fillRect(xcord, ycord, 19, 14);
+         context.fillStyle = "#3a3a3a";
+         xcord+=20;
+       }
+      var nxcord = xcord; 
+      var xcord = lastxcord; 
+      var ycord = ycord + 30;
+   <%end%>
+  
+  
+  
+  //above i am copyng for showing the next month days room selected color      
+ 
+</script> 
+
+<canvas id="myCanvas" width="8000" height="1000"  >
+ 
+  
+</canvas>
+
+
+ 

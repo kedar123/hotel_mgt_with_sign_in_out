@@ -19,15 +19,16 @@
     <%=hidden_field_tag "company_id",params[:company_id]%>
   </tr>
   <tr>
-   
-    
-     
-      <td>&nbsp;</td> 
-      <td>  <%=submit_tag "Check Availability",:id=>"Checkavailabilitybutton"%></td>
       
-      
-    
+      <td><%=submit_tag "Check Availability",:id=>"Checkavailabilitybutton"%></td> 
+      <td> <span class="upthickbox">  
+              <a href="/reservations/room_confirm/" title="Booking calender" class="thickbox" ><span style="color:#777777;font-size:15px;   line-height: 33px;text-decoration: none" id="Checkavailabilitybutton">Booking Calender</span></a>
+           </span>  
+      </td>
+         
+           
   </tr>
+        
 </table>
  </div>
 

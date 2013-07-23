@@ -5,18 +5,49 @@
   end date :- <%=text_field_tag 'end_date',params[:end_date]%>
   <br/><br/><br/>
  
-  <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "" %> 
+  <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "",:disabled=>true %> 
   <br/><br/>
 <div>
   All Rooms2
   </div>
-<%for arm in @filteredroomarray%>
-<div>
-  <%=arm%>
-  <%=check_box "addroom" , arm%>
-</div>
 
-<%end%>
+<%#here also need to put an condition about already reserved room and showing an add to room%>  
+ 
+  
+ <%for arm in @filteredroomarray%>
+    <%viewbookedarraya = []
+    hrbha = GDS::HotelRoomBookingHistory.find(:all,:domain=>[['name','=',arm]])
+            hrbha.each do |ebr|  
+                if @paramscheckin >= ebr.check_in_date  and @paramschekout <= ebr.check_out_date
+               viewbookedarraya << ebr 
+               elsif @paramscheckin >= ebr.check_in_date  and @paramschekout >= ebr.check_out_date  and @paramscheckin <= ebr.check_out_date  and ebr.check_out_date >  @paramschekout
+                 viewbookedarraya << ebr 
+               elsif  @paramscheckin <= ebr.check_in_date  and @paramschekout <= ebr.check_out_date  and @paramschekout >= ebr.check_in_date   
+                 viewbookedarraya << ebr 
+               elsif  @paramscheckin <= ebr.check_in_date  and @paramschekout >= ebr.check_out_date  
+                 viewbookedarraya << ebr 
+               elsif  ebr.check_in_date <= @paramscheckin and ebr.check_out_date <= @paramschekout  and @paramscheckin <= ebr.check_out_date
+                 viewbookedarraya << ebr 
+               end
+           end%>
+  
+  
+    <%if viewbookedarraya.blank?%>
+      <div>
+        <%=arm%>
+        <%=check_box "addroom" , arm%>
+      </div>
+    <%end%>
+  
+ <%end%>
+  
+  
+  
+  
+  
+  
+  
+  
 <%if @bookedgdsc[0]%>
 <%=hidden_field_tag "gdscid",@bookedgdsc[0].id%>
 <%end%>

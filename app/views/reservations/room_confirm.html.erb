@@ -1,0 +1,45 @@
+ 
+
+<form action="/reservations/room_confirm" method="post" data-remote="true" onsubmit="disablesubmit();">
+  <table>
+     <tr><td><b>Booking detail</b> </td></tr>
+     <tr>
+        <td align ='center'>
+          <label >Room Type</label>  
+          
+            
+          <%=select_tag "room_type", options_from_collection_for_select(@category_type, "name", "name")%>
+          <%=hidden_field_tag "database_name",params[:database_name]%>
+       </td>
+       <td align ='center'>
+          <label >Month</label>  
+          <%month = params[:date][:month] if params[:date] %>
+          <% month = month || 1%>
+          <%= select_month(Date.civil(2012,month.to_i,1), :field_name => 'month', :prompt=>'Select month') %>
+       </td>
+       
+       <td><label >Year</label>  
+           <%year = params[:date][:year] if params[:date] %>
+           <% year = year || 2013%>  
+           <%= select_year(Date.civil(year.to_i,1,1), :field_name => 'year', :prompt=>'Select year',:start_year => 2012, :end_year => 2050) %>
+       </td>
+
+         <script>
+           function disablesubmit()
+           {
+             $('#submit').attr('disabled', true);
+             $('#loading').show()
+           }
+         </script>  
+       <td>
+            <%=submit_tag "Send",:class=>"classname",:id=>" <span>"%> 
+            <span style= "display:none" id ="loading">
+             Loading...
+            </span>
+       </td>
+    </tr>
+  </table>
+</form>
+<div id="chart">  
+</div>
+

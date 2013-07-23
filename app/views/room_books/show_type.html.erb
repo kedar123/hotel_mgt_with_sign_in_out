@@ -1,4 +1,4 @@
-
+<%=link_to "Back",room_books_path%>
 <%=form_tag('/room_books/available_for_gds' )%>
 Start Date<%=text_field_tag "start_date",@hrtgdsconf.name.strftime("%d/%m/%Y")%>dd/mm/yy
 <br/>
@@ -14,12 +14,11 @@ End Date<%=text_field_tag "end_date",@hrtgdsconf.to_date.strftime("%d/%m/%Y")%>d
 </div>
 <br/>
 <%end%>
- 
 <%=hidden_field_tag "gdsid",params[:id]%>
 <%=hidden_field_tag "checkin", @paramscheckin%>
 <%=hidden_field_tag "checkout", @paramscheckout%>
-
 <%=submit_tag "Show Allocated Rooms" %>
+<%=submit_tag "Add An Item" %>
 <%=submit_tag "Save" %>
   
 

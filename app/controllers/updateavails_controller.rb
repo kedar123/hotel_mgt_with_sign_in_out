@@ -320,7 +320,7 @@ class UpdateavailsController < ApplicationController
   #now on this page i need to show date wise rooms available. so rooms available means . so here its same as 
   #reservation of rooms.also that rooms should be of a particular type like either its dbl or its king.  
   def get_date_wise_available_room
- 
+ @prgcat = GDS::ProductCategory.find(:all,:domain=>[['isroomtype','=',true]])
     #fetch all the product whoes isroom is true and category is according to params
     #here what i need to check is is the date range is already there in hotelreservationconfiguration or not
     allgdsconfgr = GDS::HotelReservationThroughGdsConfiguration.all

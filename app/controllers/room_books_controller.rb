@@ -1,10 +1,13 @@
 class RoomBooksController < ApplicationController
   # GET /room_books
   # GET /room_books.json
-  layout 'gds'
+  layout 'room_book'
   def index
     #@room_books = RoomBook.all
       logger.info "gds classssssssssss reload the data"
+      if session[:gerpurl].blank?
+        redirect_to gds_auths_path and return
+      end
        Ooor.new(:url =>session[:gerpurl], :database => session[:gdatabase], :username => session[:gusername] , :password => session[:userauth] ,:scope_prefix=>'GDS' ,:reload => true)
         hrtgc = GDS::HotelReservationThroughGdsConfiguration.all
       hrtgc.each do |eachobjtoreload|
@@ -16,6 +19,21 @@ class RoomBooksController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @room_books }
     end
+  end
+  
+ 
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  def show_view
+    @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:id])
   end
 
   def show_type
@@ -39,6 +57,8 @@ class RoomBooksController < ApplicationController
     end
     @all_cat_name = all_cat_name.uniq
   end
+  
+  
   
   
   
@@ -200,6 +220,8 @@ class RoomBooksController < ApplicationController
   
   #in this action i need to check the commit value of buttons if its delete then call another small action 
   def get_available_room_type
+     Ooor.new(:url =>session[:gerpurl], :database => session[:gdatabase], :username => session[:gusername] , :password => session[:userauth] ,:scope_prefix=>'GDSA' ,:reload => true)
+      
     if params[:commit] == 'delete'
        check_an_delete_button(params)
        if  params[:hgdscline]
@@ -209,44 +231,198 @@ class RoomBooksController < ApplicationController
        end
        
     else
-       @prgcat = GDS::ProductCategory.find(:all,:domain=>[['isroomtype','=',true]])
+       @prgcat = GDSA::ProductCategory.find(:all,:domain=>[['isroomtype','=',true]])
     #fetch all the product whoes isroom is true and category is according to params
     #here what i need to check is is the date range is already there in hotelreservationconfiguration or not
-    allgdsconfgr = GDS::HotelReservationThroughGdsConfiguration.all
+    allgdsconfgr = GDSA::HotelReservationThroughGdsConfiguration.all
     paramscheckin = Date.civil(params[:start_date].split("/")[2].to_i,params[:start_date].split("/")[1].to_i,params[:start_date].split("/")[0].to_i)
     paramschekout = Date.civil(params[:end_date].split("/")[2].to_i,params[:end_date].split("/")[1].to_i,params[:end_date].split("/")[0].to_i)
-     weatherconfisavlornot = false
-    allgdsconfgr.each do |hrtgdsconf|
-         if paramscheckin >= hrtgdsconf.name  and paramschekout <= hrtgdsconf.to_date
-          weatherconfisavlornot = true
-        elsif paramscheckin >= hrtgdsconf.name  and paramschekout >= hrtgdsconf.to_date  and paramscheckin <= hrtgdsconf.to_date  and hrtgdsconf.name >  paramschekout
-          weatherconfisavlornot = true
-        elsif  paramscheckin <= hrtgdsconf.name  and paramschekout <= hrtgdsconf.to_date and paramschekout >= hrtgdsconf.name  
-          weatherconfisavlornot = true
-        elsif  paramscheckin <= hrtgdsconf.name  and paramschekout >= hrtgdsconf.to_date 
-          weatherconfisavlornot = true
-        elsif  hrtgdsconf.name <= paramscheckin and hrtgdsconf.to_date <= paramschekout  and paramscheckin <= hrtgdsconf.to_date
-          weatherconfisavlornot = true
-        end 
-    end
-     logger.info "is this sssssssssssssssssssssssssssss"
-    logger.info weatherconfisavlornot
-     if weatherconfisavlornot == false
-    selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true]])
+     
+   
+    selectedallprd = GDSA::ProductProduct.find(:all,:domain=>[['isroom','=',true]])
     @filteredroomarray = []
       @paramscheckin = paramscheckin
-    @paramschekout = paramschekout
+      @paramschekout = paramschekout
     #ymd
-    #here i am reloading all the things
-     selectedallprd.each do |er|
-      er.reload
-      er.categ_id.reload
-     end
+    
      selectedallprd.each do |er|
        if er.categ_id.name == params[:room_type]
          @filteredroomarray  << er.name
       end
     end
+    #now from this array i need to delete all the rooms which are already allocated. for creating an array
+    #but that should be datewise. so first i need a loop on gdsline then get its booked date. then compare this date to
+    #params date . and check if this date range makes some conflict. if yes then remove it else keep it.
+    pcid = GDSA::ProductCategory.search([['name','=',params[:room_type]]])[0]
+    allgdsconfgr = GDSA::HotelReservationThroughGdsConfiguration.all
+    @bookedgdsc = []
+    #here i am getting all the hrtgc and checking if the room is there or not. i just need to copy this code for 
+    #the purpose of room can be deleted or not
+    allgdsconfgr.each do |hrc|
+    hrc.reload  
+       if paramscheckin >= hrc.name  and paramschekout <= hrc.to_date
+         @bookedgdsc << hrc 
+         elsif paramscheckin >= hrc.name  and paramschekout >= hrc.to_date  and paramscheckin <= hrc.to_date  and hrc.to_date >  paramschekout
+           @bookedgdsc << hrc 
+         elsif  paramscheckin <= hrc.name  and paramschekout <= hrc.to_date  and paramschekout >= hrc.name    
+           @bookedgdsc << hrc 
+         elsif  paramscheckin <= hrc.name  and paramschekout >= hrc.to_date   
+           @bookedgdsc << hrc 
+         elsif  hrc.name <= paramscheckin and hrc.to_date <= paramschekout  and paramscheckin <= hrc.to_date
+           @bookedgdsc << hrc 
+       end 
+    end
+     logger.info "do i am nillllllllll"
+     logger.info @bookedgdsc
+    bookedroom = []
+ 
+    @bookedgdsc.each do |bgds|
+      bgds.line_ids.each do |li|
+         li.room_number.each do |rn|
+          if rn.categ_id.name == params[:room_type]
+             bookedroom << rn.name
+          end
+        end
+       end
+     end
+    #and lastly just removing the rooms
+    logger.info "the array before doing a transactions"
+    logger.info @filteredroomarray
+    logger.info "brrrrrrrrrrrrrrrrrrrrr"
+    logger.info bookedroom
+    bookedroom.each do |br|
+      if @filteredroomarray.include?(br)
+         @filteredroomarray.delete(br)
+      end
+    end
+      
+ 
+  
+    end  
+  end 
+  
+  def edit_available_for_gds
+    
+  end
+  
+  def available_for_gds
+      #now here i need to fetch all the rooms allocated in this hrcgds
+    #so again i need to find gds configuration so that in view i can show all the room names by loop
+    
+    begin
+      logger.info GDS
+    rescue=>e
+      redirect_to gds_auths_path ,:notice=>"Your Session Has Been Expired Please Login Again" and return
+    end
+    
+      if !params[:id].blank?
+        id=''
+        if params[:id].include? 'avlfgds'
+           id = params[:id].split('&&')[0]
+           avlfgds = params[:id].split('&&')[1].split("=")[1]
+           params[:avlfgds] = avlfgds
+           params[:checkin] = params[:id].split('&&')[2].split("=")[1]
+           params[:checkout] = params[:id].split('&&')[3].split("=")[1]
+           
+        end
+        @gdsconf = GDS::HotelReservationThroughGdsConfiguration.find(id)
+        
+      else
+        @gdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:gdsid])
+      end
+      
+     
+    if params[:commit]=='Save'
+       paramscheckin = "#{params[:start_date].split('/')[2]}-#{params[:start_date].split('/')[1]}-#{params[:start_date].split('/')[0]}"
+       paramschekout = "#{params[:end_date].split('/')[2]}-#{params[:end_date].split('/')[1]}-#{params[:end_date].split('/')[0]}"
+    
+         @gdsconf.to_date = paramschekout
+         @gdsconf.name =   paramscheckin
+         @gdsconf.save
+         redirect_to :back ,:notice=>"The Values Has Been Updated"
+    end
+    #if it is an add an item then i have to redirect it to add an item method.this method will keep the layout
+    #same but it will have an drop down box for selecting an room type
+    if params[:commit] == 'Add An Item'
+      
+          
+         redirect_to room_books_add_an_item_path({:gdsid=>params[:gdsid]})
+            
+      
+    end
+    
+    
+    
+  end
+  
+  
+  
+  def add_an_item
+      @gdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:gdsid])
+      @prgcat = GDS::ProductCategory.find(:all,:domain=>[['isroomtype','=',true]])
+      #i am copying here the delete allocated room code because currently i am changing a flow little bit and wanted the deletion
+      #of room should be in one page only instead of in different pages.
+      if params[:commit] == 'Delete Allocated Rooms'
+         params[:deleteroom].each do |key,value|
+      if value == "1"
+         splittheroomname = key.split('_')
+         hrtglrn = GDS::HotelReservationThroughGdsLine.find(splittheroomname[-2]).associations['room_number']
+         logger.info "this is firstttttttttttttttttttttttttt"
+         logger.info hrtglrn
+         #above getting a room number array 
+         #here i need to check weather the room is already booked or not. that i will check by a roombookinghistory
+         logger.info "do i am checking thisssssssssss"
+         logger.info splittheroomname.inspect
+         logger.info splittheroomname[-1].to_i
+         #first need to find a product for the name purpose
+         pr = GDS::ProductProduct.find(splittheroomname[-1].to_i)
+         hrtglrn.delete(splittheroomname[-1].to_i)
+         logger.info "this is firstttt88888888888888tttttttttttttt"
+         logger.info hrtglrn
+         #above removing an room number from array variable
+         hrtgl = GDS::HotelReservationThroughGdsLine.find(splittheroomname[-2])
+         logger.info "there are some errors"
+         logger.info hrtgl
+         logger.info "some wrong before reservation array"
+         logger.info hrtgl.associations['room_number']
+         hrtgl.associations['room_number'] = hrtglrn
+         logger.info "assigned room number"
+         logger.info hrtgl.associations['room_number']
+         hrtgl.save
+         #so ultimetly its get deleted here
+         #and i need to redirect back to 
+         #
+       end
+    end
+    redirect_to "/room_books/show_type/"+@gdsconf.id.to_s,:notice=>"Selected Rooms Were Deleted"
+    end
+     
+    #if commit value is Show Rooms that means here i need to show all the available rooms for adding to that particular date range
+    #
+    if params[:commit] == 'Show Rooms'
+      #here i need to create an array of all the available rooms of that particular type
+       
+    #fetch all the product whoes isroom is true and category is according to params
+    #here what i need to check is is the date range is already there in hotelreservationconfiguration or not
+ 
+    
+    paramscheckin = Date.civil(params[:start_date].split("/")[2].to_i,params[:start_date].split("/")[1].to_i,params[:start_date].split("/")[0].to_i)
+    paramschekout = Date.civil(params[:end_date].split("/")[2].to_i,params[:end_date].split("/")[1].to_i,params[:end_date].split("/")[0].to_i)
+  
+    
+   
+    selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true]])
+    @filteredroomarray = []
+      @paramscheckin = paramscheckin
+    @paramschekout = paramschekout
+    #ymd
+    
+     selectedallprd.each do |er|
+       if er.categ_id.name == params[:room_type]
+         @filteredroomarray  << er.name
+      end
+    end
+    
     #now from this array i need to delete all the rooms which are already allocated. for creating an array
     #but that should be datewise. so first i need a loop on gdsline then get its booked date. then compare this date to
     #params date . and check if this date range makes some conflict. if yes then remove it else keep it.
@@ -272,18 +448,7 @@ class RoomBooksController < ApplicationController
      logger.info "do i am nillllllllll"
      logger.info @bookedgdsc
     bookedroom = []
-    #here its now simple that is get all the room name and then just remove a room name from above all room name array
-    #also just check the category type 
-    @bookedgdsc.each do |bgds|
-      bgds.line_ids.each do |li|
-        li.reload
-        
-         li.room_number.each do |rn|
-           rn.reload
-            rn.categ_id.reload
-         end
-       end
-     end
+ 
     @bookedgdsc.each do |bgds|
       bgds.line_ids.each do |li|
          li.room_number.each do |rn|
@@ -303,32 +468,111 @@ class RoomBooksController < ApplicationController
          @filteredroomarray.delete(br)
       end
     end
-    else
-      redirect_to :back ,:notice=>"The Date Is Overlapped"
+  
+      
+      ##################################################################################3
     end
+    #here i need to copy the code of adding a rooms to gds
+   if params[:commit] == 'Add To Gds'
+    #i am copying the code hereeeeeeeeeeeeeeeeeee
+         addtogdsroom = []
+         catid =  ""
+    params[:addroom].each do |key,value|
+      if value == "1"
+         logger.info 'this loop is here'
+          addtogdsroom << GDS::ProductProduct.find(:all,:domain=>[['name','=',key]])[0].id
+          logger.info "i got product id"
+          catid = GDS::ProductProduct.find(:all,:domain=>[['name','=',key]])[0].categ_id.id
+          logger.info "category id"
+      end
     end
+    hrtgdsconf = ""
+    logger.info "gdsidddd"
+    logger.info params[:gdscid]
+    #@gdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:gdsid])
+    #its above already got
      
-  end 
-  
-  
-  
-  def available_for_gds
-      #now here i need to fetch all the rooms allocated in this hrcgds
-    #so again i need to find gds configuration so that in view i can show all the room names by loop
-    @gdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:gdsid])
-    if params[:commit]=='Save'
-       paramscheckin = "#{params[:start_date].split('/')[2]}-#{params[:start_date].split('/')[1]}-#{params[:start_date].split('/')[0]}"
-       paramschekout = "#{params[:end_date].split('/')[2]}-#{params[:end_date].split('/')[1]}-#{params[:end_date].split('/')[0]}"
-    
-         @gdsconf.to_date = paramschekout
-         @gdsconf.name =   paramscheckin
-         @gdsconf.save
-         redirect_to :back ,:notice=>"The Values Has Been Updated"
+     @gdsconf.line_ids.each do |eld|
+      #need to test this
+      logger.info "is this blankkkkkkkkkkkkk"
+      logger.info eld.categ_id.id.to_i
+      logger.info catid.to_i
+      if eld.categ_id.id.to_i == catid.to_i
+        logger.info "already in thjis catg"
+         asrmn = eld.associations['room_number']
+         asrmn << addtogdsroom
+         eld.associations['room_number'] = asrmn.flatten!
+         logger.info eld.inspect
+         logger.info "888888888888888888"
+         eld.save
+          
+      end
     end
+    #if the line ids are not present then i need to create here
+    
+    
+    #and copying the code here complete
+    
+    redirect_to "/room_books/show_type/"+@gdsconf.id.to_s,:notice=>"The Room Is Added To A Configuration"  
+   end 
     
     
   end
   
+  
+  
+  def delete_allocated_room
+       p params
+    p "555555555555555555555555555555"
+    #for deleting a room 
+    if params[:commit]  == "Add A Room"
+      #here i need to add a room 
+      params[:start_date] = params[:start_date].to_s.gsub(/[-]/,'/')
+      params[:end_date] = params[:end_date].to_s.gsub(/[-]/,'/')
+      #the params is yymmdd
+      #needtosend id ddmmyy
+        start_date = "#{params[:start_date].split('/')[2]}/#{params[:start_date].split('/')[1]}/#{params[:start_date].split('/')[0]}"
+        end_date = "#{params[:end_date].split('/')[2]}/#{params[:end_date].split('/')[1]}/#{params[:end_date].split('/')[0]}"
+        
+      redirect_to room_books_get_available_room_type_path({:start_date=>start_date,:end_date=>end_date,:room_type=>params[:room_type],:gdscid=>params[:gdscid]})
+    else
+    
+    #from the above parameter i need to delete a room  through an association
+    params[:deleteroom].each do |key,value|
+      if value == "1"
+         splittheroomname = key.split('_')
+         hrtglrn = GDS::HotelReservationThroughGdsLine.find(splittheroomname[-2]).associations['room_number']
+         logger.info "this is firstttttttttttttttttttttttttt"
+         logger.info hrtglrn
+         #above getting a room number array 
+         #here i need to check weather the room is already booked or not. that i will check by a roombookinghistory
+         logger.info "do i am checking thisssssssssss"
+         logger.info splittheroomname.inspect
+         logger.info splittheroomname[-1].to_i
+         #first need to find a product for the name purpose
+         pr = GDS::ProductProduct.find(splittheroomname[-1].to_i)
+         hrtglrn.delete(splittheroomname[-1].to_i)
+         logger.info "this is firstttt88888888888888tttttttttttttt"
+         logger.info hrtglrn
+         #above removing an room number from array variable
+         hrtgl = GDS::HotelReservationThroughGdsLine.find(splittheroomname[-2])
+         logger.info "there are some errors"
+         logger.info hrtgl
+         logger.info "some wrong before reservation array"
+         logger.info hrtgl.associations['room_number']
+         hrtgl.associations['room_number'] = hrtglrn
+         logger.info "assigned room number"
+         logger.info hrtgl.associations['room_number']
+         hrtgl.save
+         #so ultimetly its get deleted here
+         #and i need to redirect back to 
+         #
+       end
+    end
+    redirect_to room_books_path
+    end
+    
+  end
   
   
   def delete_gdsline

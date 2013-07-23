@@ -1,0 +1,11 @@
+     
+      <%if @fullcalender == true%>
+$("#chart").html("<%= escape_javascript( render(:partial => "chart_full") ) %>");
+      
+      <%else%> 
+$("#chart").html("<%= escape_javascript( render(:partial => "chart") ) %>");
+      
+      <%end%> 
+      
+      $('#submit').removeAttr("disabled");
+      $('#loading').hide()

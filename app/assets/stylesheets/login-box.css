@@ -1,0 +1,201 @@
+body
+{
+margin:0px 0px 0px 0px ;
+color:#000000;
+
+}
+.bgclass
+{
+background:#ffffff;
+}
+#main
+{
+	background:#fff;
+	color:#000000;
+	width:900px;
+	height:auto;
+	overflow:hidden;
+	margin:10px auto 0px auto;
+}
+#main_1
+{
+	background:#F2F3EE;
+	color:#000000;
+	width:900px;
+	height:auto;
+	overflow:hidden;
+	margin:10px auto 0px auto;
+}
+#main_2
+{
+	background:#fff;
+	color:#000000;
+	width:600px;
+	height:auto;
+	overflow:hidden;
+	border-radius: 12px 5px 12px 5px;
+	border:1px solid #EAEAEA;
+	margin:10px auto 20px auto;
+}
+#pay_box
+{
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #000000;
+    height: auto;
+    margin: 0 0 50px 203px;
+    overflow: hidden;
+    width: 300px;
+}
+
+h1
+{
+	color: #FFFFFF;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 24px;
+    font-style: italic;
+    margin: 5px 0 20px 0;
+    text-align: center;
+    text-shadow: 1px 1px 1px #8F8F8F;
+}
+h2
+{
+	color: #FFFFFF;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 24px;
+    font-style: italic;
+    margin: 20px 0 20px 0;
+    text-align: center;
+    text-shadow: 1px 1px 1px #8F8F8F;
+}
+h3
+{
+	color: #FFFFFF;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 20px;
+    font-style: italic;
+    margin: 20px 0 20px 0;
+    text-align: center;
+    text-shadow: 1px 1px 1px #8F8F8F;
+}
+
+#login-box {
+	width:333px;
+	height: 352px;
+	padding: 58px 76px 0 76px;
+	margin:140px auto 0px auto;
+	color: #ebebeb;
+	font: 12px Arial, Helvetica, sans-serif;
+	background: url(login-box-backg.png) no-repeat left top;
+}
+.classname1 {
+    background: -moz-linear-gradient(center top , #EDEDED 5%, #DFDFDF 100%) repeat scroll 0 0 #EDEDED;
+    border: 1px solid #DCDCDC;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 1px 0 0 #FFFFFF inset;
+    color: #777777;
+    display: inline-block;
+    font-family: arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 1px 1px 0 #FFFFFF;
+}
+.classname1:hover {
+    background: -moz-linear-gradient(center top , #DFDFDF 5%, #EDEDED 100%) repeat scroll 0 0 #DFDFDF;
+}
+.thickbox {
+    background: -moz-linear-gradient(center top , #EDEDED 5%, #DFDFDF 100%) repeat scroll 0 0 #EDEDED;
+    border: 1px solid #DCDCDC;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 1px 0 0 #FFFFFF inset;
+    color: #777777;
+    display: inline-block;
+    font-family: arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 1px 1px 0 #FFFFFF;
+}
+.upthickbox {
+}
+.upthickbox h2 {
+    color: #777777;
+}
+.thickbox:hover {
+    background: -moz-linear-gradient(center top , #DFDFDF 5%, #EDEDED 100%) repeat scroll 0 0 #DFDFDF;
+}
+.thickbox:active {
+    position: relative;
+    top: 1px;
+}
+
+
+a:link, a:visited {
+    color:#CC3300;
+    text-decoration: none;
+}
+a:hover {
+  /*  color: #993333; 
+    text-decoration: underline;*/
+}
+
+h4 {
+	  font-family:Arial, Helvetica, sans-serif;
+    color: #000000;
+    font-size: 14px;
+    line-height: 180%;
+	  text-align:justify;
+    text-decoration: none;
+	  margin:10px 10px 0px 10px ;
+}
+.text {
+	  font-family:Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 180%;
+	  text-align:justify;
+	  padding:0px 10px 0px 10px ;
+}
+
+.box
+{
+	width:250px;
+	height:20px;
+	background:#FFFFFF;
+	border: 1px solid #999999;
+	border-radius:4px 4px 4px 4px;
+	margin:0px 10px 0px 10px ;
+	padding:0px 10px 0px 5px ;
+}
+.error_messages {
+  float:left, display:block;
+  padding: 0px;
+  color:red;
+}
+
+.error_messages1 {
+		font-family:Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    line-height: 180%;
+	  text-align:center;
+    font-style: italic;
+    float:left, display:block;
+    padding: 0px;
+    color:green;
+}
+.error_messages2 {
+		font-family:Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    line-height: 180%;
+	  text-align:center;
+    font-style: italic;
+    float:left, display:block;
+    margin:0px 0px 0px 385px;
+    color:red;
+}
+
+.loginboxfont{
+
+ color:#542158 
+}
