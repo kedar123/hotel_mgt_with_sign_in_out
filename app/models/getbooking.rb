@@ -173,7 +173,7 @@ class Getbooking   <  ActiveRecord::Base
   ############
   
   
-  def self.create_hotel_reservation(getbooking)
+  def self.create_hotel_reservation(getbooking,shop_id,company_id)
     retval = ""
     config = XmlSimple.xml_in(getbooking.body)
     logger.info "is this get parseddddddd as xmlllllllllllll"
@@ -203,7 +203,7 @@ class Getbooking   <  ActiveRecord::Base
         newres = GDS::HotelReservation.new
         newres.partner_id = respart
         newres.partner_order_id = respart
-        newres.shop_id = 1
+        newres.shop_id = shop_id
         newres.source = 'through_gds'
         newres.adults = eachbkg["ADULTS"][0].to_s
         newres.childs = eachbkg["CHILDREN"][0].to_s
@@ -340,7 +340,7 @@ class Getbooking   <  ActiveRecord::Base
      acv.account_id = 7
      acv.period_id = 10
      acv.journal_id = 8
-     acv.company_id = 1
+     acv.company_id = company_id
      acv.amount =  newres.total_cost1
      acv.date = Date.today
      acv.save
@@ -494,24 +494,15 @@ class Getbooking   <  ActiveRecord::Base
   def self.get_bookings(params)
     # super("User"=>"string","Password"=>"string","idHotel"=>"string","idSystem"=>"string","ForeignPropCode"=>"string",
     #     "idRSV"=>"string","StartDate"=>"string", "EndDate"=>"string","StartCreationDate"=>"string","EndCreationDate"=>"string").to_hash  end
-  
-  
-  
-    uri = URI('http://test.reconline.com/recoupdate/update.asmx/GetBookings')
-  
-    
-    res = Net::HTTP.post_form(uri, "User"=>params[:User],"Password"=>params[:Password],"idHotel"=>params[:idHotel],
+     uri = URI('http://test.reconline.com/recoupdate/update.asmx/GetBookings')
+     res = Net::HTTP.post_form(uri, "User"=>params[:User],"Password"=>params[:Password],"idHotel"=>params[:idHotel],
       "idSystem"=>params[:idSystem],"ForeignPropCode"=>params[:ForeignPropCode],
       "idRSV"=>params[:idRSV],"StartDate"=>params[:StartDate], "EndDate"=>params[:EndDate],
       "StartCreationDate"=>params[:StartCreationDate],"EndCreationDate"=>params[:EndCreationDate])
-    
-    
-    logger.info "the paaramsmsmsms"
+     logger.info "the paaramsmsmsms"
     logger.info res.inspect
     logger.info res.to_hash
-    
-    
-    logger.info res.body.include?("<boolean xmlns=\"http://www.reconline.com/\">true</boolean>")
+     logger.info res.body.include?("<boolean xmlns=\"http://www.reconline.com/\">true</boolean>")
     logger.info res.body
     res.to_hash
     res  

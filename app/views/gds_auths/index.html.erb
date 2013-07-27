@@ -1,14 +1,36 @@
+ 
 
+
+ 
 <%=form_tag  gds_auths_path%>
-
-username<%=text_field_tag "username"%>
-<br/>
-password<%=text_field_tag "userauth"%>
-<br/>
-openerpurl<%=text_field_tag "erpurl"%>
-<br/>
-database<%=text_field_tag "database"%>
-
-
-<%=submit_tag "Add Authenticate"%>
+<div class="container">
+<div id="login-box">
+<H2>Login</H2>
+<table width="268" align="center">
+<tr>
+<td class="invalid"><!--Invalid Email And Password--></td>
+</tr>
+</table>
+<br /><br />
+<div id="login-box-name" style="margin-top:20px;">User Name:</div>
+<div id="login-box-field" style="margin-top:20px;">
+   
+    <%=text_field_tag "username" ,"",:class=>"form-login",:placeholder=>"User Name"%>
+</div>
+<div id="login-box-name">Password:</div>
+<div id="login-box-field">
+  
+<%=text_field_tag "userauth" ,"",:class=>"form-login",:placeholder=>"Password"%>
+</div>
+<br />
+<!--<span class="login-box-options"><a href="#" style="margin-left:30px; margin-top:70px; float:right;">Forgot password?</a></span>
+-->
+<br /><br />
+  
+ <%=submit_tag "Login",:id=>"loginbutton"%>
+ 
+</div>
+</div>
 </form>
+
+ 

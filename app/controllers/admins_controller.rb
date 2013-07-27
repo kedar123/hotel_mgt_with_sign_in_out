@@ -3,9 +3,13 @@ class AdminsController < ApplicationController
   # GET /admins
   # GET /admins.json
   def index
-     
-
-    respond_to do |format|
+    #here i am storing an gds company id in session if available
+     if !params[:company_id].blank?
+       session[:gds_company_id] = params[:company_id]
+     end
+     p "i am storing an session of gdscompanyid here"
+     p session[:gds_company_id]
+     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @admins }
     end

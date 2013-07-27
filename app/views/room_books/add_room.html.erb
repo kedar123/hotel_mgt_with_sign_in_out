@@ -5,11 +5,15 @@
 
 
 
-Start Date<%=text_field_tag "start_date"%>dd/mm/yy
+Start Date<%=text_field_tag "start_date"%> 
 <br/>
-End Date<%=text_field_tag "end_date"%>dd/mm/yy
+End Date<%=text_field_tag "end_date"%> 
 <br/>
- 
+   <div>
+    <%if !session[:gds_shop_id_name].blank?%>
+       Shop  :-  <%=session[:gds_shop_id_name]%>
+    <%end%>
+    </div>
 
 <%#= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name" ),  :prompt => "" %> 
 
@@ -19,13 +23,7 @@ End Date<%=text_field_tag "end_date"%>dd/mm/yy
 
 
  
-<script>
-$(function() {
-$("#start_date" ).datepicker({dateFormat: "dd/mm/yy"});
-$("#end_date" ).datepicker({dateFormat: "dd/mm/yy"});
  
-});
-</script>
 
 
 

@@ -30,7 +30,8 @@ class GetbookingsController < ApplicationController
   # GET /getbookings/new.json
   def new
     #@getbooking = Getbooking.new
-
+    @select_shop = GDS::SaleShop.find(:all,:domain=>[['company_id','=',session[:gds_company_id].to_i ]])
+   
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @getbooking }
@@ -55,6 +56,15 @@ class GetbookingsController < ApplicationController
   #reservations from openerp web view
   #todays work start with just checking with is the really room reservation is get added or not
   def create
+  #here i have not thought for the things like when i import an reservations from gds and if the rooms 
+  #are not allocated sufficiently then i should display a message and i think snding an email to admin
+  #that please allocate the rooms in openerp as the reservations are already done.but i dont think this
+  #situation will appear  
+    begin
+      logger.info GDS
+    rescue
+      redirect_to gds_auths_path ,:notice=>"Your Session Has Been Expired Please Login again" and return
+    end
     getbooking = Getbooking.get_bookings(params)
     logger.info "some get bookings3333333335555555511111111"
     logger.info getbooking.inspect
@@ -64,12 +74,19 @@ class GetbookingsController < ApplicationController
          
         Getbooking.create_partner_if_not_created(getbooking) 
         #after creating an partner now need to start creating an reservation 
-       retv = Getbooking.create_hotel_reservation(getbooking)
+        logger.info "the session is blank"
+        logger.info session[:gds_shop_id]
+        logger.info "company id is blank"
+        logger.info session[:gds_company_id]
+        logger.info "88888888888888888888"
+         
+        retv = Getbooking.create_hotel_reservation(getbooking,params[:shop_id],session[:gds_company_id])
+        
        if retv.blank?
          logger.info "8888888888888888888888"
          # as currently i can check the blank condition directly because there are only two values one is blank and one is some value
         #flash[:notice] = getbooking.body
-        format.html {  render :text=>"booking is done" }
+        format.html {  redirect_to new_getbooking_path ,:notice=>"Reservations Are Imported Successfully" }
         format.json { render json: @getbooking.errors, status: :unprocessable_entity }
        else
          logger.info "77777777777777777777777"

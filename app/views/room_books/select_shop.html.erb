@@ -1,0 +1,23 @@
+   
+  <%=form_tag room_books_path ,:method=>'get'%>
+<div class="container">
+ <div id="hotel-selection">
+ <div class="selecthotelheadingbg">
+   <div class="slect_hotelheadingtext">Select Shop</div>
+ </div>
+ <p>&nbsp;</p>
+ <table width="240" height="117" border="0" align="center">
+     <td width="98" height="66" class="">Select Shop</td>
+    <td width="122">
+ 
+<%= select_tag  "shop_id", options_from_collection_for_select(@select_shop,"id", "name" ),  :prompt => "",:class=>"select_company" %>
+    
+    </td>
+  </tr>
+ <tr>
+  <td colspan="2">  <%=submit_tag "Go",:id=>'go'%></td>
+  </tr>
+</table>
+</div>
+  </div>
+</form>

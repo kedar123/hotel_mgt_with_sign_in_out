@@ -12,7 +12,7 @@ class GdsAuthsController < ApplicationController
   #is a simple way that is make every thing dynamic here like an creating a ooor instance with scope prefix.so there will
   #not be any conflict bet 2 apps as the web booking form will use different ooor instance.
   def index
-    @gds_auths = GdsAuth.all
+    #@gds_auths = GdsAuth.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -51,8 +51,9 @@ class GdsAuthsController < ApplicationController
   # POST /gds_auths.json
   def create
      begin
-   server = XMLRPC::Client.new2(params[:erpurl].to_s+"/common")
-   content = server.call("login", params[:database].to_s,params[:username].to_s,params[:userauth].to_s)  
+   server = XMLRPC::Client.new2("http://192.168.1.47:8069/xmlrpc"+"/common")
+   #here i am making some fields static 
+   content = server.call("login", "hotel_kedar_1" ,params[:username].to_s,params[:userauth].to_s)  
      respond_to do |format|
       if  content == 1
         #here i am creating an global variable that is why we can access it into other controller and reload the models 
@@ -61,17 +62,20 @@ class GdsAuthsController < ApplicationController
         #variable. so that there will not be an conflict.
         #what i feel here is lets have a $variable be there because i think that will help me reloading in next methods. but same time
         #keep a scope prefix for the purpose of accessing the openerp tables.
-        $authenticate = Ooor.new(:url =>params[:erpurl], :database => params[:database], :username => params[:username] , :password => params[:userauth] ,:scope_prefix=>'GDS' ,:reload => true)
+        $authenticate = Ooor.new(:url => "http://192.168.1.47:8069/xmlrpc" , :database => "hotel_kedar_1", :username => params[:username] , :password => params[:userauth] ,:scope_prefix=>'GDS' ,:reload => true)
         #here i need to keep the values in session as i seen there is a reload issue in showing all list method
         # in updateavails controller. so what i am doing here is keeping this values in session
         #and try to create a new instance with these values
-        session[:gerpurl] = params[:erpurl]
-        session[:gdatabase] = params[:database]
+        session[:gerpurl] =  "http://192.168.1.47:8069/xmlrpc"
+        session[:gdatabase] =  "hotel_kedar_1"
         session[:gusername] = params[:username]
         session[:userauth] = params[:userauth]
+        #here now a flow is little changed as after authenticate i should show a page where an user can select an 
+        #company . so i am just creating an method named select_company
+          #format.html { redirect_to admins_path, notice: 'Authenticate was successfully created.' }
+          format.html { redirect_to gds_select_company_path, notice: 'Authenticate was successfully created.' }
           
-          format.html { redirect_to admins_path, notice: 'Authenticate was successfully created.' }
-           format.json { render json: $authenticate, status: :created, location: $authenticate }
+          format.json { render json: $authenticate, status: :created, location: $authenticate }
       else
          format.html { redirect_to gds_auths_path, notice: 'Authentication was unsuccessfull.' }
          format.json { render json: $authenticate.errors, status: :unprocessable_entity }
@@ -84,6 +88,15 @@ class GdsAuthsController < ApplicationController
            end
    end
   end
+  
+  
+  #this method will only show all the companies related to a particular database. there is not much need of layouts
+  #as this is just a second step
+  def gds_select_company
+    @all_companies = GDS::ResCompany.all
+  end
+  
+  
 
   # PUT /gds_auths/1
   # PUT /gds_auths/1.json

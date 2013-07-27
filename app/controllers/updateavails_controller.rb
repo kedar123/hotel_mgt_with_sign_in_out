@@ -139,10 +139,11 @@ class UpdateavailsController < ApplicationController
   end
   
   
-  #this method is for the purpose of updating a room count in reconline.com
-  #this method should return an array whoes format is 
-  #[idofgdscnf,{:dbl=>10,king=>10},startdateobject,edob,]
-  def count_rooms
+  #just copying the count_rooms method code because i just wanted to show first page as link.
+  #also here i need to add a functionality for checking an room types like dbl,king etc
+  def update_count_rooms
+    
+     
     p $authenticate
     p "74521111111111111111111111111111"
      #i am writing a code here for reloading all the objects as i seen one problem and that is when i delete
@@ -151,7 +152,7 @@ class UpdateavailsController < ApplicationController
      #updating each day record or not
      
     ##################################a5a55a55a55a5a5a5a555a5a5a5a5a5a5a5a5a5a55a5a5a5a5a5a5a
-    HotelReservationThroughGdsConfiguration.all.each do |hrgds|
+    GDS::HotelReservationThroughGdsConfiguration.all.each do |hrgds|
       hrgds.reload
       hrgds.line_ids.each do |eli|
         eli.reload
@@ -160,14 +161,22 @@ class UpdateavailsController < ApplicationController
     #################################3335a5a5a55a5a55a5a5a5a55a5a5a5a5a5a5a5a5a5a5a55a55a5a5a5
     
     @main_array = []
-    HotelReservationThroughGdsConfiguration.all.each do |hrgds|
+    GDS::HotelReservationThroughGdsConfiguration.all.each do |hrgds|
       child_array = []
       child_array << Date.civil(hrgds.name.year,hrgds.name.month,hrgds.name.day)
       child_array << Date.civil(hrgds.to_date.year,hrgds.to_date.month,hrgds.to_date.day)
       room_type_hash = {}
-      hrgds.line_ids.each do |eli|
-         room_type_hash[eli.categ_id.name]=eli.associations['room_number'].count
+      if hrgds.shop_id.id == session[:gds_shop_id].to_i
+        #the above condition i am putting because its change in this new version
+        hrgds.line_ids.each do |eli|
+          #here i need to add one more condition and that is of just checking an room type.because currently 
+          #its limited to DBL,KING
+           if eli.categ_id.name == "DBL" or  eli.categ_id.name == "KING"
+              room_type_hash[eli.categ_id.name]=eli.associations['room_number'].count
+           end
+        end
       end
+      
       child_array << room_type_hash
       @main_array << child_array
     end
@@ -183,8 +192,18 @@ class UpdateavailsController < ApplicationController
       check_room_available_and_update_count(eca)
     end
     
-    redirect_to updateavails_all_list_path ,:notice=>"updated rooms"
+    redirect_to count_rooms_path ,:notice=>"Rooms Count Has Been Updated."
     
+    
+  end
+  
+  
+  #this method is for the purpose of updating a room count in reconline.com
+  #this method should return an array whoes format is 
+  #[idofgdscnf,{:dbl=>10,king=>10},startdateobject,edob,]
+  
+  def count_rooms
+     render :layout=>"gds"
   end
   
   #the format is like this

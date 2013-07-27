@@ -3,22 +3,94 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title> Hotel GDS Booking Management </title>
+<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>-->
+
+ <%= javascript_include_tag "jquery-1.10.1.min" %>
  
+ <%= javascript_include_tag "jquery-migrate-1.0.0" %>
+
+ <%= javascript_include_tag "jquery-ui.min" %>
+ 
+ <%=javascript_include_tag 'jquery_ujs'%>
+	 
+               
+		 
+               
+                <link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+               
+                <%= stylesheet_link_tag    "layout", :media => "all" %>
+                <%= stylesheet_link_tag    "styles", :media => "all" %>
+                <%= stylesheet_link_tag    "gdslayout", :media => "all" %>
+                
+                
 </head>
 
  
   
 
 <body>
- <div>
-   <%#here i need to put in layout but not on admins page%>
-   <%=link_to "Back",admins_path%>
-   
-   </div>
+ 
 <%=flash[:notice]%>
-<%= yield %>
+
+
+ <div class="header">
+
+<div class="container">
+<span class="logoutbutton"><a href="#" style="  float:right;">Logout</a></span>
+
+<span class="username"><a  style="  float:right; margin-right:20px;">Welcome </a></span>
+</div>
+</div>
+<div class="leftsidemenubg">
+
+<div class="reservation_text">GDS Configuration</div>
+
+<div class="leftsidemenu">
+
+
+<ul>
+ 
+  <li>
+<%=link_to "GDS Room Allocation",room_books_select_shop_path %>
+  </li>
+<li>
+  <%=link_to "Update count Of Rooms to reconline",count_rooms_path %>
+  <!--this will update a count on reconline.com-->
+</li>  
+  <li><%=link_to "Get Bookings",new_getbooking_path %>
+ <!--
+ This Link Is For Getting All The Rooms Booked In Reconline To Openerp
+ -->
+ </li> 
+
+  
+<li>  
+  <%=link_to "Update Availabilities Of Rooms",updateavails_all_list_path %>
+</li>  
+  <!--this method expects to do 2 things one is add a room in a particular date or it may delete a record in a 
+  particular date. then need to call update count method to update an count in reconline.com
+  -->
+  
+  
+<li> <%=link_to "Update Rates",new_updaterete_path %></li>
 
  
- 
+  
+ </ul>
+</div>
+
+
+
+</div>
+
+<div class="roomallocationbg">
+<%= yield %>
+</div>
+<script>
+   $(function() {	
+      $("#start_date").datepicker({ dateFormat: 'dd/mm/yy' } );
+      $("#end_date").datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script> 
 </body>
 </html>

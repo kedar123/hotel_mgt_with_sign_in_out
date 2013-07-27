@@ -32,6 +32,9 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   
   get "room_books/show_view/:id" => "room_books#show_view"
   
+  get "room_books/select_shop"
+  
+  
   
   resources :room_books
 
@@ -151,7 +154,12 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   get "updateavails/get_dates" => "updateavails#get_dates"
   post "get_date_wise_available_room" => "updateavails#get_date_wise_available_room"
   post "add_to_gds" => "updateavails#add_to_gds"
+  
   get "count_rooms" => "updateavails#count_rooms"
+  #from above 1 route i am changing it in 2 pages like first page is just of link and second page will be do the
+  #actual counting and upgrading the rooms in reconline
+  get "update_count_rooms" => "updateavails#update_count_rooms"
+  
   
   
   
@@ -192,6 +200,10 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   get "savontest/index"
   
   get "gds_auth" => "gds_auths#index"
+  
+  get "gds_select_company" => "gds_auths#gds_select_company"
+  
+  
       
   resources :gds_auths
 

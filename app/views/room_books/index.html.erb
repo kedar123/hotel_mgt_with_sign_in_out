@@ -12,6 +12,19 @@
     <th>
     To Date
   </th>
+     <th>
+    Shop
+  </th>
+   <th>
+    View
+  </th>
+  <th>
+    Edit
+  </th>
+  <th>
+    Sync
+  </th>
+  
   </tr>
   
   <%for gdshc in @hrtgdsconf%>
@@ -22,16 +35,32 @@
     
     
   <td>
-    <%=  link_to gdshc.name , "/room_books/show_type/#{gdshc.id}"%>
+    <%=   gdshc.name %>
   </td>
  
   <td>
      <%=  gdshc.to_date%>
   </td>
-  <td>
+  
+     
+  
+    <td>
+    <%if !session[:gds_shop_id_name].blank?%>
+            <%=session[:gds_shop_id_name]%>
+    <%end%>
+    </td>
+    <td>
     <%=  link_to  "View" , "/room_books/show_view/#{gdshc.id}"%>
   </td>
-     
+    
+    <td>
+       <%=  link_to  "Edit" , "/room_books/show_type/#{gdshc.id}"%>
+    </td>
+    <td>
+       <%=  link_to  "Synchronise" , "/room_books/show_type/#{gdshc.id}"%>
+    </td>
+    
+    
   </tr>
   <%end%>
 </table>

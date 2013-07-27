@@ -1,0 +1,270 @@
+
+body { background-color: #FFFFFF; margin:auto; padding:0px; text-align:center; background-image:url(main-bg.gif);   }
+
+.container {width:1000px; height:auto; margin:auto; }
+
+
+
+	
+	
+
+
+
+/*........................................................................LOg In....................................................................*/
+
+.login_bg {width:380px; height:auto; float:left; margin:auto; background: #CC3333;
+            background: -webkit-gradient(
+                            linear,
+                            left bottom,
+                            left top,
+                            color-stop(0, rgb(60,60,60)),
+                            color-stop(0.74, rgb(43,43,43)),
+                            color-stop(1, rgb(60,60,60))
+                        );
+            background: -moz-linear-gradient(
+                            center bottom,
+                            rgb(60,60,60) 0%,
+                            rgb(43,43,43) 74%,
+                            rgb(60,60,60) 100%
+                        );
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+			border-radius: 10px; ; margin-left:280px; margin-top:250px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
+			
+.loginheadingbg {width:380px; height:40px; float:left; margin:auto;  box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);   } 	
+
+.invalid {font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#FF0000; text-align:center; }	
+
+
+.forgot_password_button { float:left; margin:auto; } 
+
+.forgot_password_button ul { float:left; margin:auto; }
+
+.forgot_password_button ul li { font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #FFFFFF; float:left; list-style:none; text-decoration:underline; }
+
+.forgot_password_button ul li a { font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#FFFFFF; float:left;  list-style:none; text-decoration:underline; }
+
+.forgot_password_button ul li a:hover { font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #666666; float:left;  list-style:none; text-decoration:none; }
+
+
+
+
+/*...............................................................New Login page.................................................*/
+
+
+
+#login-box {
+	width:333px;
+	height: 352px;
+	padding: 58px 76px 0 76px;
+	color: #ebebeb;
+	font: 12px Arial, Helvetica, sans-serif;
+	background: url(login-box-backg.png) no-repeat ;
+}
+
+#login-box img {
+	border:none;
+}
+
+#login-box h2 {
+	padding:0;
+	margin:0;
+	color: #ebebeb;
+	font: bold 44px "Calibri", Arial;
+	text-shadow: rgba(0,0,0,0.4) 0px 3px 3px;
+}
+
+
+#login-box-name {
+	float: left;
+	display:inline;
+	width:80px;
+	text-align: right;
+	padding: 14px 10px 0 0;
+	margin:0 0 7px 0;
+	font-size: 14px;
+	font-weight:bold;
+	text-shadow: rgba(0,0,0,0.3) 0px 3px 3px;
+}
+
+#login-box-field {
+	float: left;
+	display:inline;
+	width:230px;
+	margin:0;
+	margin:0 0 7px 0;
+	text-shadow: rgba(0,0,0,0.4) 0px 3px 3px;
+}
+
+
+.form-login  {
+	width: 205px;
+	padding: 10px 4px 6px 3px;
+	border: 1px solid #0d2c52;
+	background-color:#1e4f8a;
+	font-size: 16px;
+	color: #ebebeb;
+}
+
+
+.login-box-options  {
+	clear:both;
+	padding-left:87px;
+	font-size: 11px;
+}
+
+.login-box-options a {
+	color: #ebebeb;
+	font-size: 11px;
+}
+
+#loginbutton {width:83px;
+ height:36px;
+  float:right; 
+  margin:auto;
+  margin-right:20px; 
+  background-image:url(login-btn.png);
+   background-repeat:no-repeat;
+    font: bold 22px "Calibri", Arial; color:#FFFFFF;
+	 border:none; 
+	 text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
+	 margin-top:20px;  }
+
+.invalid {font-family:Arial, Helvetica, sans-serif; font-size:15px; color: #FFCC00; text-align:center; text-shadow: rgba(0,0,0,0.4) 0px 3px 3px }	
+
+
+/*.................................................................Hotel Selection .............................................*/
+
+#hotel-selection {
+	width:300px;
+	height: 200px;
+	float:left;
+	margin:auto;
+	
+	color: #ebebeb;
+	font: 12px Arial, Helvetica, sans-serif;
+	margin-left:350px; margin-top:135px;
+	background: url(hotel_selection.png) no-repeat left top;
+}
+
+#login-box img {
+	border:none;
+	float:left;
+}
+
+.selecthotelheadingbg {width:267px; height:40px; float:left; margin:auto;  box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); margin-left:15px; margin-top:15px; text-align:center;   } 	
+
+.slect_hotelheadingtext{ font-family:Arial, Helvetica, sans-serif; font-size:24px; color: #FFFFFF; text-shadow: 1px 1px 2px #222; text-align:center; font-weight:bold; float:left; margin:auto; margin-left:60px;     }
+
+#login-box-names {
+	float: left;
+	display:inline;
+	text-align: left;
+	margin:auto;
+	
+	font-size: 14px;
+	font-weight:bold;
+	text-shadow: rgba(0,0,0,0.3) 0px 3px 3px;
+}
+
+.listening_eventstext {color: #FFFFFF; font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:20px; font-weight:bold; text-shadow: rgba(0,0,0,0.3) 0px 3px 3px; font-weight:bold; }
+
+
+#go {
+	width: 110px;
+	height: 35px;
+	border: none;
+	 background-image: url(go.png); text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
+	float: right; margin-bottom:15px; background-repeat:no-repeat;
+	font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; margin-right:10px; ;
+	}	
+	
+	
+	
+/*..................................................................vertical menu........................................................................*/
+
+.header { height:40px; margin:auto; background-image:url(dock-bg.gif); background-repeat:repeat-x; box-shadow: 0px 0px 6px rgba(0,0,0,0.7); -moz-box-shadow: 0px 0px 3px rgba(0,0,0,0.7); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.7); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.7);   }
+
+
+.logoutbutton { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #FFFFFF; margin:auto; text-decoration:none; font-weight:bold; }
+
+.logoutbutton a { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #FFFFFF; margin:auto; margin-top:10px; font-weight:bold; }
+
+.logoutbutton a:hover { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #aecffb ; margin:auto; margin-top:10px; font-weight:bold; }
+
+
+
+
+
+.username{ font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #00FFFF; margin:auto; text-decoration:none; font-weight:bold; }
+
+.username a { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #00FFFF; margin:auto; margin-top:10px; font-weight:bold; text-decoration:none; }
+
+.username a:hover { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #00FFFF ; margin:auto; margin-top:10px; font-weight:bold; text-decoration:none; }
+
+
+
+
+
+.leftsidemenubg {width:280px; height:800px; float: left; background-color: #f0eeee; border-right:solid; border-right-color: #CCCCCC; border-right-width:1px; margin:auto; padding:0px; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); margin-top:1px;  }
+
+.reservation_text { font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#2c5796; float:left; margin-left:60px; font-weight:bold; margin-top:20px; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;  }
+
+
+.leftsidemenu { width:250px; float:left; margin:auto; }
+
+.leftsidemenu ul { width:150px; float:left; margin:auto;  margin-top:10px; margin-left:50px;  }
+
+.leftsidemenu ul li {width:150px; float:left; margin:auto; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#666666; text-align:left; line-height:30px; list-style:none; text-decoration:none; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; padding:5px; margin-top:1px;      }
+
+.leftsidemenu ul li a {width:150px;  float:left; margin:auto; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#666666; text-align:left; line-height:30px; list-style:none; text-decoration:none; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; margin-top:1px; padding:5px;     }
+
+.leftsidemenu ul li a:hover {width:150px;  float:left; margin:auto; font-family:Arial, Helvetica, sans-serif; font-size:13px; color: #FFFFFF; text-align:left; line-height:30px; display:block; list-style:none; text-decoration: none; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; background-color:#2d589b; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); margin-top:1px; padding:5px; border-right:solid; border-right-color:#FFFFFF; border-right-width:1px; }
+
+
+
+
+/*....................................................................Roomallocation.................................................................*/
+
+.roomallocationbg {width:1000px; height:500px; float:left; margin:auto; background-color:#FFFFFF; margin-left:20px; margin-top:20px; box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -o-box-shadow: 0px 0px 4px rgba(0,0,0,0.3);  }
+
+
+.usersname {font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#2c5796; margin:auto; float:left; text-decoration:none; }
+
+.usersname a {font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#2c5796; float:left; text-decoration:none; }
+
+.usersname a:hover {font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#2c5796;  float:left; text-decoration:none; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

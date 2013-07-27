@@ -1,8 +1,8 @@
 <%=link_to "Back",room_books_path%>
-<%=form_tag('/room_books/available_for_gds' )%>
-Start Date<%=text_field_tag "start_date",@hrtgdsconf.name.strftime("%d/%m/%Y")%>dd/mm/yy
+<%=form_tag('/room_books/available_for_gds',:onsubmit=>"return check_radio_button()" )%>
+Start Date<%=text_field_tag "start_date",@hrtgdsconf.name.strftime("%d/%m/%Y")%> 
 <br/>
-End Date<%=text_field_tag "end_date",@hrtgdsconf.to_date.strftime("%d/%m/%Y")%>dd/mm/yy
+End Date<%=text_field_tag "end_date",@hrtgdsconf.to_date.strftime("%d/%m/%Y")%> 
 <br/>
 <h2>
   Select Room Type
@@ -10,16 +10,49 @@ End Date<%=text_field_tag "end_date",@hrtgdsconf.to_date.strftime("%d/%m/%Y")%>d
 <%for roomtype in @all_cat_name%>
 <div>
 <b><%=roomtype%></b>
-<%=radio_button_tag "avlfgds",roomtype%>
+  <%=radio_button_tag "avlfgds",roomtype %>
 </div>
+
+
 <br/>
 <%end%>
 <%=hidden_field_tag "gdsid",params[:id]%>
 <%=hidden_field_tag "checkin", @paramscheckin%>
 <%=hidden_field_tag "checkout", @paramscheckout%>
-<%=submit_tag "Show Allocated Rooms" %>
-<%=submit_tag "Add An Item" %>
-<%=submit_tag "Save" %>
-  
-
+<%=submit_tag "Show Allocated Rooms",:onclick=>"$('#showallocateclick').val('1')" %>
+<%=submit_tag "Add An Item",:onclick=>"$('#showallocateclick').val('0')" %>
+<%=submit_tag "Save",:onclick=>"$('#showallocateclick').val('0')" %>
 </form>
+
+<input type="text" name="showallocateclick" id="showallocateclick" style="display:none"/>
+
+
+<script>
+  function check_radio_button()
+  {
+    mylastreturn = true;
+    if($('#showallocateclick').val()=='1')
+     {
+     var checked = false, radios  = document.getElementsByName( 'avlfgds' );
+    for(var i = 0, radio; radio = radios[i]; i++) {
+        if (radio.checked) {
+            checked = true;
+            break;
+        }
+       }
+ if (!checked) {
+    alert("Please select room type");
+     
+    mylastreturn = false;
+    
+ }
+else
+  {
+   }
+     
+     
+     }
+    return mylastreturn;
+       
+  }
+  </script>

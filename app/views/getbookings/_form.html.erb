@@ -1,5 +1,5 @@
 <form method="POST" action="/getbookings" >                      
-                        
+ <%= token_tag nil %>                       
                           <table cellspacing="0" cellpadding="4" bordercolor="#dcdcdc" style="border-collapse: collapse;" rules="none" frame="box">
                           <tbody><tr>
 	<td background="#dcdcdc" style="border-right: 2px solid white;" class="frmHeader">Parameter</td>
@@ -56,7 +56,13 @@
                             <td style="color: #000000; font-weight: normal;" class="frmText">EndCreationDate:</td>
                             <td><input type="text" name="EndCreationDate" size="50" class="frmInput"></td>
                           </tr>
-                        
+                             <tr>
+                            <td style="color: #000000; font-weight: normal;" class="frmText">Select Shop:</td>
+                            <td><%= select_tag  "shop_id", options_from_collection_for_select(@select_shop,"id", "name" ),  :prompt => "",:class=>"select_company" %>
+                          </td>
+                          </tr>
+                          
+                          
                         <tr>
                           <td></td>
                           <td align="right"> <input type="submit" class="button" value="Aufrufen"></td>
