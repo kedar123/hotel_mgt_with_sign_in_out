@@ -58,10 +58,7 @@
   <% hrbha = GDS::HotelRoomBookingHistory.all%>
  <%for arm in @filteredroomarray%>
     <%viewbookedarraya = []
-    
-    
-   
-            hrbha.each do |ebr|  
+             hrbha.each do |ebr|  
              if ebr.history_id.product_id.id == arm.id
                 if @paramscheckin >= ebr.check_in_date  and @paramschekout <= ebr.check_out_date
                viewbookedarraya << ebr 
@@ -76,9 +73,7 @@
                end
             end  
            end%>
-  
-  
-    <%if viewbookedarraya.blank?%>
+     <%if viewbookedarraya.blank?%>
       <tr>
         <td height="31">&nbsp;</td>
         <td width="154">  <span class="todate_fromdaterequlartext"><%=arm.name%> </span>

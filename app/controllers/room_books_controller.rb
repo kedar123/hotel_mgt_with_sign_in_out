@@ -422,10 +422,13 @@ class RoomBooksController < ApplicationController
     #but that should be datewise. so first i need a loop on gdsline then get its booked date. then compare this date to
     #params date . and check if this date range makes some conflict. if yes then remove it else keep it.
     pcid = GDSA::ProductCategory.search([['name','=',params[:room_type]]])[0]
-    allgdsconfgr = GDSA::HotelReservationThroughGdsConfiguration.all
+    #allgdsconfgr = GDSA::HotelReservationThroughGdsConfiguration.all
     @bookedgdsc = []
     #here i am getting all the hrtgc and checking if the room is there or not. i just need to copy this code for 
     #the purpose of room can be deleted or not
+    #the logic is as follows. first i get all the products with that particular shop id
+    #the with allgdsconfgr i am taking first all the configuration withing that period.the consept here is one room is allocated
+    #to one shop at a time 
     allgdsconfgr.each do |hrc|
     hrc.reload  
        if paramscheckin >= hrc.name  and paramschekout <= hrc.to_date
@@ -530,7 +533,8 @@ class RoomBooksController < ApplicationController
   end
   
   
-  
+  #this method is get called after creation of rooms that is why the gdsconfid is available so there is no need to check anything
+  #for gdsshopid
   def add_an_item
       @gdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:gdsid])
       @prgcat = GDS::ProductCategory.find(:all,:domain=>[['isroomtype','=',true]])
@@ -584,8 +588,15 @@ class RoomBooksController < ApplicationController
     paramschekout = Date.civil(params[:end_date].split("/")[2].to_i,params[:end_date].split("/")[1].to_i,params[:end_date].split("/")[0].to_i)
   
     
-   
-    selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true]])
+    #here i need to change this line as i am showing here all the rooms of that particular shop. means one room can be 
+    #assigned to one shop that is to one hotel. so if the hotel means shop is different then conceptually one room can 
+    #not be assign by gdsconf to different shops. and that is why when showing an room i am checking an shop id. so 
+    #ultimetly i am showing only rooms which are allocated to a particular shop and that is why there is no way to 
+    #assign an room to multiple shops. this is an conditions i put through an web interface . i am not sure what is 
+    #happened in openerp for the same
+ #   selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true]])
+    selectedallprd = GDSA::ProductProduct.find(:all,:domain=>[['isroom','=',true],['shop_id','=',session[:gds_shop_id].to_i]])
+ 
     @filteredroomarray = []
       @paramscheckin = paramscheckin
     @paramschekout = paramschekout
@@ -602,6 +613,16 @@ class RoomBooksController < ApplicationController
     #params date . and check if this date range makes some conflict. if yes then remove it else keep it.
     pcid = GDS::ProductCategory.search([['name','=',params[:room_type]]])[0]
     allgdsconfgr = GDS::HotelReservationThroughGdsConfiguration.all
+    #this allgdsconfgr is fine for finding all because there is no need to see an shop id because this i am doing for the purpose of
+    #compare and to see weather the room is booked or not.so if i got 
+    #here GDS::HotelReservationThroughGdsConfiguration.all  will work for following reason
+    #1)its because one room is assigned to shop compulsory.so in final loop where i am deleting an room . so suppose if i 
+    #get that this particular room is already assigned then that means that room is assigned to another shop by openerp because
+    #from rails app this is not possible. else its already assigned to this particular shop id so it should be removed. so i think
+    #its better to keep find all instead of finding it by shop id.
+    #
+    #
+    #allgdsconfgr = GDS::HotelReservationThroughGdsConfiguration.find(:all,:domain=>[['shop_id','=',session[:gds_shop_id].to_i]])
     @bookedgdsc = []
     #here i am getting all the hrtgc and checking if the room is there or not. i just need to copy this code for 
     #the purpose of room can be deleted or not
@@ -878,6 +899,7 @@ class RoomBooksController < ApplicationController
       redirect_to gds_auths_path ,:notice=>"Your Session Has Been Expired Please Login Again"
     end
     #here i also need to check an session for gusername is available or not for logged in user purpose.
+  
      if session[:gusername].blank?
         redirect_to gds_auths_path,:notice=>"Your Session Has Been Expired Please Login Again" and return
      end
