@@ -12,6 +12,10 @@
  <%= javascript_include_tag "jquery-ui.min" %>
  
  <%=javascript_include_tag 'jquery_ujs'%>
+
+ <%=javascript_include_tag 'date_validation'%>
+ 
+ 
 	 
                
 		 
@@ -54,7 +58,7 @@
 <%=link_to "GDS Room Allocation",room_books_select_shop_path %>
   </li>
 <li>
-  <%=link_to "Update count Of Rooms to reconline",count_rooms_path %>
+  <%=link_to "Update Room Count",count_rooms_path %>
   <!--this will update a count on reconline.com-->
 </li>  
   <li><%=link_to "Get Bookings",new_getbooking_path %>

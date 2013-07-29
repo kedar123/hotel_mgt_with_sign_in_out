@@ -1,76 +1,65 @@
-
-
-<%=form_tag room_books_action_gds_conf_path%>
-<table>
-  <tr>
-     <th>
-    Delete
-  </th>
-  <th>
-    From Date
-  </th>
-    <th>
-    To Date
-  </th>
-     <th>
-    Shop
-  </th>
-   <th>
-    View
-  </th>
-  <th>
-    Edit
-  </th>
-  <th>
-    Sync
-  </th>
-  
-  </tr>
-  
-  <%for gdshc in @hrtgdsconf%>
-  <tr>
-    <td>
-        <%=  check_box_tag 'gdshc[]' ,gdshc.id %>
-    </td>
-    
-    
-  <td>
-    <%=   gdshc.name %>
-  </td>
+  <%=form_tag room_books_action_gds_conf_path,:onsubmit=>"return check_conf_list_check_box()"%>
+   <div class="todate_fromdatebg">
+     <div class="todate_fromdateheadingbg">
+        <table width="130" height="28" border="0" align="right">
+          <tr>
+            <td width="72" height="28">
+                <%=  submit_tag "Add",:onclick=>"$('#deleteroom').val(0)" %>
+            </td>
+            <td width="71">
+                <%=  submit_tag "Delete",:onclick=>"$('#deleteroom').val(1)" %>
+            </td>
+            <td>
+              <%=  submit_tag "Synchronize",:onclick=>"$('#deleteroom').val(1)" %>
+               <%=  hidden_field_tag "deleteroom"%>
+            </td>
+          </tr>
+        </table>
+        </div>
  
-  <td>
-     <%=  gdshc.to_date%>
-  </td>
-  
-     
-  
-    <td>
-    <%if !session[:gds_shop_id_name].blank?%>
-            <%=session[:gds_shop_id_name]%>
-    <%end%>
-    </td>
-    <td>
-    <%=  link_to  "View" , "/room_books/show_view/#{gdshc.id}"%>
-  </td>
-    
-    <td>
-       <%=  link_to  "Edit" , "/room_books/show_type/#{gdshc.id}"%>
-    </td>
-    <td>
-       <%=  link_to  "Synchronise" , "/room_books/show_type/#{gdshc.id}"%>
-    </td>
-    
-    
-  </tr>
-  <%end%>
-</table>
-<%#add a room should take me to a a page where first it should ask me for start and end date%>
-<%=  submit_tag "Add" %>
-<br/>
-<%=  submit_tag "Delete" %>
-<br/>
-<%#=  link_to "Edit",updateavails_get_dates_path%>
- 
+        <table width="497" height="104" border="0" align="center">
+           
+              <tr class="todate_fromdateheadingtext">
+                <td width="48" height="23"><div align="center" >Select</div></td>
+                <td width="102"><div align="center" >From Date </div></td>
+                <td width="88"><div align="center" >To Date</div></td>
+                <td width="107"><div align="center" >Shop</div></td>
+                <td width="62"><div align="center" >View</div></td>
+                <td width="50"><div align="center">Edit</div></td>
+              </tr>
+              <%for gdshc in @hrtgdsconf%>
+              <tr class="todate_fromdaterequlartext" >
+                <td height="23">
+                    <div align="center">
+                      <%=  check_box_tag 'gdshc[]' ,gdshc.id %>
+                    </div>
+                </td>
+                <td><div align="center" ><%=  gdshc.name %></div></td>
+                <td><div align="center"><%=  gdshc.to_date%></div></td>
+                <td><div align="center" >
+                    <%if !session[:gds_shop_id_name].blank?%>
+                      <%=session[:gds_shop_id_name]%>
+                    <%end%></div>
+                </td>
+                <td>
+                <div class="viewbutton">
+                <ul>
+                <li><a href="#"><%=  link_to  "View" , "/room_books/show_view/#{gdshc.id}"%></a></li>
+                </ul>
+                </div>
 
-<br/>
+                </td>
+                <td><div class="viewbutton">
+                <ul>
+                <li><a href="#"><%=  link_to  "Edit" , "/room_books/show_type/#{gdshc.id}"%></a></li>
+                </ul>
+                </div></td>
+              </tr> 
+              <% end %>
+            </table>
+      </form>
+     </div>
+ 
+ 
+ 
  

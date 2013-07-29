@@ -3,8 +3,8 @@ class UpdateavailsController < ApplicationController
   # GET /updateavails.json
   layout 'gds'
   require 'xmlsimple' 
-  before_filter :reload_me
-  
+  #before_filter :reload_me
+  before_filter :check_gds_availability
   
   def index
     #updateavails = Updateavail.update_avail
@@ -159,6 +159,8 @@ class UpdateavailsController < ApplicationController
       end
     end
     #################################3335a5a5a55a5a55a5a5a5a55a5a5a5a5a5a5a5a5a5a5a55a55a5a5a5
+    #as discussed yesterday with parikshit i am changing the above loop little. means if there is a list of checkboxes for
+    #hotelresthgdsco then i only update that much configuration else all dates will be synchronize
     
     @main_array = []
     GDS::HotelReservationThroughGdsConfiguration.all.each do |hrgds|
@@ -607,5 +609,16 @@ anarrayofhrtgc = []
     
   end
   
+  
+  
+  
+    private
+  def check_gds_availability
+    begin
+      logger.info GDS
+    rescue
+      redirect_to gds_auths_path ,:notice=>"Your Session Has Been Expired Please Login Again"  and return
+    end
+  end
   
 end

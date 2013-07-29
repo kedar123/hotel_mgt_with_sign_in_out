@@ -58,6 +58,15 @@ function check_date(){
 }
 
 
+
+
+
+
+
+
+
+
+
 function check_validation(){
     
     form_valid = true;

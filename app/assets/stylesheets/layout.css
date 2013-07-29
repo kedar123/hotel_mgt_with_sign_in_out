@@ -1,173 +1,13 @@
 
-
-
-
-
-
-
-
-
-body { background-color: #999999; margin:auto; padding:0px; }
+body { background-color: #FFFFFF; margin:auto; padding:0px; text-align:center; background-image:url(main-bg.gif);   }
 
 .container {width:1000px; height:auto; margin:auto; }
 
-.registerform_bg {
-            background: #CC3333;
-            background: -webkit-gradient(
-                            linear,
-                            left bottom,
-                            left top,
-                            color-stop(0, rgb(60,60,60)),
-                            color-stop(0.74, rgb(43,43,43)),
-                            color-stop(1, rgb(60,60,60))
-                        );
-            background: -moz-linear-gradient(
-                            center bottom,
-                            rgb(60,60,60) 0%,
-                            rgb(43,43,43) 74%,
-                            rgb(60,60,60) 100%
-                        );
-            -moz-border-radius: 10px;
-            -webkit-border-radius: 10px;
-			border-radius: 10px;
-            margin:10px;
-			width: 480px; height:180px;
-			margin-left:450px;
-			margin-top:10px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);
-            }    
-
-.headingbg {width:480px; height:40px; float:left; margin:auto; border-bottom:solid; border-bottom-color:#FFFFFF; border-bottom-width:1px;  box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4)  } 
-			
-			
-.headingtext {font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#FFFFFF; margin:auto; text-align:center; margin-top:10px; text-shadow: rgba(0,0,0,0.2) 0px 2px 2px; }
 
 
-.listening_eventstext {color: #FFFFFF; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:20px; font-weight:bold; text-shadow: rgba(0,0,0,0.2) 0px 2px 2px; }
-
-.tables {margin-top:50px; }
-
-.checkavailabilitybg { width:185px; height:35px; float:left; margin:auto; font-family:Arial, Helvetica, sans-serif; font-size:15px; color: #333333; background-image:url(../images/Check%20Avalability.png); background-repeat: no-repeat;  }  
-
-.checkavailability_text {width:130px; height:auto; float:left; margin:0px; } 
-
-.checkavailability_text ul { width:130px; height:auto; float:left; margin:0px; }
-
-.checkavailability_text ul li { height:auto; float:left; font-family: Arial, Helvetica, sans-serif; font-size:15px; color:#333333; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; line-height:35px;  list-style:none; text-decoration:none; font-weight:bold;      }
-
-.checkavailability_text ul li a { height:auto; float:left; font-family: Arial, Helvetica, sans-serif; font-size:15px; color:#333333; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; line-height:35px;   list-style:none; text-decoration:none; font-weight:bold;     }
-
-.checkavailability_text ul li a:hover {  height:auto; float:left; font-family: Arial, Helvetica, sans-serif; font-size:15px; color: #FFFFFF; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; line-height:35px;    list-style:none; text-decoration: underline; font-weight:bold;     }
-
-
-/*.........................................................Date picker.........................................*/
-
-body { font-size: 62.5%; }
-			/*input {width: 200px; height: 1.1em; display:block; }*/
-			
-
-
-/*........................................................Sign Up.................................................*/
-
-.signup_bg {width:450px; height:auto; float:left; margin:auto; background: #CC3333;
-            background: -webkit-gradient(
-                            linear,
-                            left bottom,
-                            left top,
-                            color-stop(0, rgb(60,60,60)),
-                            color-stop(0.74, rgb(43,43,43)),
-                            color-stop(1, rgb(60,60,60))
-                        );
-            background: -moz-linear-gradient(
-                            center bottom,
-                            rgb(60,60,60) 0%,
-                            rgb(43,43,43) 74%,
-                            rgb(60,60,60) 100%
-                        );
-            -moz-border-radius: 10px;
-            -webkit-border-radius: 10px;
-			border-radius: 10px; ; margin-left:280px; margin-top:115px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
-			
-.signup_bg_con {width:450px; height:auto; float:left; margin:auto; background: #CC3333;
-            background: -webkit-gradient(
-                            linear,
-                            left bottom,
-                            left top,
-                            color-stop(0, rgb(60,60,60)),
-                            color-stop(0.74, rgb(43,43,43)),
-                            color-stop(1, rgb(60,60,60))
-                        );
-            background: -moz-linear-gradient(
-                            center bottom,
-                            rgb(60,60,60) 0%,
-                            rgb(43,43,43) 74%,
-                            rgb(60,60,60) 100%
-                        );
-            -moz-border-radius: 10px;
-            -webkit-border-radius: 10px;
-			border-radius: 10px; ; margin-left:280px; margin-top:20px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
-			
-
-
-
-
-signup_bg_compl{
-    width:450px; height:auto; float:left; margin:auto; background: #CC3333;
-            background: -webkit-gradient(
-                            linear,
-                            left bottom,
-                            left top,
-                            color-stop(0, rgb(60,60,60)),
-                            color-stop(0.74, rgb(43,43,43)),
-                            color-stop(1, rgb(60,60,60))
-                        );
-            background: -moz-linear-gradient(
-                            center bottom,
-                            rgb(60,60,60) 0%,
-                            rgb(43,43,43) 74%,
-                            rgb(60,60,60) 100%
-                        );
-            -moz-border-radius: 10px;
-            -webkit-border-radius: 10px;
-			border-radius: 10px; ; margin-left:280px; margin-top:170px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
-	
-
-
-.signupheadingbg {width:450px; height:40px; float:left; margin:auto;  box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);   } 			
-			
-			
-.signuptext{ font-family:Arial, Helvetica, sans-serif; font-size:24px; color:#edcc23; text-shadow: 1px 1px 2px #222; text-align:center; font-weight:bold; line-height:40px;    } 
-
-.signuptextforgotpwd{ font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#edcc23; text-shadow: 1px 1px 2px #222; text-align:center; font-weight:bold; line-height:40px;    } 
-
-
-.signuptextcolor{ font-family:Arial, Helvetica, sans-serif; font-size:24px; color: #FFFFFF; text-shadow: 1px 1px 2px #222; text-align:center; font-weight:bold;    } 
-
-
-.signuptextcolor a {
-    color:#FFFFFF;
-    text-decoration: none;
-}
-
-#signup {
-	width: 130px;
-	height: 30px;
-	border: none;
-	 background-image:url(SignUp1.png); text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
-	float: right; margin-bottom:15px;
-	font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; margin-left:10px;
-	}	
 	
 	
-#forgot {
-	width: 156px;
-	height: 30px;
-	border: none;
-	 background-image: url(forgot_password.png); text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
-	float: right; margin-bottom:15px;
-	font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; margin-left:10px;
-	}			
-		
-		
+
 
 
 /*........................................................................LOg In....................................................................*/
@@ -189,135 +29,285 @@ signup_bg_compl{
                         );
             -moz-border-radius: 10px;
             -webkit-border-radius: 10px;
-			border-radius: 10px; ; margin-left:320px; margin-top:170px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
+			border-radius: 10px; ; margin-left:280px; margin-top:250px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
 			
-.loginheadingbg {width:380px; height:auto; float:left; margin:auto;  box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);   } 	
+.loginheadingbg {width:380px; height:40px; float:left; margin:auto;  box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);   } 	
 
 .invalid {font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#FF0000; text-align:center; }	
 
 
-/*......................................................................Rooms Available...............................................................*/
+.forgot_password_button { float:left; margin:auto; } 
 
-.roomsavailable_bg {width:490px; height:auto; float:left; margin:auto; background: #CC3333;
-            background: -webkit-gradient(
-                            linear,
-                            left bottom,
-                            left top,
-                            color-stop(0, rgb(60,60,60)),
-                            color-stop(0.74, rgb(43,43,43)),
-                            color-stop(1, rgb(60,60,60))
-                        );
-            background: -moz-linear-gradient(
-                            center bottom,
-                            rgb(60,60,60) 0%,
-                            rgb(43,43,43) 74%,
-                            rgb(60,60,60) 100%
-                        );
-            -moz-border-radius: 10px;
-            -webkit-border-radius: 10px;
-			border-radius: 10px; ; margin-left:448px; margin-top:10px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
+.forgot_password_button ul { float:left; margin:auto; }
 
+.forgot_password_button ul li { font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #FFFFFF; float:left; list-style:none; text-decoration:underline; }
 
-.roomsavailableheading_bg  {width:550px; height:50px; float:left; margin:auto;  box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); line-height:20px;   } 
+.forgot_password_button ul li a { font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#FFFFFF; float:left;  list-style:none; text-decoration:underline; }
 
-
-.rooms_availabilitytext{ font-family:Arial, Helvetica, sans-serif; font-size:17px; color:#edcc23; text-shadow: 1px 1px 2px #222; 
-                        text-align:center; font-weight:bold; line-height:16px; height:16px;     }
+.forgot_password_button ul li a:hover { font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #666666; float:left;  list-style:none; text-decoration:none; }
 
 
 
-#Checkavailabilitybutton{
-width: 185px;
-height: 35px;
-border: none;
-background-image: url(Check%20Avalability.png); background-repeat:no-repeat; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
-float: left; margin-bottom:15px; text-align: center; margin-left:3px;
-font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; ;
-} 
 
-#Checkavailabilitybuttonconfirm
-{
-    
-    width: 185px;
-height: 35px;
-border: none;
-background-image: url(Check%20Avalability.png); background-repeat:no-repeat; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
-float: left; margin-bottom:15px; text-align: right; margin-left:3px;
-font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; ;
+/*...............................................................New Login page.................................................*/
 
-}
-#Checkavailabilitybookbutton{
-width: 185px;
-height: 35px;
-border: none;
-background-image: url(Check%20Avalability.png); background-repeat:no-repeat; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
-float: left; margin-bottom:15px; text-align: center; margin-left:10px;
-font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; ;
-} 
 
-#Checkavailabilitybookbutton1{
-width: 185px;
-height: 35px;
-border: none;
-background-image: url(books_rooms.png); background-repeat:no-repeat; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
-float: left; margin-bottom:15px; text-align: center; margin-left:10px;
-font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; ;
+
+#login-box {
+	width:333px;
+	height: 352px;
+	padding: 58px 76px 0 76px;
+	color: #ebebeb;
+	font: 12px Arial, Helvetica, sans-serif;
+	background: url(login-box-backg.png) no-repeat ;
+	margin-top:150px;
+	margin-left:200px;
 }
 
-.reject_payment{
-font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #EDCC23; font-weight:bold; margin-right:10px;  
-    
-    
+#login-box img {
+	border:none;
 }
 
-.selecthotel_bg {width:300px; height:auto; float:left; margin:auto; background: #CC3333;
-            background: -webkit-gradient(
-                            linear,
-                            left bottom,
-                            left top,
-                            color-stop(0, rgb(60,60,60)),
-                            color-stop(0.74, rgb(43,43,43)),
-                            color-stop(1, rgb(60,60,60))
-                        );
-            background: -moz-linear-gradient(
-                            center bottom,
-                            rgb(60,60,60) 0%,
-                            rgb(43,43,43) 74%,
-                            rgb(60,60,60) 100%
-                        );
-            -moz-border-radius: 10px;
-            -webkit-border-radius: 10px;
-border-radius: 10px; ; margin-left:350px; margin-top:170px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
-
-.selecthotelheadingbg {width:300px; height:40px; float:left; margin:auto;  box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);   }
+#login-box h2 {
+	padding:0;
+	margin:0;
+	color: #ebebeb;
+	font: bold 44px "Calibri", Arial;
+	text-shadow: rgba(0,0,0,0.4) 0px 3px 3px;
+}
 
 
-.dropdown {width:200px; font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333333; }
+#login-box-name {
+	float: left;
+	display:inline;
+	width:80px;
+	text-align: right;
+	padding: 14px 10px 0 0;
+	margin:0 0 7px 0;
+	font-size: 14px;
+	font-weight:bold;
+	text-shadow: rgba(0,0,0,0.3) 0px 3px 3px;
+}
+
+#login-box-field {
+	float: left;
+	display:inline;
+	width:230px;
+	margin:0;
+	margin:0 0 7px 0;
+	text-shadow: rgba(0,0,0,0.4) 0px 3px 3px;
+}
+
+
+.form-login  {
+	width: 205px;
+	padding: 10px 4px 6px 3px;
+	border: 1px solid #0d2c52;
+	background-color:#1e4f8a;
+	font-size: 16px;
+	color: #ebebeb;
+}
+
+
+.login-box-options  {
+	clear:both;
+	padding-left:87px;
+	font-size: 11px;
+}
+
+.login-box-options a {
+	color: #ebebeb;
+	font-size: 11px;
+}
+
+#loginbutton {width:83px;
+ height:36px;
+  float:right; 
+  margin:auto;
+  margin-right:20px; 
+  background-image:url(login-btn.png);
+   background-repeat:no-repeat;
+    font: bold 22px "Calibri", Arial; color:#FFFFFF;
+	 border:none; 
+	 text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
+	 margin-top:20px;  }
+
+.invalid {font-family:Arial, Helvetica, sans-serif; font-size:15px; color: #FFCC00; text-align:center; text-shadow: rgba(0,0,0,0.4) 0px 3px 3px }	
+
+
+/*.................................................................Hotel Selection .............................................*/
+
+#hotel-selection {
+	width:300px;
+	height: 200px;
+	float:left;
+	margin:auto;
+	
+	color: #ebebeb;
+	font: 12px Arial, Helvetica, sans-serif;
+	margin-left:350px; margin-top:250px;
+	background: url(hotel_selection.png) no-repeat left top;
+}
+
+#login-box img {
+	border:none;
+	float:left;
+}
+
+.selecthotelheadingbg {width:267px; height:40px; float:left; margin:auto;  box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); margin-left:15px; margin-top:15px; text-align:center;   } 	
+
+.slect_hotelheadingtext{ font-family:Arial, Helvetica, sans-serif; font-size:24px; color: #FFFFFF; text-shadow: 1px 1px 2px #222; text-align:center; font-weight:bold; float:left; margin:auto; margin-left:60px;     }
+
+#login-box-names {
+	float: left;
+	display:inline;
+	text-align: left;
+	margin:auto;
+	
+	font-size: 14px;
+	font-weight:bold;
+	text-shadow: rgba(0,0,0,0.3) 0px 3px 3px;
+}
+
+.listening_eventstext {color: #FFFFFF; font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:20px; font-weight:bold; text-shadow: rgba(0,0,0,0.3) 0px 3px 3px; font-weight:bold; }
 
 
 #go {
-width: 110px;
-height: 35px;
-border: none;
-background-image:url(go.png); text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
-float: left; margin-left:77px;
-font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; margin-right:10px; background-color: #333333;
-}
+	width: 110px;
+	height: 35px;
+	border: none;
+	 background-image: url(go.png); text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
+	float: right; margin-bottom:15px; background-repeat:no-repeat;
+	font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; margin-right:10px; ;
+	}	
+	
+	
+	
+/*..................................................................vertical menu........................................................................*/
 
-.select_company
-{
-    width:150px;
-    font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; 
-    border:none; 
-}
+.header { height:40px; margin:auto; background-image:url(dock-bg.gif); background-repeat:repeat-x; box-shadow: 0px 0px 6px rgba(0,0,0,0.7); -moz-box-shadow: 0px 0px 3px rgba(0,0,0,0.7); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.7); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.7);   }
 
-.welcome{
-    
-     text-align: right;margin-right: 20px;font-size: 12px;color:#EDCC23;
-}
 
-.welcome1
-{
-    text-align: right;margin-right: -163px;font-size: 12px;color:#EDCC23;
-}
+.logoutbutton { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #FFFFFF; margin:auto; text-decoration:none; font-weight:bold; }
 
+.logoutbutton a { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #FFFFFF; margin:auto; margin-top:10px; font-weight:bold; }
+
+.logoutbutton a:hover { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #aecffb ; margin:auto; margin-top:10px; font-weight:bold; }
+
+
+
+
+
+.username{ font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #00FFFF; margin:auto; text-decoration:none; font-weight:bold; }
+
+.username a { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #00FFFF; margin:auto; margin-top:10px; font-weight:bold; text-decoration:none; }
+
+.username a:hover { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #00FFFF ; margin:auto; margin-top:10px; font-weight:bold; text-decoration:none; }
+
+
+
+
+
+.leftsidemenubg {width:280px; height:800px; float: left; background-color: #f0eeee; border-right:solid; border-right-color: #CCCCCC; border-right-width:1px; margin:auto; padding:0px; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); margin-top:1px;  }
+
+.reservation_text { font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#2c5796; float:left; margin-left:60px; font-weight:bold; margin-top:20px; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;  }
+
+
+.leftsidemenu { width:250px; float:right; margin:auto; }
+
+.leftsidemenu ul { width:250px; float:right; margin:auto;  margin-top:10px; margin-left:50px;  }
+
+.leftsidemenu ul li {width:250px; float:right; margin:auto; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#666666; text-align:left; line-height:30px; list-style:none; text-decoration:none; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; padding:5px; margin-top:1px;      }
+
+.leftsidemenu ul li a {width:250px;  float:right; margin:auto; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#666666; text-align:left; line-height:30px; list-style:none; text-decoration:none; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; margin-top:1px; padding:5px;     }
+
+.leftsidemenu ul li a:hover {width:250px;  float:right; margin:auto; font-family:Arial, Helvetica, sans-serif; font-size:13px; color: #FFFFFF; text-align:left; line-height:30px; display:block; list-style:none; text-decoration: none; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; background-color:#2d589b; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); margin-top:1px; padding:5px; border-right:solid; border-right-color:#FFFFFF; border-right-width:1px; }
+
+
+
+
+
+
+/*....................................................................Roomallocation.................................................................*/
+
+.roomallocationbg {width:1000px; height:500px; float:left; margin:auto; background-color:#FFFFFF; margin-left:20px; margin-top:20px; box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -o-box-shadow: 0px 0px 4px rgba(0,0,0,0.3);  }
+
+
+.usersname {font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#2c5796; margin:auto; float:left; text-decoration:none; }
+
+.usersname a {font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#2c5796; float:left; text-decoration:none; }
+
+.usersname a:hover {font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#2c5796;  float:left; text-decoration:none; }
+
+.todate_fromdatebg {width:520px; height:auto; float:left; margin:auto; box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -o-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); margin-left:230px; margin-top:20px; border-radius:8px; }
+
+.todate_fromdateheadingbg {width:520px; height:30px; float:left; margin:auto; background-image:url(innerpageheaderbg.png); background-repeat:repeat-x; }
+
+
+
+
+
+
+.todate_fromdateheadingtext {color: #333333; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:20px; font-weight:bold;}
+
+.todate_fromdaterequlartext {color: #333333; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:20px; }
+
+.viewbutton { margin:auto; float:right; }
+
+.viewbutton ul { margin:auto; float:right; }
+
+.viewbutton ul li { float:right; font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #FF0000; text-align:center; list-style:none; text-decoration:none; }
+
+.viewbutton ul li a { float:right; font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #FF0000; text-align:center; list-style:none; text-decoration:none; }
+
+.viewbutton ul li a:hover { float:right; font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #666666; text-align:center; list-style:none; text-decoration: underline ; }
+
+.showdeletebutton { float:Right; margin:auto; }  
+
+.showdeletebutton ul { float:Right; margin:auto; margin-right:15px; line-height:25px; list-style:none; }
+
+.showdeletebutton ul li { float:Right; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#FFFFFF; padding-right:10px; list-style:none; font-weight:bold;  }
+
+.showdeletebutton ul li a { float:Right; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#FFFFFF; list-style:none; text-decoration:none; font-weight:bold;  }
+
+.showdeletebutton ul li a:hover { float:Right; font-family:Arial, Helvetica, sans-serif; font-size:13px; color: #FF9900; list-style:none; text-decoration: underline; font-weight:bold;  }
+
+/*......................................................... Available For GDS .........................................................................*/
+
+
+.availableforgdsbg {width:590px; height:auto; float:left; margin:auto; box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -o-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); margin-left:230px; margin-top:20px; border-radius:8px; }
+
+.availableforgdsbgheadingbg {width:590px; height:30px; float:left; margin:auto; background-image:url(innerpageheaderbg.png); background-repeat:repeat-x; }
+
+.alreadyallocatedtext {color: #FF0000; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; }
+
+
+/*......................................................Get Available rooms..........................................................................*/
+
+.getavailableroomsdbl_dropdown {width:120px; }  
+
+.yourcompany_text {color: #003399; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:20px; font-weight:bold;}
+
+/*.....................................................Adds An Item..................................................................................*/
+
+
+.selectroomtype {color:#003399; font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight:bold; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

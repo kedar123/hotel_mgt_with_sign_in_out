@@ -2,6 +2,9 @@ class RoomBooksController < ApplicationController
   # GET /room_books
   # GET /room_books.json
    require 'xmlrpc/client'
+     require 'xmlsimple' 
+   before_filter :check_gds_availability
+   
   layout 'room_book'
   def index
     #@room_books = RoomBook.all
@@ -27,7 +30,6 @@ class RoomBooksController < ApplicationController
         format.html  {render :layout=>"gds"}
         format.json { render json: @room_books }
      end
-     
   end
   
   #this method will allow user to select a shop
@@ -72,8 +74,10 @@ class RoomBooksController < ApplicationController
     logger.info @paramscheckout
     #from this i need to fetch 
     @hrtgdsconf.line_ids.each do |elid|
+             
              elid.reload
              elid.categ_id.reload
+             
     end
     all_cat_name = []
     @hrtgdsconf.line_ids.each do |elid|
@@ -102,7 +106,127 @@ class RoomBooksController < ApplicationController
      if params[:commit] == "Add"
         redirect_to room_books_add_room_path
      end  
+     #here i need to copy the code from updateavails for the purpose of updating an count on reconline.com
+     if params[:commit] == "Synchronize"
+        synch_selected_gdsconf(params) 
+        redirect_to :back ,:notice=>'Selected Gds Configuration Has Been Updated'
+     end
+    
   end
+  
+  #the down method will select and synch an particular gdsconf
+  
+  def synch_selected_gdsconf(params)
+       if !params[:gdshc].blank?
+           params[:gdshc].each do |ecid|
+             p ecid
+             p '55555555'
+             #@hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.find(ecid)
+             #here i need to copy an code for updating an particular gds conf count 
+             synch_this_gds_conf(ecid)
+           end
+       end
+  end
+  
+  
+  def synch_this_gds_conf(ecid)
+  #first i am copying an code which will create an one array element for the purpose of updating an count on reconline.com
+  @main_array = []
+    hrgds = GDS::HotelReservationThroughGdsConfiguration.find(ecid)
+    #GDS::HotelReservationThroughGdsConfiguration.all.each do |hrgds|
+      child_array = []
+      child_array << Date.civil(hrgds.name.year,hrgds.name.month,hrgds.name.day)
+      child_array << Date.civil(hrgds.to_date.year,hrgds.to_date.month,hrgds.to_date.day)
+      room_type_hash = {}
+      if hrgds.shop_id.id == session[:gds_shop_id].to_i
+        #the above condition i am putting because its change in this new version
+        hrgds.line_ids.each do |eli|
+          #here i need to add one more condition and that is of just checking an room type.because currently 
+          #its limited to DBL,KING
+           if eli.categ_id.name == "DBL" or  eli.categ_id.name == "KING"
+              room_type_hash[eli.categ_id.name]=eli.associations['room_number'].count
+           end
+        end
+      end
+       child_array << room_type_hash
+      @main_array << child_array
+    #end
+     @main_array.each do |eca|
+         #here i will call a seperate function because the functionality is little more
+         check_room_available_and_update_count(eca)
+     end
+ end
+    
+ 
+  
+   def check_room_available_and_update_count(eca)
+    
+   date1 = eca[0]
+   date2 = eca[1]
+    logger.info date1
+    logger.info date2
+    logger.info date2.class
+    logger.info "some datesssssss"
+      uri = URI('http://test.reconline.com/recoupdate/update.asmx/GetAvailFB')
+      uri1 = URI('http://test.reconline.com/recoupdate/update.asmx/UpdateAvail')
+  #i need to create a loop again because an keys of hash may be multiple and i am parsing an count only by a 
+  #particular room type
+    #i can put here key of 0 because i know that 
+   #and all this should be in date range 
+   logger.info "this all need to changeeeeeeeeeeeeeeeeeeee"
+   logger.info eca
+  for actd in date1..date2  
+      eca[2].keys.each do |ek|  
+      res = Net::HTTP.post_form(uri, "User"=>"kedar","Password"=>"ked2012","idHotel"=>"38534","idSystem"=>0,"ForeignPropCode"=>'blank',
+            "IncludeRateLevels"=>"BAR" ,"ExcludeRateLevels"=>"","IncludeRoomTypes"=>ek,"ExcludeRoomTypes"=>"","StartDate"=>"#{actd.day}.#{actd.month}.#{actd.year}",
+            "EndDate"=>"#{actd.day}.#{actd.month}.#{actd.year}" )
+        logger.info "the paaramsmsmsms"
+        logger.info res.inspect
+        logger.info res.to_hash
+        logger.info res.body.include?("<boolean xmlns=\"http://www.reconline.com/\">true</boolean>")
+        logger.info res.body
+        config = XmlSimple.xml_in(res.body)
+         logger.info config.inspect
+         logger.info "this is configgggggggggggggggggggggggggggg"
+         theavailroomsis = config['diffgram'][0]['NewDataSet'][0]['Availability'][0]['AVAIL'][0] 
+         logger.info "i should get this as 90"
+         logger.info theavailroomsis
+         theavailroomsis = theavailroomsis.split(":")[1]
+          logger.info theavailroomsis.to_i
+          if eca[2][ek].to_i > theavailroomsis.to_i
+             #if it is greater then i need to reduce that much count
+             thenum = eca[2][ek].to_i - theavailroomsis.to_i
+             logger.info "so this is the difference"
+             logger.info thenum
+             logger.info eca[2][ek].to_i
+             #now need to update this number
+             logger.info "before sending a request"
+              res = Net::HTTP.post_form(uri1, "User"=>"kedar","Password"=>"ked2012","idHotel"=>'38534',"idSystem"=>0,"ForeignPropCode"=>'blank',
+        "IncludeRateLevels"=>"BAR","ExcludeRateLevels"=>"","IncludeRoomTypes"=>ek,"ExcludeRoomTypes"=>"","StartDate"=>"#{actd.day}.#{actd.month}.#{actd.year}",
+        "Availability"=>"+#{thenum}")
+              logger.info "after sending a request"
+         end
+          if eca[2][ek].to_i < theavailroomsis.to_i
+            thenum = theavailroomsis.to_i - eca[2][ek].to_i  
+             #now need to update this number
+             logger.info "this is gggggggggggg"
+             logger.info thenum
+             logger.info eca[2][ek].to_i
+             res = Net::HTTP.post_form(uri1, "User"=>"kedar","Password"=>"ked2012","idHotel"=>'38534',"idSystem"=>0,"ForeignPropCode"=>'blank',
+        "IncludeRateLevels"=>"BAR","ExcludeRateLevels"=>"","IncludeRoomTypes"=>ek,"ExcludeRoomTypes"=>"","StartDate"=>"#{actd.day}.#{actd.month}.#{actd.year}",
+        "Availability"=>"-#{thenum}") 
+      logger.info res
+      logger.info res.body
+      logger.info "8888888888888888888"
+         end
+          #now here if this count is bigger then that much count i need to reduce else if the count is less then
+         #increase the count and then call a web service again.
+       end
+  end  
+  end
+  
+  
+  
   
   
   #here i need to show a header that is from date and to date fields
@@ -159,7 +283,7 @@ class RoomBooksController < ApplicationController
               end 
         end
           if weatherconfisavlornot == true
-             redirect_to :back ,:notice=>'The Date Is Overlapped'
+             redirect_to :back ,:notice=>'The Date Is Overlapped' and return
          end
       end
        logger.info "is this sssssssssssssssssssssssssssss"
@@ -168,6 +292,7 @@ class RoomBooksController < ApplicationController
   end
   
   def add_to_gds
+    begin
     #its because when showing an rooms that is products i am showing only that particular shop id products.
     #so again here there is no need to check again
     logger.info "1111111111111111111111111"
@@ -191,7 +316,9 @@ class RoomBooksController < ApplicationController
       hrtgdsconf.shop_id = session[:gds_shop_id]
       hrtgdsconf.to_date = params[:checkout]
       hrtgdsconf.name =   params[:checkin]
+     
       hrtgdsconf.save
+      
       hrtgdsconf.reload
     else
       logger.info "already got con"
@@ -231,7 +358,11 @@ class RoomBooksController < ApplicationController
     
      #redirect_to room_books_add_room_date_path({:room_type=>params[:room_type],:start_date=>params[:start_date],:end_date=>params[:end_date],:gdscid=>hrtgdsconf.id})  
     redirect_to "/room_books/show_type/"+hrtgdsconf.id.to_s,:notice=>"The Room Is Added To A Configuration"  and return
- 
+    rescue => e
+      logger.info e.message
+      logger.info e.inspect
+      redirect_to gds_auths_path ,:notice=>"Your Session Is Expired Please Login Again" and return
+    end
   
   end
   
@@ -264,6 +395,7 @@ class RoomBooksController < ApplicationController
        end
        
     else
+      
        @prgcat = GDSA::ProductCategory.find(:all,:domain=>[['isroomtype','=',true]])
     #fetch all the product whoes isroom is true and category is according to params
     #here what i need to check is is the date range is already there in hotelreservationconfiguration or not
@@ -573,6 +705,7 @@ class RoomBooksController < ApplicationController
   
   
   def delete_allocated_room
+    
        p params
     p "555555555555555555555555555555"
     #for deleting a room 
@@ -734,4 +867,17 @@ class RoomBooksController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  
+  
+  private
+  def check_gds_availability
+    begin
+      logger.info GDS
+    rescue
+      redirect_to gds_auths_path ,:notice=>"Your Session Has Been Expired Please Login Again"
+    end
+  end
+ 
+  
 end

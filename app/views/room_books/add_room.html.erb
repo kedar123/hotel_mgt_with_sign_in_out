@@ -1,23 +1,48 @@
+ 
+
+<%=form_tag room_books_add_room_date_path ,:onsubmit=>"return check_date_gds()"%>
 
 
+<div class="todate_fromdatebg">
+<div class="todate_fromdateheadingbg">
+</div>
+ <table width="297" height="79" border="0" align="center">
+  <tr>
+    <td width="104" height="23" class="todate_fromdateheadingtext">Start Date: -</td>
+    <td width="177"> 
+        <%=text_field_tag "start_date"%> 
+          
+    </td>
+  </tr>
+  <tr>
+    <td height="23" class="todate_fromdateheadingtext">End Date :-</td>
+    <td> 
+      <%=text_field_tag "end_date"%> 
+     </td>
+  </tr>
+</table>
 
-<%=form_tag room_books_add_room_date_path%>
-
-
-
-Start Date<%=text_field_tag "start_date"%> 
-<br/>
-End Date<%=text_field_tag "end_date"%> 
-<br/>
-   <div>
-    <%if !session[:gds_shop_id_name].blank?%>
+<table width="372" border="0" align="center">
+ 
+  
+  <tr>
+  <td width="206"><div align="right">
+      <%if !session[:gds_shop_id_name].blank?%>
        Shop  :-  <%=session[:gds_shop_id_name]%>
     <%end%>
-    </div>
+  </div>
+  </td>
+  </tr>
+  <tr>
+  <td width="156"><div align="left">
+   <%=submit_tag "Get Available Rooms"%>
+  </div></td>
+  </tr>
+</table>
 
-<%#= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name" ),  :prompt => "" %> 
+ 
+</div>
 
-<%=submit_tag "Get Available Rooms"%>
 </form>
 
 

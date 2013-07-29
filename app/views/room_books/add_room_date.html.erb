@@ -1,20 +1,54 @@
 
- <%=form_tag room_books_get_available_room_type_path %>
-  start date :- <%=text_field_tag 'start_date',params[:start_date],:readonly=>true%>
-  <br/>
-  end date :- <%=text_field_tag 'end_date',params[:end_date],:readonly=>true%>
-  <br/><br/>
-  <div>
-    <%if !session[:gds_shop_id_name].blank?%>
-       Shop  :-  <%=session[:gds_shop_id_name]%>
-    <%end%>
-    </div>
-  <br/>
-  <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name" ),  :prompt => "" %> 
-  <%=submit_tag "Add Room"%>
+ 
   
   
-  <%#the first loop i am creating here to just get an category ids and then count it %>
+  
+  <%#####################################################copyingggggggggggggggggggggggggggggg%>
+   <%=form_tag room_books_get_available_room_type_path ,:onsubmit=>"return check_room_type()"%>
+  <div class="todate_fromdatebg">
+      <div class="todate_fromdateheadingbg">
+      </div>
+        <table width="297" height="79" border="0" align="center">
+            <tr>
+              <td width="104" height="23" class="todate_fromdateheadingtext">Start Date: -</td>
+              <td width="177"> 
+                   <%=text_field_tag 'start_date',params[:start_date],:readonly=>true%>
+               </td>
+            </tr>
+            <tr>
+              <td height="23" class="todate_fromdateheadingtext">End Date :-</td>
+              <td> 
+              <%=text_field_tag 'end_date',params[:end_date],:readonly=>true%>
+             </td>
+            </tr>
+            <tr>
+              <td>
+             <%if !session[:gds_shop_id_name].blank?%>
+                  Shop  :-  <%=session[:gds_shop_id_name]%>
+            <%end%>
+               </td>
+             </tr>  
+      </table>
+      <table width="259" border="0" align="center">
+        <tr>
+          <td height="33" colspan="2"><div align="center"><span class="selectroomtype">Select Room Type</span> </div></td>
+        </tr>
+        <tr><td>
+          <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name" ),  :prompt => "" %> 
+        </td></tr>
+      </table>
+      <table width="259" border="0" align="center">
+        <tr>
+          <td height="33" colspan="2"><div align="center"><span class="selectroomtype"><%=submit_tag "Add Room"%></span> </div></td>
+        </tr>
+      </table>    
+     
+    
+    
+    
+ 
+</div>
+   <%#the first loop i am creating here to just get an category ids and then count it %>
   <%showsubmit=false%>
   <%if @hotelgdsconf && @hotelgdsconf.line_ids%>
   <%@hotelgdsconf.line_ids.each do |hgdscline|%>
@@ -36,7 +70,8 @@
     <%end%>
     </div>
   <%end%>
-      <%=hidden_field_tag "gdscid",params[:gdscid]%>
+       <%=hidden_field_tag "gdscid",params[:gdscid]%>
      
   </form>
+  
   

@@ -1,29 +1,42 @@
-<%=form_tag "/room_books/delete_allocated_room"%>
-<br/><br/>
-Start Date:-<%=params[:checkin]%>
-<br/><br/>
-End Date:-<%=params[:checkout]%>
+<%=form_tag "/room_books/delete_allocated_room" ,:onsubmit=>"return check_delete_room()"%>
+
+<div class="">
+
+<div class="availableforgdsbg">
+<div class="availableforgdsbgheadingbg">
+
+
 <%=hidden_field_tag 'start_date',params[:checkin]%>
 <%=hidden_field_tag 'end_date',params[:checkout]%>
 <%=hidden_field_tag 'room_type',params[:avlfgds]%>
 <%=hidden_field_tag 'gdscid',@gdsconf.id%>
+    
+    
+    
+  
+</div>
 
+<table width="590" height="199" border="0">
+  <tr>
+    <td height="32" colspan="2"><div align="center"><span class="todate_fromdateheadingtext">Start Date: -</span>&nbsp; 
+        <span class="todate_fromdaterequlartext"><%=params[:checkin]%></span></div></td>
+  </tr>
+  <tr>
+    <td height="32" colspan="2"><div align="center"><span class="todate_fromdateheadingtext">End Date:-</span>
+        <span class="todate_fromdaterequlartext"> &nbsp;&nbsp;&nbsp;<%=params[:checkout]%></span></div></td>
+  </tr>
+  <tr>
+    <td height="23" colspan="2"><div align="center" class="todate_fromdateheadingtext"><%=params[:avlfgds]%></div></td>
+  </tr>
+  <tr>
+    <td height="25" colspan="2"><div align="center" class="selectroomtype">Already Allocated Rooms</div></td>
+  </tr>
+ 
 
-
-<br/><br/>
-<%=params[:avlfgds]%>
-<h2>
-  Already Allocated Rooms
-</h2>
-
-<br/>
-note:-
-here i put a condition that is if the booking of room is done that means if the values i found in hotel room booking history
-then the room is not shown for delete
-<br/>
-<%for el in @gdsconf.line_ids%>
+ 
+  <%for el in @gdsconf.line_ids%>
   <%for rn in el.room_number%>
-  <div>
+  
      <%if rn.categ_id.name == params[:avlfgds] %>
     <%
     #yy/mm/dd
@@ -37,9 +50,7 @@ then the room is not shown for delete
         hrbh = GDS::HotelRoomBookingHistory.find(:all,:domain=>[['name','=',rn.name]])
         paramscheckin = Date.civil(params[:checkin].split("-")[0].to_i,params[:checkin].split("-")[1].to_i,params[:checkin].split("-")[2].to_i)
         paramschekout = Date.civil(params[:checkout].split("-")[0].to_i,params[:checkout].split("-")[1].to_i,params[:checkout].split("-")[2].to_i)
-        logger.info paramscheckin.inspect
-        logger.info paramschekout.inspect
-        logger.info "888888888888888"
+        
          viewbookedarray = []
             hrbh.each do |ebr|  
                 if paramscheckin >= ebr.check_in_date  and paramschekout <= ebr.check_out_date
@@ -55,23 +66,45 @@ then the room is not shown for delete
                end
            end
           %>
-     <%if viewbookedarray.blank?%>
-        <%=rn.name%>
+  
+  
+   <%if viewbookedarray.blank?%>
+        
         <%#now for delete each room number i need a checkbox %>
         <%#in the room name i need to show by underscore which gds configuration is this and which line id is this%>
-       <%=check_box "deleteroom" , rn.name.to_s + "_" + @gdsconf.id.to_s + "_"+el.id.to_s+ "_"+rn.id.to_s%>
-    <%end%>
+    <tr>
+    <td width="246" height="23"><div align="center"><span class="todate_fromdaterequlartext"><%=rn.name%></span>
+        <%=check_box "deleteroom" , rn.name.to_s + "_" + @gdsconf.id.to_s + "_"+el.id.to_s+ "_"+rn.id.to_s%>
+    </div></td>
     
-    
+  </tr>       
     <%end%>
-   </div>
- <%end%>
-<%end%>
-<%=submit_tag "Delete Allocated Rooms"%>
+    <%end%>
+  <%end%>
+  <%end%> 
+ 
+ 
+<%=text_field_tag "deleteroomc","",:id=>"deleteroomc",:style=>"display:none"%>
+<tr><td>
+<%=submit_tag "Delete Allocated Rooms",:onclick=>"$('#deleteroomc').val(1)"%>
+</td></tr>
 
+<tr><td>
 
-<div>
+  <%=submit_tag "Add A Room",:onclick=>"$('#deleteroomc').val(0)"%>
+</td>
+</tr>
   
-  <%=submit_tag "Add A Room"%>
-  </div>
-</form>
+  
+</table>
+
+
+
+
+
+</div>
+
+
+
+
+</div>

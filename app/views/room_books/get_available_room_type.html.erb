@@ -1,23 +1,59 @@
  
-<%=form_tag "/room_books/add_to_gds"%>
- start date :- <%=text_field_tag 'start_date',params[:start_date]%>
-  <br/>
-  end date :- <%=text_field_tag 'end_date',params[:end_date]%>
-  <br/><br/>
-    <div>
-    <%if !session[:gds_shop_id_name].blank?%>
-       Shop :-   <%=session[:gds_shop_id_name]%>
-    <%end%>
-    </div>
-  <br/>
+<%=form_tag "/room_books/add_to_gds" ,:onsubmit=>"return get_available_room_type_check_box()"%>
  
-  <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "",:disabled=>true %> 
-  <br/><br/>
-<div>
-  
-  </div>
+ 
+ 
+ 
+<%###############################%>
+<div class="todate_fromdatebg">
+<div class="todate_fromdateheadingbg">
+</div>
 
-<%#here also need to put an condition about already reserved room and showing an add to room%>  
+<table width="297" height="79" border="0" align="center">
+  <tr>
+    <td width="104" height="23" class="todate_fromdateheadingtext">Start Date: -</td>
+    <td width="177"> 
+
+         <%=text_field_tag 'start_date',params[:start_date]%>
+    </td>
+  </tr>
+  <tr>
+    <td height="23" class="todate_fromdateheadingtext">End Date :-</td>
+    <td> 
+       <%=text_field_tag 'end_date',params[:end_date]%>
+    </td>
+  </tr>
+  <tr>
+    <td height="23" class="todate_fromdateheadingtext">
+      
+      <%if !session[:gds_shop_id_name].blank?%>
+       Shop  
+      <%end%>
+      
+    </td>
+    <td> 
+       <%if !session[:gds_shop_id_name].blank?%>
+           <%=session[:gds_shop_id_name]%>
+       <%end%>
+    </td>
+  </tr>
+   
+</table>
+
+<table width="259" border="0" align="center">
+  <tr>
+    <td height="33" colspan="2"><div align="center"><span class="selectroomtype">Select Room Type</span> </div></td>
+  </tr>
+  <tr>
+    <td width="129" height="32">
+     <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "",:disabled=>true %> 
+   </td>
+    <td width="154">      </td>
+  </tr>
+  
+    
+    
+   <%#here also need to put an condition about already reserved room and showing an add to room%>  
  
   <% hrbha = GDS::HotelRoomBookingHistory.all%>
  <%for arm in @filteredroomarray%>
@@ -43,29 +79,27 @@
   
   
     <%if viewbookedarraya.blank?%>
-      <div>
-        <%=arm.name%>
-        <%=check_box "addroom" , arm.id%>
-      </div>
+      <tr>
+        <td height="31">&nbsp;</td>
+        <td width="154">  <span class="todate_fromdaterequlartext"><%=arm.name%> </span>
+        <%=check_box "addroom" , arm.id%>      </td>
+      </tr>
     <%end%>
-  
- <%end%>
-  
-  
-  
-  
-  
-  
-  
-  
-<%if @bookedgdsc[0]%>
+  <%end%>
+        <tr>
+         <td>&nbsp;</td>
+          <%if @bookedgdsc[0]%>
 <%=hidden_field_tag "gdscid",@bookedgdsc[0].id%>
 <%end%>
  <%=hidden_field_tag "gdscid",params[:gdscid]%>
 <%=hidden_field_tag "checkin",@paramscheckin%>
 <%=hidden_field_tag "checkout",@paramschekout%>
-<%=submit_tag "Add to gds"%>
+<td>
+ <%=submit_tag "Add to gds",:id=>"button",:name=>"button"%>
+        </td>
+       </tr>
+</table>
+ </div>
+ 
 </form>
-
-
-
+ 
