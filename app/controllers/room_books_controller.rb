@@ -594,9 +594,18 @@ class RoomBooksController < ApplicationController
     #ultimetly i am showing only rooms which are allocated to a particular shop and that is why there is no way to 
     #assign an room to multiple shops. this is an conditions i put through an web interface . i am not sure what is 
     #happened in openerp for the same
- #   selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true]])
-    selectedallprd = GDSA::ProductProduct.find(:all,:domain=>[['isroom','=',true],['shop_id','=',session[:gds_shop_id].to_i]])
- 
+    #selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true]])
+    selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true],['shop_id','=',session[:gds_shop_id].to_i]])
+    logger.info "just checking here what shoukld be an class2222222"
+    selectedallprd.each do |sp|
+      logger.info sp.id
+      logger.info sp.class
+      logger.info sp.name
+      
+      
+    end
+      
+      
     @filteredroomarray = []
       @paramscheckin = paramscheckin
     @paramschekout = paramschekout
@@ -658,12 +667,42 @@ class RoomBooksController < ApplicationController
     logger.info @filteredroomarray
     logger.info "brrrrrrrrrrrrrrrrrrrrr"
     logger.info bookedroom
+    logger.info "checking the deletion of array"
+    bookedroom.each do |br|
+      logger.info br.id
+      logger.info br.name
+      logger.info br.class
+    end
+    logger.info "testing ends here"
+    
+    logger.info "555555555544444444444444444111111111111111"
+     @filteredroomarray.each do |fa|
+       logger.info fa.id
+       logger.info fa.name
+       logger.info fa.class
+       
+     end
+     logger.info "where is breaked" 
+    #34,35 product class is in   bookedroom
     bookedroom.each do |br|
       if @filteredroomarray.include?(br)
+        logger.info "yes this is include"
+        logger.info br.id
+        logger.info br.name
          @filteredroomarray.delete(br)
+      else
+        logger.info "not included"
+        logger.info br.id
+        logger.info br.name
       end
     end
-  
+    logger.info "last output"
+    @filteredroomarray.each do |fa|
+       logger.info fa.id
+       logger.info fa.name
+       logger.info fa.class
+       
+     end
       
       ##################################################################################3
     end
@@ -695,6 +734,10 @@ class RoomBooksController < ApplicationController
       if eld.categ_id.id.to_i == catid.to_i
         logger.info "already in thjis catg"
          asrmn = eld.associations['room_number']
+         logger.info "there are some conflictssssssssssssssssssssssssssss"
+         logger.info asrmn
+         logger.info addtogdsroom
+         logger.info "ssssssssssssssssssssssssssssssssssssssssssssssssss"
          asrmn << addtogdsroom
          eld.associations['room_number'] = asrmn.flatten!
          logger.info eld.inspect

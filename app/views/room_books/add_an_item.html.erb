@@ -12,12 +12,12 @@ End Date<%=text_field_tag "end_date",@gdsconf.to_date.strftime("%d/%m/%Y"),:read
 
 <%else%>
 <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "" %> 
-
+<%=submit_tag "Show Rooms" %>
 <%end%>
   
 
 
-<%=submit_tag "Show Rooms" %>
+
   <%=params[:commit]%>
 <%if params[:commit] == 'Delete Allocated Rooms'%>
  <%hrbh = GDS::HotelRoomBookingHistory.all%>
