@@ -619,6 +619,11 @@ anarrayofhrtgc = []
     rescue
       redirect_to gds_auths_path ,:notice=>"Your Session Has Been Expired Please Login Again"  and return
     end
+     #here i also need to check an session for gusername is available or not for logged in user purpose.
+     if session[:gusername].blank?
+        redirect_to gds_auths_path,:notice=>"Your Session Has Been Expired Please Login Again" and return
+     end
+    
   end
   
 end

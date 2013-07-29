@@ -203,6 +203,7 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   
   get "gds_select_company" => "gds_auths#gds_select_company"
   
+  get "logout" => "gds_auths#logout"
   
       
   resources :gds_auths

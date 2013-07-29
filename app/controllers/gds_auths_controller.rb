@@ -90,6 +90,13 @@ class GdsAuthsController < ApplicationController
   end
   
   
+  
+  def logout
+    reset_session
+    redirect_to gds_auths_path ,:notice=>"You Have Been Logged Out"
+  end
+  
+  
   #this method will only show all the companies related to a particular database. there is not much need of layouts
   #as this is just a second step
   def gds_select_company

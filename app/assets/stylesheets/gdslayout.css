@@ -60,6 +60,7 @@ body { background-color: #FFFFFF; margin:auto; padding:0px; text-align:center; b
 	color: #ebebeb;
 	font: 12px Arial, Helvetica, sans-serif;
 	background: url(login-box-backg.png) no-repeat ;
+        margin-left: 225px;
 }
 
 #login-box img {
@@ -125,7 +126,7 @@ body { background-color: #FFFFFF; margin:auto; padding:0px; text-align:center; b
   margin-right:20px; 
   background-image:url(login-btn.png);
    background-repeat:no-repeat;
-    font: bold 22px "Calibri", Arial; color:#FFFFFF;
+    font: bold 17px "Calibri", Arial; color:#FFFFFF;
 	 border:none; 
 	 text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
 	 margin-top:20px;  }

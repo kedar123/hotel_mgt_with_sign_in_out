@@ -20,8 +20,9 @@
                
 		 
                
-                <link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-               
+                 
+                <%= stylesheet_link_tag    "jquery-ui", :media => "all" %>
+                <%= stylesheet_link_tag    "gdslayout", :media => "all" %>
                 <%= stylesheet_link_tag    "layout", :media => "all" %>
                 <%= stylesheet_link_tag    "styles", :media => "all" %>
                 <%= stylesheet_link_tag    "gdslayout", :media => "all" %>
@@ -40,9 +41,13 @@
  <div class="header">
 
 <div class="container">
-<span class="logoutbutton"><a href="#" style="  float:right;">Logout</a></span>
+  <%#i want to put here one link for logout of session this logout will create an action which will remove an session and %>
+  <%#make an GDS constant as nil so next time an user will need to compulsory login again%>
+<span class="logoutbutton"><a href="/logout" style="float:right;">Logout</a>
 
-<span class="username"><a  style="  float:right; margin-right:20px;">Welcome </a></span>
+</span>
+
+<span class="username"><a  style="  float:right; margin-right:20px;">Welcome <%=session[:gusername]%> </a></span>
 </div>
 </div>
 <div class="leftsidemenubg">

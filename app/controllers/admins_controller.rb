@@ -9,6 +9,10 @@ class AdminsController < ApplicationController
      end
      p "i am storing an session of gdscompanyid here"
      p session[:gds_company_id]
+     if session[:gusername].blank?
+        redirect_to gds_auths_path,:notice=>"Your Session Has Been Expired Please Login Again" and return
+     end
+    
      respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @admins }

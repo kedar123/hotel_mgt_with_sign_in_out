@@ -2,6 +2,7 @@ class GetbookingsController < ApplicationController
   # GET /getbookings
   # GET /getbookings.json
   layout 'gds'
+   before_filter :check_gds_availability
   def index
     
    # getbook = Getbooking.get_bookings
@@ -122,4 +123,22 @@ class GetbookingsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  
+  
+    private
+  def check_gds_availability
+    begin
+      logger.info GDS
+    rescue
+      redirect_to gds_auths_path ,:notice=>"Your Session Has Been Expired Please Login Again"
+    end
+    #here i also need to check an session for gusername is available or not for logged in user purpose.
+     if session[:gusername].blank?
+        redirect_to gds_auths_path,:notice=>"Your Session Has Been Expired Please Login Again" and return
+     end
+    
+    
+  end
+  
 end
