@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
    include ActiveMerchant::Billing
+   layout 'web_layout'
   # GET /payments
   # GET /payments.json
   def index
@@ -101,8 +102,20 @@ class PaymentsController < ApplicationController
         @newres.date_order = Date.today
         @newres.pricelist_id = 1
         @newres.printout_group_id = 1
-        @newres.checkin = session[:checkin]
-        @newres.checkout = session[:checkout] 
+        p session[:checkin]
+        p "555555555"
+        p session[:checkin].to_s.split('/')[2].split(' ')[0]
+        p "555555555555"
+        p session[:checkin].to_s.split('/')[0]
+        p "11111111111111111"
+        p session[:checkin].to_s.split('/')[1]
+        p "5555555555"
+        p session[:checkin].to_s.split('/')[2].split(' ')[1]
+        checkindate = DateTime.new(session[:checkin].split(' ')[0].to_s.split('/')[2].to_i,session[:checkin].split(' ')[0].to_s.split('/')[0].to_i,session[:checkin].split(' ')[0].to_s.split('/')[1].to_i,session[:checkin].split(' ')[1].to_s.split(':')[0].to_i,session[:checkin].split(' ')[1].to_s.split(':')[1].to_i )
+        checkoutdate = DateTime.new(session[:checkout].split(' ')[0].to_s.split('/')[2].to_i,session[:checkout].split(' ')[0].to_s.split('/')[0].to_i,session[:checkout].split(' ')[0].to_s.split('/')[1].to_i,session[:checkout].split(' ')[1].to_s.split(':')[0].to_i,session[:checkout].split(' ')[1].to_s.split(':')[1].to_i )
+        
+        @newres.checkin =  checkindate+5.hours+30.minutes
+        @newres.checkout = checkoutdate+5.hours+30.minutes
         @newres.dummy = session[:checkout]
         p "sssssssssssssssssssssssss"
         p session[:checkin]#mm-dd-yy
@@ -113,8 +126,6 @@ class PaymentsController < ApplicationController
         logger.info "checkinnnnnnnnnnnnnnnnnnnnnnnnnnn"
         logger.info session[:checkin]
         logger.info session[:checkout]
-         checkindate = DateTime.new(session[:checkin].split(' ')[0].to_s.split('/')[2].to_i,session[:checkin].split(' ')[0].to_s.split('/')[0].to_i,session[:checkin].split(' ')[0].to_s.split('/')[1].to_i,session[:checkin].split(' ')[1].to_s.split(':')[0].to_i,session[:checkin].split(' ')[1].to_s.split(':')[1].to_i )
-        checkoutdate = DateTime.new(session[:checkout].split(' ')[0].to_s.split('/')[2].to_i,session[:checkout].split(' ')[0].to_s.split('/')[0].to_i,session[:checkout].split(' ')[0].to_s.split('/')[1].to_i,session[:checkout].split(' ')[1].to_s.split(':')[0].to_i,session[:checkout].split(' ')[1].to_s.split(':')[1].to_i )
         doc_date = DateTime.new(session[:checkin].split(' ')[0].to_s.split('/')[2].to_i,session[:checkin].split(' ')[0].to_s.split('/')[0].to_i,session[:checkin].split(' ')[0].to_s.split('/')[1].to_i,session[:checkin].split(' ')[1].to_s.split(':')[0].to_i,session[:checkin].split(' ')[1].to_s.split('/')[1].to_i ).ago  14.days 
         doc_date = Date.today if doc_date < Date.today
         @newres.doc_date = doc_date

@@ -1,6 +1,7 @@
 class AuthenticatesController < ApplicationController
   # GET /authenticates
   # GET /authenticates.json
+  layout 'web_layout'
   def index
     @authenticates = Authenticate.all
 

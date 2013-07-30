@@ -1,24 +1,20 @@
 <html>
   <head>
     
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
- <%= javascript_include_tag "jquery-migrate-1.0.0" %>
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
-                <%= javascript_include_tag "thickbox" %>
-	  
-	 <%=javascript_include_tag 'jquery_ujs'%>
-	 
-               
-		 
-                <%=javascript_include_tag "jquery-ui-timepicker-addon.js"%>
-                <%=javascript_include_tag "jquery-ui-sliderAccess.js"%>
-                <link rel="stylesheet" media="all" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-                <%=stylesheet_link_tag "jquery-ui-timepicker-addon"%>
-                <%=stylesheet_link_tag "jquery-ui-timepicker-addon"%>
-                <%= stylesheet_link_tag    "layout", :media => "all" %>
-                <%= stylesheet_link_tag    "styles", :media => "all" %>
-                <%= stylesheet_link_tag    "thickbox" %>
-                <%= javascript_include_tag "thickbox" %>
+     
+    <%= javascript_include_tag "jquery-1.10.1.min" %>
+    <%= javascript_include_tag "jquery-migrate-1.0.0" %>
+    <%= javascript_include_tag "jquery-ui.min" %>
+    <%= javascript_include_tag "thickbox" %>
+    <%=javascript_include_tag 'jquery_ujs'%>
+    <%=javascript_include_tag "jquery-ui-timepicker-addon.js"%>
+    <%=javascript_include_tag "jquery-ui-sliderAccess.js"%>
+    <%=stylesheet_link_tag "jquery-ui"%>
+    <%=stylesheet_link_tag "jquery-ui-timepicker-addon"%>
+    <%= stylesheet_link_tag    "weblayout", :media => "all" %>
+    <%= stylesheet_link_tag    "web_styles", :media => "all" %>
+    <%= stylesheet_link_tag    "thickbox" %>
+    <%= javascript_include_tag "thickbox" %>
 
                 
   <script>   
@@ -77,7 +73,16 @@
     <body>
        <%if !@resname.blank?%>
   <div class="welcome">Welcome <%=@resname%></div>
-  <div class="welcome">  <%=link_to "Sign Out",authenticates_sign_out_path%></div>
+  
+  <div class="welcome">  
+ <div class="viewbutton">
+                <ul>
+                  <li>
+                    <%=link_to "Sign Out",authenticates_sign_out_path%></div>
+                  </li>
+                  </ul>
+   </div>
+  
   
   <%end%>
   

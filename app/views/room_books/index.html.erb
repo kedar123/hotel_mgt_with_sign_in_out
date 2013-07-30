@@ -4,6 +4,10 @@
         <table width="130" height="28" border="0" align="right">
           <tr>
             <td width="72" height="28">
+                
+                 <%=  select_tag "page", "<option value=''></option><option value='2'>2</option><option value='4'>4</option><option value='unlimited'>unlimited</option>".html_safe,:onchange=>"this.form.submit()"%>
+            </td>
+            <td width="72" height="28">
                 <%=  submit_tag "Add",:onclick=>"$('#deleteroom').val(0)" %>
             </td>
             <td width="71">

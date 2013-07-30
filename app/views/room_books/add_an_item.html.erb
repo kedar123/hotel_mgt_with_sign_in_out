@@ -1,29 +1,52 @@
+<%######################################################################################%>
+
+ 
+
+<div class="todate_fromdatebg">
+<div class="todate_fromdateheadingbg1" >
+</div>
 <%=form_tag('/room_books/add_an_item' )%>
-Start Date<%=text_field_tag "start_date",@gdsconf.name.strftime("%d/%m/%Y"),:readonly=>true%>dd/mm/yy
-<br/>
-End Date<%=text_field_tag "end_date",@gdsconf.to_date.strftime("%d/%m/%Y"),:readonly=>true%>dd/mm/yy
-<br/>
-<%=hidden_field_tag :gdsid,params[:gdsid]%>
-<h2>
-  Select Room Type
-</h2>
-<%if params[:commit] == "Show Rooms"%>
+<table width="297" height="79" border="0" align="center">
+  <tr>
+    <td width="104" height="23" class="todate_fromdateheadingtext">Start Date: -</td>
+    <td width="177"> 
+
+        <%=text_field_tag "start_date",@gdsconf.name.strftime("%d/%m/%Y"),:readonly=>true%>
+      
+        </td>
+  </tr>
+  <tr>
+    <td height="23" class="todate_fromdateheadingtext">End Date :-</td>
+    <td> 
+      <%=text_field_tag "end_date",@gdsconf.to_date.strftime("%d/%m/%Y"),:readonly=>true%>
+     </td>
+  </tr>
+ <%=hidden_field_tag :gdsid,params[:gdsid]%>
+  <tr>
+    <td height="33" colspan="2"><div align="center"><span class="selectroomtype">Select Room Type</span> </div></td>
+  </tr>
+  <tr>
+    <td width="129" height="32">
+     
+    <%if params[:commit] == "Show Rooms"%>
 <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "",:disabled=>true %> 
 
 <%else%>
 <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "" %> 
 <%=submit_tag "Show Rooms" %>
 <%end%>
+    </td>
+     
+  </tr>
+ 
+   
   
-
-
-
-  <%=params[:commit]%>
-<%if params[:commit] == 'Delete Allocated Rooms'%>
+  
+  <%if params[:commit] == 'Delete Allocated Rooms'%>
  <%hrbh = GDS::HotelRoomBookingHistory.all%>
 <%for el in @gdsconf.line_ids%>
   <%for rn in el.room_number%>
-  <div>
+   
      <%if rn.categ_id.name == params[:room_type] %>
     <%
     #yy/mm/dd
@@ -60,21 +83,24 @@ End Date<%=text_field_tag "end_date",@gdsconf.to_date.strftime("%d/%m/%Y"),:read
            end
           %> 
      <%if viewbookedarray.blank?%>
-        <%=rn.name%>
-        <%#now for delete each room number i need a checkbox %>
+         <tr>
+            <td height="31">&nbsp;</td>
+            <td width="154">  <span class="todate_fromdaterequlartext"><%=rn.name%> </span>
+            <%=check_box "deleteroom" , rn.name.to_s + "_" + @gdsconf.id.to_s + "_"+el.id.to_s+ "_"+rn.id.to_s%>      </td>
+         </tr>
+         <%#now for delete each room number i need a checkbox %>
         <%#in the room name i need to show by underscore which gds configuration is this and which line id is this%>
-       <%=check_box "deleteroom" , rn.name.to_s + "_" + @gdsconf.id.to_s + "_"+el.id.to_s+ "_"+rn.id.to_s%>
-    <%end%>
-    
-    
-    <%end%>
-   </div>
- <%end%>
+      <%end%>
+     <%end%>
+  <%end%>
 <%end%>
-
-<%=submit_tag "Delete Allocated Rooms"%>
+ <tr><td><%=submit_tag "Delete Allocated Rooms"%></td></tr>
 <%end%>
- <%if params[:commit] == 'Show Rooms'%>
+  
+  
+  
+  
+  <%if params[:commit] == 'Show Rooms'%>
   <%paramscheckin = Date.civil(params[:start_date].split("/")[2].to_i,params[:start_date].split("/")[1].to_i,params[:start_date].split("/")[0].to_i)
     paramschekout = Date.civil(params[:end_date].split("/")[2].to_i,params[:end_date].split("/")[1].to_i,params[:end_date].split("/")[0].to_i)
   %>
@@ -103,14 +129,19 @@ End Date<%=text_field_tag "end_date",@gdsconf.to_date.strftime("%d/%m/%Y"),:read
       
            end%>
    <%if viewbookedarraya.blank?%>
-      <div>
-        <%=arm.name%>
-        <%=check_box "addroom" , arm.id%>
-      </div>
-   <%end%>
-  
+              <tr>
+                 <td height="31">&nbsp;</td>
+                 <td width="154">  <span class="todate_fromdaterequlartext"><%=arm.name%> </span>
+                     <%=check_box "addroom" , arm.id%>      
+                 </td>
+              </tr>
     <%end%>
-    <%=submit_tag "Add To Gds"%>
+     <%end%>
+   <tr><td> <%=submit_tag "Add To Gds"%></td></tr>
 <%end%>
-
-</form>
+  
+         
+</table>
+  </form>
+ </div>
+ 

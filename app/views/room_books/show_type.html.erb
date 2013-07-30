@@ -51,23 +51,15 @@ else
     day = new Date().getDate();
     var today = new Date(year,month,day);
     
-    
-     if(  checkin < today)
-   {
-     alert("It should not be less than the current datol");
-     mylastreturn = false;
-   }  
+    //here i should remove this down condition because its in edit mode and in edit the checkin date can be less than today date
+    //therefore i need to remove this condition
+   //  if(  checkin < today)
+   //{
+   //  alert("It should not be less than the current datol");
+   //  mylastreturn = false;
+   //}  
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+          
       
     return mylastreturn;
        
@@ -155,3 +147,12 @@ else
  
 </div>
   </form>
+  
+  
+  
+  
+  
+  
+  
+  
+  

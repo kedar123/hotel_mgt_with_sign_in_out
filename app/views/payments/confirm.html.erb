@@ -1,23 +1,10 @@
- 
-
-
-
-
-
-
-
-
-
-
-
-<div class="signup_bg_con">
+ <div class="signup_bg">
 
 <div class=" signupheadingbg">
 
 <div class="signuptext">Payment<span class="signuptextcolor"> Preview</span> </div>
 </div>
-
-<table width="431" border="0" align="center">
+<table width="200" border="0" align="center">
   <tr>
     <td width="138" height="49"><span class="listening_eventstext"> Name :</span></td>
     <td width="283"><span class="listening_eventstext"><%= @address['name'] %></span></td>
@@ -74,9 +61,14 @@
     <td>
       <%= form_tag :action => 'complete', :token => params[:token], :payer_id => params[:PayerID] do %>
       <%= token_tag(nil) %>
-      <%= submit_tag 'Complete Payment' ,:id=>'Checkavailabilitybuttonconfirm'%>
+      <%= submit_tag 'Complete Payment' ,:id=>"Checkavailabilitybutton"%>
+       <div class="viewbutton">
+                <ul>
+                <li>
       <%= link_to 'Reject Payment' ,payments_rejected_payment_path({:token=>params[:token]}),:class=>"reject_payment"%>
-      
+                  </li>
+                  </ul>
+         </div>
 <% end %>
       
     </td>
@@ -84,5 +76,15 @@
    
 </table>
  
+
+
+
+
 </div>
 
+
+
+
+
+
+ 

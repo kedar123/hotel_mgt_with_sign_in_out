@@ -1,6 +1,7 @@
 class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
+  layout 'web_layout'
   def index
     @reservations = Reservation.all
 

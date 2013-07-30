@@ -25,12 +25,34 @@ class RoomBooksController < ApplicationController
     #this code is for reload that is why no need to put an condition of gds_shop_id   
     logger.info "gds shop idddddddd"
     logger.info session[:gds_shop_id]
-     @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.find(:all,:domain=>[['shop_id','=',session[:gds_shop_id].to_i]])
+    if params[:page].blank?
+      @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.search([['shop_id','=',session[:gds_shop_id].to_i]],0,2)
+    else
+      if params[:page].to_i == 2
+         @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.search([['shop_id','=',session[:gds_shop_id].to_i]],0,2)
+      end
+      if params[:page].to_i == 4
+         @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.search([['shop_id','=',session[:gds_shop_id].to_i]],0,4)
+      end
+      if params[:page] ==  'unlimited'
+         @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.search([['shop_id','=',session[:gds_shop_id].to_i]])
+      end
+      
+      
+      
+    end
+     
+     @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.find(@hrtgdsconf)
+     
      respond_to do |format|
         format.html  {render :layout=>"gds"}
         format.json { render json: @room_books }
      end
   end
+  
+  
+  
+  
   
   #this method will allow user to select a shop
   def select_shop
@@ -111,7 +133,9 @@ class RoomBooksController < ApplicationController
         synch_selected_gdsconf(params) 
         redirect_to :back ,:notice=>'Selected Gds Configuration Has Been Updated'
      end
-    
+     if params[:commit].blank? and !params[:page].blank?
+        redirect_to room_books_path(:page=>params[:page])
+     end
   end
   
   #the down method will select and synch an particular gdsconf
