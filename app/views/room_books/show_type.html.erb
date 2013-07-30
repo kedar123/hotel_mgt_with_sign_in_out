@@ -77,8 +77,8 @@ else
   <tr>
     
     <td width="71">
-        <%=submit_tag "Save",:onclick=>"$('#showallocateclick').val('0')" %>
-
+        <%=submit_tag "Save",:onclick=>"$('#showallocateclick').val('0')",:class=>'submit_button' %>
+        
     </td>
   </tr>
 </table>
@@ -88,7 +88,7 @@ else
     
     <td width="71">
         <!--<input type="submit" name="button4" id="button4" value="Back" />-->
-         <%=link_to "Back",room_books_path%>
+         <%=link_to "Back",room_books_path,:class=>'submit_button'%>
     </td>
   </tr>
 </table>
@@ -126,16 +126,16 @@ else
    <tr>
     <td height="23">
       
-      <%=submit_tag "Show Allocated Rooms",:onclick=>"$('#showallocateclick').val('1')" %>
+      <%=submit_tag "Show Allocated Rooms",:onclick=>"$('#showallocateclick').val('1')",:class=>'submit_button' %>
     </td>
     <td colspan="2"><%=hidden_field_tag "gdsid",params[:id]%>
 <%=hidden_field_tag "checkin", @paramscheckin%>
 <%=hidden_field_tag "checkout", @paramscheckout%>
 
-<%=submit_tag "Add An Item",:onclick=>"$('#showallocateclick').val('0')" %></td>
+<%=submit_tag "Add An Item",:onclick=>"$('#showallocateclick').val('0')",:class=>'submit_button' %></td>
   </tr>
 <tr><td>
-<%=submit_tag "Save",:onclick=>"$('#showallocateclick').val('0')" %>
+
 </td>
 </tr>
 

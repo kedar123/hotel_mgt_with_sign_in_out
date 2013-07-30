@@ -8,13 +8,13 @@
                  <%=  select_tag "page", "<option value=''></option><option value='2'>2</option><option value='4'>4</option><option value='unlimited'>unlimited</option>".html_safe,:onchange=>"this.form.submit()"%>
             </td>
             <td width="72" height="28">
-                <%=  submit_tag "Add",:onclick=>"$('#deleteroom').val(0)" %>
+                <%=  submit_tag "Add",:onclick=>"$('#deleteroom').val(0)" ,:class=>'submit_button'%>
             </td>
             <td width="71">
-                <%=  submit_tag "Delete",:onclick=>"$('#deleteroom').val(1)" %>
+                <%=  submit_tag "Delete",:onclick=>"$('#deleteroom').val(1)" ,:class=>'submit_button'%>
             </td>
             <td>
-              <%=  submit_tag "Synchronize",:onclick=>"$('#deleteroom').val(1)" %>
+              <%=  submit_tag "Synchronize",:onclick=>"$('#deleteroom').val(1)",:class=>'submit_button' %>
                <%=  hidden_field_tag "deleteroom"%>
             </td>
           </tr>

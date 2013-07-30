@@ -33,7 +33,7 @@
 
 <%else%>
 <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "" %> 
-<%=submit_tag "Show Rooms" %>
+<%=submit_tag "Show Rooms",:class=>'submit_button' %>
 <%end%>
     </td>
      
@@ -94,7 +94,7 @@
      <%end%>
   <%end%>
 <%end%>
- <tr><td><%=submit_tag "Delete Allocated Rooms"%></td></tr>
+ <tr><td><%=submit_tag "Delete Allocated Rooms",:class=>'submit_button'%></td></tr>
 <%end%>
   
   
@@ -137,7 +137,7 @@
               </tr>
     <%end%>
      <%end%>
-   <tr><td> <%=submit_tag "Add To Gds"%></td></tr>
+   <tr><td> <%=submit_tag "Add To Gds",:class=>'submit_button'%></td></tr>
 <%end%>
   
          

@@ -39,7 +39,7 @@
       </table>
       <table width="259" border="0" align="center">
         <tr>
-          <td height="33" colspan="2"><div align="center"><span class="selectroomtype"><%=submit_tag "Add Room"%></span> </div></td>
+          <td height="33" colspan="2"><div align="center"><span class="selectroomtype"><%=submit_tag "Add Room",:class=>'submit_button'%></span> </div></td>
         </tr>
       </table>    
      
@@ -66,7 +66,7 @@
   <%end%>
   <div>
     <%if showsubmit%>
-    <%=submit_tag 'delete' %>
+    <%=submit_tag 'delete' ,:class=>'submit_button'%>
     <%end%>
     </div>
   <%end%>

@@ -86,22 +86,21 @@
  
 <%=text_field_tag "deleteroomc","",:id=>"deleteroomc",:style=>"display:none"%>
 <tr><td>
-<%=submit_tag "Delete Allocated Rooms",:onclick=>"$('#deleteroomc').val(1)"%>
-</td></tr>
+<%=submit_tag "Delete Allocated Rooms",:onclick=>"$('#deleteroomc').val(1)",:class=>'submit_button'%>
+</td>
+<td>
 
-<tr><td>
-
-  <%=submit_tag "Add A Room",:onclick=>"$('#deleteroomc').val(0)"%>
+  <%=submit_tag "Add A Room",:onclick=>"$('#deleteroomc').val(0)",:class=>'submit_button'%>
 </td>
 </tr>
-  
+
+   
   
 </table>
 
 
 
-
-
+ 
 </div>
 
 
