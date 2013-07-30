@@ -10,19 +10,21 @@
 
 <table width="auto" height="121" border="0" align="center" class="tables" >
   <tr>
-    <td width="121" height="40" class="listening_eventstext">Check in Date:</td>
+    <td width="121" height="40" class="listening_eventstext1">Check in Date:</td>
     <td width="159"><%= text_field_tag "checkin",params[:checkin],:size =>"30" %></td>
   </tr>
   <tr>
-    <td height="36" class="listening_eventstext">Check Out Date: </td>
+    <td height="36" class="listening_eventstext1">Check Out Date: </td>
     <td><%= text_field_tag "checkout",params[:checkout],:size =>"30" %></td>
     <%=hidden_field_tag "company_id",params[:company_id]%>
   </tr>
   <tr>
       
-      <td><%=submit_tag "Check Availability",:id=>"Checkavailabilitybutton"%></td> 
+      <td><%=submit_tag "Check Availability",:id=>"Checkavailabilitybutton1"%></td> 
+        
       <td> <span class="upthickbox">  
-              <a href="/reservations/room_confirm/" title="Booking calender" class="thickbox" ><span style="color:#777777;font-size:15px;   line-height: 33px;text-decoration: none" id="Checkavailabilitybutton">Booking Calender</span></a>
+              <a href="/reservations/room_confirm/" title="Booking calender" class="thickbox" >
+                <span style="color:#777777;font-size:15px;   line-height: 33px;text-decoration: none" id="Checkavailabilitybutton1">Booking Calender</span></a>
            </span>  
       </td>
          

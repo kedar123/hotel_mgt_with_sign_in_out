@@ -117,10 +117,12 @@ else
   <tr class="todate_fromdateheadingtext">
     <td width="149" height="30" class="todate_fromdateheadingtext">Select Room Type:-</td>
      <%for roomtype in @all_cat_name%>
+        <tr>
         <td width="57">
             <%=roomtype%> 
             <%=radio_button_tag "avlfgds",roomtype %>
         </td>
+        </tr>
      <%end%>
   </tr>
    <tr>

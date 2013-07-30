@@ -114,8 +114,8 @@ class PaymentsController < ApplicationController
         checkindate = DateTime.new(session[:checkin].split(' ')[0].to_s.split('/')[2].to_i,session[:checkin].split(' ')[0].to_s.split('/')[0].to_i,session[:checkin].split(' ')[0].to_s.split('/')[1].to_i,session[:checkin].split(' ')[1].to_s.split(':')[0].to_i,session[:checkin].split(' ')[1].to_s.split(':')[1].to_i )
         checkoutdate = DateTime.new(session[:checkout].split(' ')[0].to_s.split('/')[2].to_i,session[:checkout].split(' ')[0].to_s.split('/')[0].to_i,session[:checkout].split(' ')[0].to_s.split('/')[1].to_i,session[:checkout].split(' ')[1].to_s.split(':')[0].to_i,session[:checkout].split(' ')[1].to_s.split(':')[1].to_i )
         
-        @newres.checkin =  checkindate+5.hours+30.minutes
-        @newres.checkout = checkoutdate+5.hours+30.minutes
+        @newres.checkin =  session[:checkin]
+        @newres.checkout = session[:checkout]
         @newres.dummy = session[:checkout]
         p "sssssssssssssssssssssssss"
         p session[:checkin]#mm-dd-yy
