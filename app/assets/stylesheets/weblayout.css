@@ -32,7 +32,7 @@ body { background-color: #999999; margin:auto; padding:0px; }
 			border-radius: 10px;
             margin:10px;
 			width: 480px; height:180px;
-			margin-left:380px;
+			margin-left:250px;
 			margin-top:10px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);
             }    
 
@@ -156,7 +156,7 @@ body { font-size: 62.5%; }
                         );
             -moz-border-radius: 10px;
             -webkit-border-radius: 10px;
-			border-radius: 10px; ; margin-left:280px; margin-top:250px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
+			border-radius: 10px; ; margin-left:280px; margin-top:160px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
 			
 .loginheadingbg {width:380px; height:40px; float:left; margin:auto;  box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);   } 	
 
@@ -182,7 +182,7 @@ body { font-size: 62.5%; }
                         );
             -moz-border-radius: 10px;
             -webkit-border-radius: 10px;
-			border-radius: 10px; ; margin-left:350px; margin-top:250px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
+			border-radius: 10px; ; margin-left:350px; margin-top:200px; border:solid; border-width:1px; border-color:#FFFFFF; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);  }
 
 .selecthotelheadingbg {width:300px; height:40px; float:left; margin:auto;  box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4);   } 	
 
@@ -195,8 +195,8 @@ body { font-size: 62.5%; }
 	height: 35px;
 	border: none;
 	 background-image:url(go.png); text-shadow: rgba(0,0,0,0.2) 0px 1px 1px;
-	float: right; margin-bottom:15px;
-	font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; margin-right:10px; background-color: #333333;
+	float: none; margin-bottom:15px;
+	font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333; font-weight:bold; margin-left:77px; background-color: #333333;
 	}	
 
 #book_rooms {
@@ -253,3 +253,18 @@ body { font-size: 62.5%; }
 .viewbutton ul li a { float:right; font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #FFFFFF; text-align:center; list-style:none; text-decoration:none; }
 
 .viewbutton ul li a:hover { float:right; font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #666666; text-align:center; list-style:none; text-decoration: underline ; }
+
+.header { height:40px; margin:auto; background-image:url(dock-bg.gif); background-repeat:repeat-x; box-shadow: 0px 0px 6px rgba(0,0,0,0.7); -moz-box-shadow: 0px 0px 3px rgba(0,0,0,0.7); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.7); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.7);   }
+
+
+.logoutbutton { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #FFFFFF; margin:auto; text-decoration:none; font-weight:bold;float:right;margin-right:80px; }
+
+.logoutbutton a { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #FFFFFF; margin:auto; margin-top:10px; font-weight:bold; }
+
+.logoutbutton a:hover { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #aecffb ; margin:auto; margin-top:10px; font-weight:bold; }
+
+.logoutbutton1 { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #F22222; margin:auto; text-decoration:none; font-weight:bold; }
+
+.logoutbutton1 a { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #F22222; margin:auto; margin-top:10px; font-weight:bold; }
+
+.logoutbutton1 a:hover { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #aecffb ; margin:auto; margin-top:10px; font-weight:bold; }

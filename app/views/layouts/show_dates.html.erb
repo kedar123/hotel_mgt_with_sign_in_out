@@ -71,20 +71,20 @@
   </script>
     </head>
     <body>
-       <%if !@resname.blank?%>
-  <div class="welcome">Welcome <%=@resname%></div>
-  
-  <div class="welcome">  
- <div class="viewbutton">
-                <ul>
-                  <li>
-                    <%=link_to "Sign Out",authenticates_sign_out_path%></div>
-                  </li>
-                  </ul>
-   </div>
-  
-  
-  <%end%>
+   <div class="header">
+  <%if !@resname.blank?%>
+ 
+  <%#i want to put here one link for logout of session this logout will create an action which will remove an session and %>
+  <%#make an GDS constant as nil so next time an user will need to compulsory login again%>
+<span class="logoutbutton"> 
+Welcome <%=@resname%> 
+<br/>
+<%=link_to "Sign Out",authenticates_sign_out_path%>
+</span>
+
+ 
+ <%end%>
+</div>
   
        <%=yield%>
  

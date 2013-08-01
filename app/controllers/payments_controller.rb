@@ -177,7 +177,7 @@ class PaymentsController < ApplicationController
              checkindfortd = checkindate
              checkoutdfortd = checkoutdate
              
-             dtd = Time.diff(checkindfortd,checkoutdfortd)
+             #dtd = Time.diff(checkindfortd,checkoutdfortd)
              
              #here i need to do a calculation as follows.
              #if its a month then get that much days in month and multiply by that much with price
@@ -186,23 +186,18 @@ class PaymentsController < ApplicationController
              #therefore if the day difference is 0 then whatever may be the oures i should charge an 1 day cost.
              #then if there is day difference then get the month then get the start date of month 
              ###################################################################################
-             #just changing the logic in mind here instead of 
-             if dtd[:month] > 0
-               #here i need to implement the yesterdays logic
-                 for i in 1..dtd[:month]
-                   
-                   #if the difference between months start and end date is 0 then consider it as 1 day price
-                   if ((checkindate.end_of_month.day - checkindate.day) == 0)
-                      session[:amount] = session[:amount] + resline.price.to_i 
-                   end
-                   if ((checkindate.end_of_month.day - checkindate.day) > 0)
-                      session[:amount] = session[:amount] + ((checkindate.end_of_month.day - checkindate.day) * resline.price.to_i) 
-                   end
-                   
-                 end
-                 
+             #just changing the logic in mind here instead of getting and month and calculating an days.
+             #lets go next day untile its equivalent to checkout date.and each day add one price. and lastly check an hour
+             #another simple logic is i should go on increasing the days untile i get that checkindate is greater than
+             #checkout dateand each day i should increase an amount
                     
-             end
+                   #if the difference between months start and end date is 0 then consider it as 1 day price
+                    while checkindfortd < checkoutdfortd
+                          session[:amount] = session[:amount].to_i + resline.price.to_i 
+                          checkindfortd = checkindfortd.next_day
+                    end  
+                    
+                 
               
            else
            

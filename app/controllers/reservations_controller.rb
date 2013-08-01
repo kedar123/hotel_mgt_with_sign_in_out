@@ -532,8 +532,16 @@ class ReservationsController < ApplicationController
       @resname = @partner_id.name
     end
     @book_room_array =  check_book_room_search(params)
+    logger.info "888888888888@book_room_array"
+    logger.info @book_room_array
+    logger.info "some category@category"
+    logger.info @category
+    logger.info "rommmmmmmmm@room"
+    logger.info @room
+    
     logger.info @room
     logger.info "roommmmmmm"
+    
     render :layout=>"show_dates"
   end
   
