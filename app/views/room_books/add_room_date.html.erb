@@ -1,5 +1,10 @@
-
- 
+<%showsubmit=false%>
+  <%if @hotelgdsconf && @hotelgdsconf.line_ids%>
+  <%@hotelgdsconf.line_ids.each do |hgdscline|%>
+         <%showsubmit=true%>
+   <%end%>
+<%end%>
+   
   
   
   
@@ -7,6 +12,10 @@
    <%=form_tag room_books_get_available_room_type_path ,:onsubmit=>"return check_room_type()"%>
   <div class="todate_fromdatebg">
       <div class="todate_fromdateheadingbg">
+          <%if showsubmit%>
+    <%=submit_tag 'delete' ,:class=>'submit_button'%>
+    <%end%>
+   
       </div>
         <table width="297" height="79" border="0" align="center">
             <tr>
@@ -39,6 +48,35 @@
           <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name" ),  :prompt => "" %> 
         </td></tr>
       </table>
+     <%#the first loop i am creating here to just get an category ids and then count it %>
+  <%showsubmit=false%>
+  <%if @hotelgdsconf && @hotelgdsconf.line_ids%>
+  <%@hotelgdsconf.line_ids.each do |hgdscline|%>
+    <div class="todate_fromdateheadingtext">
+      <table align="center">
+        <tr>
+     <%#here an delete checkbox should be there which will delete this gdsline%>
+        <%#=check%>
+         <%#the name should be as delete hrgdslin%>
+          <td>&nbsp;</td>
+          <td width="154">
+            <span class="todate_fromdaterequlartext">
+              <%= hgdscline.categ_id.name %>
+            </span>
+         <%=  check_box_tag 'hgdscline[]' ,hgdscline.id %>
+            Count:- <%=hgdscline.room_number.count%>
+            </td>
+            
+          <td>
+            <%=link_to  'edit' , "/room_books/available_for_gds/"+@hotelgdsconf.id.to_s+"&&"+"avlfgds="+hgdscline.categ_id.name.to_s+"&&"+"checkin="+@hotelgdsconf.name.to_s+"&&"+"checkout="+@hotelgdsconf.to_date.to_s%>
+         </td>
+         </tr>
+      </table>
+    <%showsubmit=true%>
+    </div>
+  <%end%>
+   
+  <%end%>
       <table width="259" border="0" align="center">
         <tr>
           <td height="33" colspan="2"><div align="center"><span class="selectroomtype"><%=submit_tag "Add Room",:class=>'submit_button'%></span> </div></td>
@@ -49,31 +87,10 @@
     
     
  
-</div>
-   <%#the first loop i am creating here to just get an category ids and then count it %>
-  <%showsubmit=false%>
-  <%if @hotelgdsconf && @hotelgdsconf.line_ids%>
-  <%@hotelgdsconf.line_ids.each do |hgdscline|%>
-    <div>
-     <%#here an delete checkbox should be there which will delete this gdsline%>
-        <%#=check%>
-         <%#the name should be as delete hrgdslin%>
-         <%=  check_box_tag 'hgdscline[]' ,hgdscline.id %>
-        <%= hgdscline.categ_id.name %>
-       
-        <%=hgdscline.room_number.count%>
-            <%=link_to  'edit' , "/room_books/available_for_gds/"+@hotelgdsconf.id.to_s+"&&"+"avlfgds="+hgdscline.categ_id.name.to_s+"&&"+"checkin="+@hotelgdsconf.name.to_s+"&&"+"checkout="+@hotelgdsconf.to_date.to_s%>
-     <%showsubmit=true%>
-    </div>
-  <%end%>
-  <div>
-    <%if showsubmit%>
-    <%=submit_tag 'delete' ,:class=>'submit_button'%>
-    <%end%>
-    </div>
-  <%end%>
+
+  
        <%=hidden_field_tag "gdscid",params[:gdscid]%>
-     
+   </div>  
   </form>
   
   

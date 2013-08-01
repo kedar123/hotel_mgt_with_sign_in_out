@@ -5,6 +5,15 @@
 
 <div class="todate_fromdatebg">
 <div class="todate_fromdateheadingbg">
+  <table width="50" height="28" border="0" align="Left" >
+  <tr>
+    
+    <td width="71">
+        <!--<input type="submit" name="button4" id="button4" value="Back" />-->
+         <%=link_to "Back",room_books_path,:class=>'submit_button'%>
+    </td>
+  </tr>
+</table>
 </div>
  <table width="297" height="79" border="0" align="center">
   <tr>
@@ -26,7 +35,7 @@
  
   
   <tr>
-  <td width="206"><div align="right">
+  <td width="206"><div align="left" class="todate_fromdateheadingtext addroombutton">
       <%if !session[:gds_shop_id_name].blank?%>
        Shop  :-  <%=session[:gds_shop_id_name]%>
     <%end%>
@@ -34,8 +43,8 @@
   </td>
   </tr>
   <tr>
-  <td width="156"><div align="left">
-   <%=submit_tag "Get Available Rooms",:class=>'submit_button'%>
+  <td width="156"><div   class="addroombutton">
+   <%=submit_tag "Get  Rooms",:class=>'submit_button'%>
   </div></td>
   </tr>
 </table>

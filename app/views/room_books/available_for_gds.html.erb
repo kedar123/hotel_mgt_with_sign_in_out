@@ -81,7 +81,7 @@
         <%#now for delete each room number i need a checkbox %>
         <%#in the room name i need to show by underscore which gds configuration is this and which line id is this%>
     <tr>
-    <td width="246" height="23"><div align="center"><span class="todate_fromdaterequlartext"><%=rn.name%></span>
+    <td width="500" height="23"><div align="center"><span class="todate_fromdaterequlartext"><%=rn.name%></span>
         <%=check_box "deleteroom" , rn.name.to_s + "_" + @gdsconf.id.to_s + "_"+el.id.to_s+ "_"+rn.id.to_s%>
     </div></td>
     
@@ -93,13 +93,11 @@
  
  
 <%=text_field_tag "deleteroomc","",:id=>"deleteroomc",:style=>"display:none"%>
-<tr><td>
-<%=submit_tag "Delete Allocated Rooms",:onclick=>"$('#deleteroomc').val(1)",:class=>'submit_button'%>
+<tr><td width="500" height="50">
+<%=submit_tag "Delete Rooms",:onclick=>"$('#deleteroomc').val(1)",:class=>'submit_button1'%>
+    <%=submit_tag "Add A Room",:onclick=>"$('#deleteroomc').val(0)",:class=>'submit_button2'%>
 </td>
-<td>
-
-  <%=submit_tag "Add A Room",:onclick=>"$('#deleteroomc').val(0)",:class=>'submit_button'%>
-</td>
+ 
 </tr>
 
    

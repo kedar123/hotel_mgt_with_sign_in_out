@@ -118,7 +118,7 @@ else
     <td width="149" height="30" class="todate_fromdateheadingtext">Select Room Type:-</td>
      <%for roomtype in @all_cat_name%>
         <tr>
-        <td width="57">
+        <td width="57" align="left" class="todate_fromdaterequlartext">
             <%=roomtype%> 
             <%=radio_button_tag "avlfgds",roomtype %>
         </td>
@@ -128,13 +128,13 @@ else
    <tr>
     <td height="23">
       
-      <%=submit_tag "Show Allocated Rooms",:onclick=>"$('#showallocateclick').val('1')",:class=>'submit_button' %>
+      <%=submit_tag "Show Rooms",:onclick=>"$('#showallocateclick').val('1')",:class=>'submit_button' %>
     </td>
     <td colspan="2"><%=hidden_field_tag "gdsid",params[:id]%>
 <%=hidden_field_tag "checkin", @paramscheckin%>
 <%=hidden_field_tag "checkout", @paramscheckout%>
 
-<%=submit_tag "Add An Item",:onclick=>"$('#showallocateclick').val('0')",:class=>'submit_button' %></td>
+<%=submit_tag "Add Room",:onclick=>"$('#showallocateclick').val('0')",:class=>'submit_button' %></td>
   </tr>
 <tr><td>
 
