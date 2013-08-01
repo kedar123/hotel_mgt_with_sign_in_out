@@ -50,9 +50,13 @@
                   <%else%>
                     <% if room[1][2] == build[1]%>     
                 <%#%>
+                     <table><tr>
                       <td width="208">
                         <p>
-                          <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label></p></td>
+                          <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label></p>
+                      </td>
+                      </tr>
+                      </table>
                     <%end%>     
 
                   <%end%>
