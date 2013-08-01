@@ -521,6 +521,7 @@ class ReservationsController < ApplicationController
   #here now i need to fetch all the rooms of a particular company id. this is the only change in my previous coding
   #and current coding
   def show_availability_of_rooms
+   
     #here i am making an connection again because i seen one error of uninitialize constant. which should not happen 
     #actually because at first time i am connecting to openerp which according to me should be kept in memory. but still 
     #because of error i am connecting again

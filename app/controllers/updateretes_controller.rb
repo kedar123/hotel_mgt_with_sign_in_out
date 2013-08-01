@@ -1,6 +1,9 @@
 class UpdateretesController < ApplicationController
   # GET /updateretes
   # GET /updateretes.json
+  
+   layout 'gds'
+   before_filter :check_gds_availability
   def index
    # @updateretes = Updaterete.update_rates
 
@@ -80,5 +83,19 @@ class UpdateretesController < ApplicationController
       format.html { redirect_to updateretes_url }
       format.json { head :no_content }
     end
+  end
+   private
+  def check_gds_availability
+    begin
+      logger.info GDS
+    rescue
+      redirect_to gds_auths_path ,:notice=>"Your Session Has Been Expired Please Login Again" and return
+    end
+    #here i also need to check an session for gusername is available or not for logged in user purpose.
+     if session[:gusername].blank?
+        redirect_to gds_auths_path,:notice=>"Your Session Has Been Expired Please Login Again" and return
+     end
+    
+    
   end
 end

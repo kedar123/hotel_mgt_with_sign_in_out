@@ -102,6 +102,7 @@ class PaymentsController < ApplicationController
         @newres.date_order = Date.today
         @newres.pricelist_id = 1
         @newres.printout_group_id = 1
+        @newres.source = 'through_web'
         p session[:checkin]
         p "555555555"
         p session[:checkin].to_s.split('/')[2].split(' ')[0]
@@ -113,9 +114,19 @@ class PaymentsController < ApplicationController
         p session[:checkin].to_s.split('/')[2].split(' ')[1]
         checkindate = DateTime.new(session[:checkin].split(' ')[0].to_s.split('/')[2].to_i,session[:checkin].split(' ')[0].to_s.split('/')[0].to_i,session[:checkin].split(' ')[0].to_s.split('/')[1].to_i,session[:checkin].split(' ')[1].to_s.split(':')[0].to_i,session[:checkin].split(' ')[1].to_s.split(':')[1].to_i )
         checkoutdate = DateTime.new(session[:checkout].split(' ')[0].to_s.split('/')[2].to_i,session[:checkout].split(' ')[0].to_s.split('/')[0].to_i,session[:checkout].split(' ')[0].to_s.split('/')[1].to_i,session[:checkout].split(' ')[1].to_s.split(':')[0].to_i,session[:checkout].split(' ')[1].to_s.split(':')[1].to_i )
-        
-        @newres.checkin =  session[:checkin]
-        @newres.checkout = session[:checkout]
+        zone = ActiveSupport::TimeZone.new("Asia/Kolkata")
+        tmzci=Time.new(session[:checkin].split(' ')[0].to_s.split('/')[2].to_i,session[:checkin].split(' ')[0].to_s.split('/')[0].to_i,session[:checkin].split(' ')[0].to_s.split('/')[1].to_i,session[:checkin].split(' ')[1].to_s.split(':')[0].to_i,session[:checkin].split(' ')[1].to_s.split(':')[1].to_i)
+        tmzco=Time.new(session[:checkout].split(' ')[0].to_s.split('/')[2].to_i,session[:checkout].split(' ')[0].to_s.split('/')[0].to_i,session[:checkout].split(' ')[0].to_s.split('/')[1].to_i,session[:checkout].split(' ')[1].to_s.split(':')[0].to_i,session[:checkout].split(' ')[1].to_s.split(':')[1].to_i)
+        tmzutcin= tmzci.in_time_zone("UTC")
+        tmzutcout= tmzco.in_time_zone("UTC")
+     
+        #p checkoutdate.zone.name
+        p checkoutdate.zone
+        p Time.zone.name 
+        p "eeeeeeeeeeeeeeeeee"
+       
+        @newres.checkin =  tmzutcin
+        @newres.checkout = tmzutcout
         @newres.dummy = session[:checkout]
         p "sssssssssssssssssssssssss"
         p session[:checkin]#mm-dd-yy
@@ -150,15 +161,68 @@ class PaymentsController < ApplicationController
            logger.info checkoutdate
            logger.info checkindate
            logger.info (checkoutdate - checkindate).to_i
-              if ((checkoutdate - checkindate).to_i == 0) 
+           #here need to check an checkout policy for this particular shop. there are 2 possibilities one 
+           #is 24 hr e.g room price is 1000
+           #so oif the checkin date is 1-1-2013 8 am and checkout is at 3-1-2013 at 7pm clock so the price will be
+           #1-1-2013  8am to 2-1-2013 8am = 1000
+           #2-1-2013  8am to 3-1-2013 8am = 1000
+           #3-1-2013  8am to 3-1-2013 7pm = 1000
+           #so the total is  3000
+           #here i need to first find out which shop is this i can find that by the company available
+           #here in an session i need to find out which co is there and take the first 
+           
+           cknp = CheckoutConfiguration.find(:all,:domain=>[['shop_id','=',1]]).first.name
+           if cknp == "24hour"
+             #here i am copying checkin and checkout variables so that it will not make any conflict in its current flow
+             checkindfortd = checkindate
+             checkoutdfortd = checkoutdate
+             
+             dtd = Time.diff(checkindfortd,checkoutdfortd)
+             
+             #here i need to do a calculation as follows.
+             #if its a month then get that much days in month and multiply by that much with price
+             #here i need to take current date and find out the days remaining in that particular month
+             #ultimetly what i need to do is get every day and month in houres so i use the logic that each day is of 24 hrs
+             #therefore if the day difference is 0 then whatever may be the oures i should charge an 1 day cost.
+             #then if there is day difference then get the month then get the start date of month 
+             ###################################################################################
+             #just changing the logic in mind here instead of 
+             if dtd[:month] > 0
+               #here i need to implement the yesterdays logic
+                 for i in 1..dtd[:month]
+                   
+                   #if the difference between months start and end date is 0 then consider it as 1 day price
+                   if ((checkindate.end_of_month.day - checkindate.day) == 0)
+                      session[:amount] = session[:amount] + resline.price.to_i 
+                   end
+                   if ((checkindate.end_of_month.day - checkindate.day) > 0)
+                      session[:amount] = session[:amount] + ((checkindate.end_of_month.day - checkindate.day) * resline.price.to_i) 
+                   end
+                   
+                 end
+                 
+                    
+             end
+              
+           else
+           
+        
+            if ((checkoutdate - checkindate).to_i == 0) 
                  logger.info "some errporrrrrrrrrrrrrrrr as value is zero"
                   session[:amount] = session[:amount].to_i +   resline.price.to_i    
                   logger.info session[:amount]
              else
                 session[:amount] = session[:amount].to_i +  (resline.price.to_i * (checkoutdate - checkindate).to_i )  
+                logger.info session[:amount].to_i
+                logger.info "sssssssssss"
+                logger.info resline.price.to_i
+                logger.info "prrrrrrrrrrrrrrrrrr"
+                logger.info (checkoutdate - checkindate).to_i
                 logger.info "checkout date is longer"
                 logger.info session[:amount]
              end
+             end
+        
            end
         end
        #here i am just putting an note that is in previous code what i have done is calculated a price i think instead of that
@@ -459,7 +523,7 @@ class PaymentsController < ApplicationController
          call_create_saleorder_and_invoice(@hotel)
         @reservation_no = @hotel.reservation_no
        #flash[:notice] ="You Have Now Made A Successful Purchased. Your Booking Reference Is:"+@hotel.reservation_no if @hotel
-        Notifier.complete_reservation(@hotel.partner_id.email,"You Have Now Made A Successful Purchased. Your Booking Reference Is:"+@hotel.reservation_no).deliver if @hotel
+        Notifier.complete_reservation(@hotel.partner_id.email,"Room Has Been Booked Successfully. Your Booking Reference Is:"+@hotel.reservation_no).deliver if @hotel
          logger.info "i am here after successful reservation"
           session[:amount] = nil
           session[:newlysavedreservationid] = nil

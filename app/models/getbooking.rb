@@ -428,7 +428,7 @@ class Getbooking   <  ActiveRecord::Base
        name = ""
        
        #as here the  customer will be global so the company id is blank 
-       res.company_id = ''  
+       @respart.company_id = ''  
          
        if  !eachbkg["CCHOLDER"].blank?
          name = eachbkg["CCHOLDER"][0].to_s

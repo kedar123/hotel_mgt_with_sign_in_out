@@ -22,11 +22,13 @@
              </td>
             </tr>
             <tr>
-              <td>
-             <%if !session[:gds_shop_id_name].blank?%>
-                  Shop  :-  <%=session[:gds_shop_id_name]%>
+              <%if !session[:gds_shop_id_name].blank?%>
+                  <td class="todate_fromdateheadingtext">Shop :-</td>  
+                  <td class="todate_fromdateheadingtext"><%=session[:gds_shop_id_name]%></td>
             <%end%>
-               </td>
+              
+             
+               
              </tr>  
       </table>
       <table width="259" border="0" align="center">

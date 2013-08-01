@@ -135,6 +135,8 @@ class AuthenticatesController < ApplicationController
        #here i am keeping a user id in session for future reference
        session[:user_id_avail] = @useravailable[0]
        logger.info "after sign in auth"
+         logger.info session[:amount]
+           logger.info "sessionnnnnnnnnnnnnnnnnnnnnnnnnnn44444444444444444444444555555555555"
        redirect_to   payments_preview_payment_path
      end
    end
@@ -196,10 +198,14 @@ class AuthenticatesController < ApplicationController
             #then i need to send it again to sign in method
            
          
-         
+           logger.info session[:amount]
+           logger.info "sessionnnnnnnnnnnnnnnnnnnnnnnnnnn"
+           
            redirect_to authenticates_sign_in_path({:company_id=>session["campany_id"],:checkin=>session[:checkin],:checkout=>session[:checkout],:room=>session["selectedroom"]}) ,:notice=>"Your Account Is Created Please Login"
          else
-           redirect_to authenticates_sign_in_path() ,:notice=>"An Account Is Exist With This Email Please SignIn"
+           logger.info session[:amount]
+           logger.info "sessionnnnnnnnnnnnnnnnnnnnnnnnnnn55555555555"  
+           redirect_to authenticates_sign_in_path({:company_id=>session["campany_id"],:checkin=>session[:checkin],:checkout=>session[:checkout],:room=>session["selectedroom"]}) ,:notice=>"An Account Is Exist With This Email Please SignIn"
          end
      end  
      

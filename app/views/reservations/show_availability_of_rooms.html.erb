@@ -40,7 +40,8 @@
                             </legend></p>
                          
                          <%hidelabel = true%>
-                             
+                            <%#here i need to change an split to an category wise rooms %> 
+                            
                             <%@room.each_slice(2) do |room|%>
                                  <% if room[0][2] == build[1]%>
                                       <%if @book_room_array and  @book_room_array.include? room[0][0]%>
