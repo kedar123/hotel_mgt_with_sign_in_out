@@ -31,7 +31,9 @@
       <%end%>
       
     </td>
-    <td class="todate_fromdateheadingtext"> 
+    <td class="todate_fromdateheadingtext">
+       
+       
        <%if !session[:gds_shop_id_name].blank?%>
            <%=session[:gds_shop_id_name]%>
        <%end%>
@@ -40,9 +42,9 @@
    
 </table>
 
-<table width="259" border="0" align="center">
+<table width="297" border="0" align="center">
   <tr>
-    <td height="33" colspan="2"><div align="center"><span class="selectroomtype">Select Room Type</span> </div></td>
+    <td height="33" colspan="2"><div align="left"><span class="selectroomtype">Select Room Type</span> </div></td>
   </tr>
   <tr>
     <td width="129" height="32">
@@ -75,9 +77,17 @@
            end%>
      <%if viewbookedarraya.blank?%>
       <tr>
-        <td height="31">&nbsp;</td>
-        <td width="154">  <span class="todate_fromdaterequlartext"><%=arm.name%> </span>
-        <%=check_box "addroom" , arm.id%>      </td>
+         <td>
+           <table>
+             <tr>
+               <td><%=check_box "addroom" , arm.id%>
+                 </td>
+                 <td><%=arm.name%>
+                   </td>
+               </tr>
+             </table>
+           </td>
+         
       </tr>
     <%end%>
   <%end%>
@@ -89,7 +99,7 @@
  <%=hidden_field_tag "gdscid",params[:gdscid]%>
 <%=hidden_field_tag "checkin",@paramscheckin%>
 <%=hidden_field_tag "checkout",@paramschekout%>
-<td>
+<td colspan="2">
  <%=submit_tag "Add to gds",:id=>"button",:name=>"button",:class=>'submit_button'%>
         </td>
        </tr>

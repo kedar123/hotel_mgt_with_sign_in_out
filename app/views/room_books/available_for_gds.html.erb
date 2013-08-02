@@ -81,9 +81,15 @@
         <%#now for delete each room number i need a checkbox %>
         <%#in the room name i need to show by underscore which gds configuration is this and which line id is this%>
     <tr>
-    <td width="500" height="23"><div align="center"><span class="todate_fromdaterequlartext"><%=rn.name%></span>
+    <td width="500" height="23">
+      
+      <div align="left" style="margin-left:220px;">
         <%=check_box "deleteroom" , rn.name.to_s + "_" + @gdsconf.id.to_s + "_"+el.id.to_s+ "_"+rn.id.to_s%>
-    </div></td>
+        <span class="todate_fromdaterequlartext"><%=rn.name%></span>
+      </div>
+    
+    
+    </td>
     
   </tr>       
     <%end%>
