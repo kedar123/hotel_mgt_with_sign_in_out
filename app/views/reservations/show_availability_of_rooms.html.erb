@@ -30,12 +30,16 @@
 <div class="roomsavailable_bg">
   <div class="">
     <%hidecount=1%>
+    
     <%if !@category.blank?%>
       <% for build in @category.uniq!%> 
         <%hidecount=hidecount + 1%>
         <fieldset id="hidelabel<%=hidecount%>">
+          <%size=0%>
           <p> <legend class="rooms_availabilitytext"> Which rooms you want to book in <%= build[0]%></i></b>
           </legend></p>
+           <div style="width:480px;">      
+
           <%hidelabel = true%>
     <%#here i need to change an split to an category wise rooms %> 
     <%#but there is one bug here its not actually an category wise splitting . because @room.each slice will%>
@@ -61,14 +65,23 @@
                     <% if room[1][2] == build[1]%>     
                 <%#%>
            <%logger.info "condition is true4"%>
-                     <table><tr>
-                      <td width="208">
-                        <p> 
-                          <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label></p>
-                      </td>
-                      </tr>
-                      </table>
-                    <%end%>     
+                       <%if size == 0%>
+                                 <div style="width:210px;float:left;margin:0px;"> 
+                                   <p>  
+                                    <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label>
+                                    </p>
+                                 </div>
+                        <%size=1%>
+                       <%elsif size == 1%>
+                                <div style="width:300px;"> <p>
+                                     <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label>
+                                     </p>
+                                 </div>
+                       <%size=0%>
+                       <%end%>
+                  <%end%>     
+          
+          
 
                   <%end%>
                 <%end%>      
@@ -79,17 +92,39 @@
               <%else%> 
                  <%logger.info "condition is true6"%>
                 <%hidelabel = false%>
-                <table width="400" border="0" align="center">
-                  <tr>
+               
                     <%if room[0]%>    
                        <%if @book_room_array and  @book_room_array.include? room[0][1]%>
                       <%else%>
                      <%logger.info "condition is true7"%>
-                      <td width="220"><p> 
-                          <%= check_box_tag "room[#{room[0][1]}]","#{room[0][1]}"%><label><%= room[0][0]%></label></p></td>
-                      <%end%>
+                    
+                          
                       
-                    <%end%>
+                      <%if size == 0%>
+                                 <div style="width:210px;float:left;margin:0px;"> <p>
+                                    <%= check_box_tag "room[#{room[0][1]}]","#{room[0][1]}"%><label><%= room[0][0]%></label> 
+                                    </p>
+                                  </div>
+                        <%size=1%>
+                       <%elsif size == 1%>
+                                <div style="width:300px;"> <p>
+                                     <%= check_box_tag "room[#{room[0][1]}]","#{room[0][1]}"%><label><%= room[0][0]%></label> 
+                                     </p>
+                                 </div>
+                       <%size=0%>
+                       <%end%>
+                      
+                      
+                      
+                      
+                      <%end%>
+                     <%end%>
+                      
+                      
+                      
+                      
+                      
+                      
                       
                       
           <%#here its because i am showing an room in two columns i need to do add %>
@@ -102,36 +137,70 @@
                       <%else%>
                        <%logger.info "condition is true10"%>
                         <% if room[1][2] == build[1]%>
-                          <td width="208"> <p>
-                              <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label></p></td>
-                        <%end%>        
+                        
+                     
+                           <%if size == 0%>
+                                 <div style="width:210px;float:left;margin:0px;"> 
+                                   <p> <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label>
+                                     </p>
+                                  </div>
+                        <%size=1%>
+                       <%elsif size == 1%>
+                                <div style="width:300px;"> 
+                                    <p> <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label></p>
+                                 </div>
+                       <%size=0%>
+                       <%end%>
+              
+              
+              
+                      <%end%>        
                       <%end%>
                     <%end%>
                   </tr>
                                                     
               <%end%>
                 <%else%>
-                 <table> 
-                  <tr>
+                  
                       <% if room[1][2] == build[1]%>
                            <%if @book_room_array and  @book_room_array.include? room[1][1]%>
                                <%logger.info "condition is true9"%>
                            <%else%>
-                                  <td width="208"> <p>
-                              <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label></p></td>
+                    
+                    
+                    
+                                   
+                              
+                                  
+                                  
+                        <%if size == 0%>
+                                 <div style="width:210px;float:left;margin:0px;"> 
+                                   <p> <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label> </p>
+                                  </div>
+                        <%size=1%>
+                       <%elsif size == 1%>
+                                <div style="width:300px;"> 
+                                     <p><%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label> </p>
+                                 </div>
+                       <%size=0%>
+                       <%end%>
+                                  
+                                  
+                                  
+                                  
                            <%end%>
         
                       <%end%>  
-                    </tr>
-                </table>
+                  
             <% end %>
-</table> 
+  
           <% end %>
           <%if hidelabel%>
             <script>
               $("#hidelabel<%=hidecount%>").hide();
             </script>
           <%end%>
+            </div>
         </fieldset>                
       <% end %>
     <%end%>
@@ -141,6 +210,10 @@
       <%= hidden_field_tag "checkout",params['checkout']  %>
       <%= submit_tag "Book Rooms",:id=>"book_rooms"%>                           
     </div>  
+     
+            
+              
+  
   </div>
 </div>
 </form>
