@@ -532,6 +532,7 @@ class ReservationsController < ApplicationController
       @resname = @partner_id.name
     end
     @book_room_array =  check_book_room_search(params)
+    #this will return an rooms which are booked in that period
     logger.info "888888888888@book_room_array"
     logger.info @book_room_array
     logger.info "some category@category"
@@ -541,7 +542,7 @@ class ReservationsController < ApplicationController
     
     logger.info @room
     logger.info "roommmmmmm"
-    
+    #
     render :layout=>"show_dates"
   end
   
@@ -555,7 +556,8 @@ class ReservationsController < ApplicationController
      @category = []
      @room = []
      @hotelroom = HotelRoom.find(:all)  
-     
+     #here i need to add one more condition that is when its allocated to gds then done show it. it should not be displayed
+     #here on web page
       @hotelroom.each do |hr|
         logger.info "not herererererer"
         logger.info hr
@@ -575,10 +577,12 @@ class ReservationsController < ApplicationController
           logger.info "inside the room"
           logger.info hr.product_id.categ_id.name
           logger.info hr.product_id.categ_id.id
+          #category array is of category name and category id
           @category << [hr.product_id.categ_id.name,hr.product_id.categ_id.id]  
           logger.info hr.product_id.name
           logger.info hr.product_id.id
           logger.info hr.product_id.categ_id.id
+          #room array is of product name , product id, product category id
           @room << [hr.product_id.name,hr.product_id.id,hr.product_id.categ_id.id]
         else
           logger.info "55555555544444444441111111222222222"
@@ -647,12 +651,53 @@ logger.info "divvvvvvvvvvv erroooooooooooooooo"
       end
     end
     name_array = []
+     #actually here i need the the array should be of room id or product id.
     booked_room.each do |rn|
-      name_array << rn.name
+      name_array << rn.history_id.product_id.id
     end
+   
     logger.info "returning the array"
     logger.info name_array    
     name_array    
+    #here i need ad.each do d this array that is if the room is allocated to gds then also done show i will get this by 
+     paramschecking = Date.new(params['checkin'].split(" ")[0].to_s.split("/")[2].to_i,params['checkin'].split(" ")[0].to_s.split("/")[0].to_i,params['checkin'].split(" ")[0].to_s.split("/")[1].to_i )
+     paramschekoutg = Date.new(params['checkout'].split(" ")[0].to_s.split("/")[2].to_i,params['checkout'].split(" ")[0].to_s.split("/")[0].to_i,params['checkout'].split(" ")[0].to_s.split("/")[1].to_i )
+
+    HotelReservationThroughGdsConfiguration.all.each do |ehrtgdsc|
+      booked = false
+      #here i am using a short line of in between of dates
+      if paramschecking >= ehrtgdsc.name  and paramschekoutg <= ehrtgdsc.to_date
+          logger.info "I am her88e4"
+          booked = true
+        elsif paramschecking >= ehrtgdsc.name  and paramschekoutg >= ehrtgdsc.to_date  and paramschecking <= ehrtgdsc.to_date  and ehrtgdsc.name >  paramschekoutg
+          logger.info "I am here744"
+          booked = true
+        elsif  paramschecking <= ehrtgdsc.name  and paramschekoutg <= ehrtgdsc.to_date  and paramschekoutg >= ehrtgdsc.name    
+          booked = true
+          logger.info "I am here4"
+        elsif  paramschecking <= ehrtgdsc.name  and paramschekoutg >= ehrtgdsc.to_date  
+          booked = true
+          logger.info "I am here4"
+          logger.info paramschecking
+        elsif  ehrtgdsc.name <= paramschecking and ehrtgdsc.to_date <= paramschekoutg  and paramschecking <= ehrtgdsc.to_date
+          booked = true
+          logger.info "I am here5"
+           logger.info paramschecking
+      end
+        
+      if booked  
+        logger.info "i think here i should come only 2 times1"
+       ehrtgdsc.line_ids.each do |eli|
+          for rn in eli.room_number
+            logger.info rn.id
+            logger.info "i think here i should come only 2 times12"
+              name_array << rn.id
+         end
+       end
+      end 
+       
+    end
+    name_array
   end
   
 end
