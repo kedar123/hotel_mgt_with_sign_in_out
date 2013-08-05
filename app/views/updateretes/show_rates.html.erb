@@ -48,10 +48,150 @@
 </form>
 
 </div>
-
- 
- 
+<div class="todate_fromdatebg1" id="todate_fromdatebg1" style="display:none"> 
+   <%=form_tag updateretes_update_rates_path ,:onsubmit=>"$('#todate_fromdatebg1').hide();" %>
+ <table>
+  <tr>
+   <td class="todate_fromdateheadingtext">
+     Begin Period
+   </td>
   
+  <td>
+<%=text_field_tag "begin_period","",:readonly=>true  %>
+</td>
+</tr>
+
+ <tr>
+   <td class="todate_fromdateheadingtext">
+       End Period
+   </td>
+   <td>
+     <%=text_field_tag "end_period" ,"",:readonly=>true %>
+     <%=hidden_field_tag "start_date" , params[:start_date] %>
+     <%=hidden_field_tag "end_date" , params[:end_date] %>
+     <%=hidden_field_tag "room_type" , params[:room_type] %>
+     
+     
+     
+   </td>
+
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       IOcc
+   </td>
+   <td>
+     <%=text_field_tag "SINGLEOCCUPANCY"  %>
+   </td>
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       IIOcc
+   </td>
+   <td>
+     <%=text_field_tag "DOUBLEOCCUPANCY"  %>
+   </td>
+</tr>
+ <tr>
+   <td class="todate_fromdateheadingtext">
+       IIIOcc
+   </td>
+   <td>
+     <%=text_field_tag "TRIPLEOCCUPANCY"  %>
+   </td>
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       II+Child
+   </td>
+   <td>
+     <%=text_field_tag "QUADRUPLEOCCUPANCY"  %>
+   </td>
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       +Adult
+   </td>
+   <td>
+     <%=text_field_tag "ROLLAWAYADULT"  %>
+   </td>
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       +Child
+   </td>
+   <td>
+     <%=text_field_tag "ROLLAWAYCHILD"  %>
+   </td>
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       mo
+   </td>
+   <td>
+     <%=text_field_tag "CTAMO"  %>
+   </td>
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       tu
+   </td>
+   <td>
+     <%=text_field_tag "CTATU"  %>
+   </td>
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       we
+   </td>
+   <td>
+     <%=text_field_tag "CTAWE"  %>
+   </td>
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       th
+   </td>
+   <td>
+     <%=text_field_tag "CTATH"  %>
+   </td>
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       fr
+   </td>
+   <td>
+     <%=text_field_tag "CTAFR"  %>
+   </td>
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       st
+   </td>
+   <td>
+     <%=text_field_tag "CTASA"  %>
+   </td>
+</tr>
+<tr>
+   <td class="todate_fromdateheadingtext">
+       su
+   </td>
+   <td>
+     <%=text_field_tag "CTASU"  %>
+   </td>
+</tr>
+ 
+
+
+<tr><td>
+    <div class="addroombutton">
+    <%=submit_tag "Submit",:class=>"submit_button"%>
+    </div>    
+    </td></tr>
+  </table>
+  </form>
+ </div>
+<%if ((@get_rates !=nil) &&   (!@get_rates.blank?) && (!@get_rates["diffgram"].blank? ) )%>  
 <div class="todate_fromdatebg1"> 
 
 <table border="1">
@@ -72,31 +212,73 @@
       </th>
     
       <th class="todate_fromdateheadingtext">
-      SINGLEOCCUPANCY
+       IOcc
       
       </th>
       <th class="todate_fromdateheadingtext">
-      DOUBLEOCCUPANCY
+        IIOcc
       </th>
       <th class="todate_fromdateheadingtext">
-      TRIPLEOCCUPANCY
+       IIIOcc
       </th>
        <th class="todate_fromdateheadingtext">
-      QUADRUPLEOCCUPANCY
+      II+Child
       </th>
-    </tr>
+      <th class="todate_fromdateheadingtext">
+       +Adult
+      </th>
+      <th class="todate_fromdateheadingtext">
+       +Child
+      </th>
+      <th  class="todate_fromdateheadingtext">
+        su
+      </th>
+      <th  class="todate_fromdateheadingtext">
+        mo
+      </th>
+      <th  class="todate_fromdateheadingtext">
+        tu
+      </th>
+      <th  class="todate_fromdateheadingtext">
+        wn
+      </th>
+      
+      <th  class="todate_fromdateheadingtext">
+        th
+      </th>
+      <th  class="todate_fromdateheadingtext">
+        fr
+      </th>
+      <th  class="todate_fromdateheadingtext">
+        st
+      </th>
+      
+    
    
+    </tr>
+    
     <%countperiod = 1%>
     <%if ((@get_rates !=nil) &&   (!@get_rates.blank?) && (!@get_rates["diffgram"].blank? ) )%>
     <%@get_rates["diffgram"][0]["NewDataSet"][0]["Rate"].each do |get_rate|%>
     <%countperiod = countperiod + 1 %>
     <input type="hidden" value="<%=get_rate['BEGINPERIOD'][0].to_s.split('T')[0]%>" id="<%=countperiod%>BEGINPERIOD" />
     <input type="hidden" value="<%=get_rate['ENDPERIOD'][0].to_s.split('T')[0]%>" id="<%=countperiod%>ENDPERIOD" />
-    <input type="hidden" value="<%=get_rate['SINGLEOCCUPANCY'][0].to_s.split('T')[0]%>" id="<%=countperiod%>SINGLEOCCUPANCY" />
-    <input type="hidden" value="<%=get_rate['DOUBLEOCCUPANCY'][0].to_s.split('T')[0]%>" id="<%=countperiod%>DOUBLEOCCUPANCY" />
-    <input type="hidden" value="<%=get_rate['TRIPLEOCCUPANCY'][0].to_s.split('T')[0]%>" id="<%=countperiod%>TRIPLEOCCUPANCY" />
-    <input type="hidden" value="<%=get_rate['QUADRUPLEOCCUPANCY'][0].to_s.split('T')[0]%>" id="<%=countperiod%>QUADRUPLEOCCUPANCY" />
-     <script>
+    <input type="hidden" value="<%=get_rate['SINGLEOCCUPANCY'][0]%>" id="<%=countperiod%>SINGLEOCCUPANCY" />
+    <input type="hidden" value="<%=get_rate['DOUBLEOCCUPANCY'][0]%>" id="<%=countperiod%>DOUBLEOCCUPANCY" />
+    <input type="hidden" value="<%=get_rate['TRIPLEOCCUPANCY'][0]%>" id="<%=countperiod%>TRIPLEOCCUPANCY" />
+    <input type="hidden" value="<%=get_rate['QUADRUPLEOCCUPANCY'][0]%>" id="<%=countperiod%>QUADRUPLEOCCUPANCY" />
+    <input type="hidden" value="<%=get_rate['ROLLAWAYADULT'][0]%>" id="<%=countperiod%>ROLLAWAYADULT" />
+    <input type="hidden" value="<%=get_rate['ROLLAWAYCHILD'][0]%>" id="<%=countperiod%>ROLLAWAYCHILD" />
+    <input type="hidden" value="<%=get_rate['CTAMO'][0]%>" id="<%=countperiod%>CTAMO" />
+    <input type="hidden" value="<%=get_rate['CTATU'][0]%>" id="<%=countperiod%>CTATU" />
+    <input type="hidden" value="<%=get_rate['CTAWE'][0]%>" id="<%=countperiod%>CTAWE" />
+    <input type="hidden" value="<%=get_rate['CTATH'][0]%>" id="<%=countperiod%>CTATH" />
+    <input type="hidden" value="<%=get_rate['CTAFR'][0]%>" id="<%=countperiod%>CTAFR" />
+    <input type="hidden" value="<%=get_rate['CTASA'][0]%>" id="<%=countperiod%>CTASA" />
+    <input type="hidden" value="<%=get_rate['CTASU'][0]%>" id="<%=countperiod%>CTASU" />
+     
+    
+    <script>
    function update_values(count)
    {
      $('#begin_period').val($('#'+count+'BEGINPERIOD').val());
@@ -105,7 +287,17 @@
      $('#DOUBLEOCCUPANCY').val($('#'+count+'DOUBLEOCCUPANCY').val());
      $('#TRIPLEOCCUPANCY').val($('#'+count+'TRIPLEOCCUPANCY').val());
      $('#QUADRUPLEOCCUPANCY').val($('#'+count+'QUADRUPLEOCCUPANCY').val());
-     
+     $('#ROLLAWAYADULT').val($('#'+count+'ROLLAWAYADULT').val());
+     $('#ROLLAWAYCHILD').val($('#'+count+'ROLLAWAYCHILD').val());
+     $('#CTAMO').val($('#'+count+'CTAMO').val());
+     $('#CTATU').val($('#'+count+'CTATU').val());
+     $('#CTAWE').val($('#'+count+'CTAWE').val());
+     $('#CTATH').val($('#'+count+'CTATH').val());
+     $('#CTAFR').val($('#'+count+'CTAFR').val());
+     $('#CTASA').val($('#'+count+'CTASA').val());
+     $('#CTASU').val($('#'+count+'CTASU').val());
+      
+     $("#todate_fromdatebg1").show();
      
      return false;
      
@@ -137,78 +329,34 @@
          <td>
           <%=get_rate['QUADRUPLEOCCUPANCY'][0]%>
          </td>
-         
+         <td>
+          <%=get_rate['ROLLAWAYADULT'][0]%>
+         </td>
+      <td>
+          <%=get_rate['ROLLAWAYCHILD'][0]%>
+         </td>
+         <td><%=get_rate['CTASU'][0]%>
+          </td>
+          <td><%=get_rate['CTAMO'][0]%>
+          </td>
+          <td><%=get_rate['CTATU'][0]%>
+          </td>
+          <td><%=get_rate['CTAWE'][0]%>
+          </td>
+          <td><%=get_rate['CTATH'][0]%>
+          </td>
+       <td><%=get_rate['CTAFR'][0]%>
+          </td>
+          <td><%=get_rate['CTASA'][0]%>
+          </td>
+          
       </tr>
     <%end%>
     <%end%>
   </table>
  
-  <%=form_tag updateretes_update_rates_path%>
- <table>
-  <tr>
-   <td class="todate_fromdateheadingtext">
-     Begin Period
-   </td>
-  
-  <td>
-<%=text_field_tag "begin_period","",:readonly=>true  %>
-</td>
-</tr>
 
- <tr>
-   <td class="todate_fromdateheadingtext">
-       End Period
-   </td>
-   <td>
-     <%=text_field_tag "end_period" ,"",:readonly=>true %>
-     <%=hidden_field_tag "start_date" , params[:start_date] %>
-     <%=hidden_field_tag "end_date" , params[:end_date] %>
-     <%=hidden_field_tag "room_type" , params[:room_type] %>
-     
-     
-     
-   </td>
-
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       SINGLEOCCUPANCY
-   </td>
-   <td>
-     <%=text_field_tag "SINGLEOCCUPANCY"  %>
-   </td>
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       DOUBLEOCCUPANCY
-   </td>
-   <td>
-     <%=text_field_tag "DOUBLEOCCUPANCY"  %>
-   </td>
-</tr>
- <tr>
-   <td class="todate_fromdateheadingtext">
-       TRIPLEOCCUPANCY
-   </td>
-   <td>
-     <%=text_field_tag "TRIPLEOCCUPANCY"  %>
-   </td>
-</tr>
- <tr>
-   <td class="todate_fromdateheadingtext">
-       QUADRUPLEOCCUPANCY
-   </td>
-   <td>
-     <%=text_field_tag "QUADRUPLEOCCUPANCY"  %>
-   </td>
-</tr>
-<tr><td>
-    <div class="addroombutton">
-    <%=submit_tag "Submit",:class=>"submit_button"%>
-    </div>    
-    </td></tr>
-  </table>
-  </form>
 
 </div>
+  <%end%>
   </div>
