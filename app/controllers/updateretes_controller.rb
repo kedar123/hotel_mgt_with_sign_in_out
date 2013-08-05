@@ -12,11 +12,20 @@ class UpdateretesController < ApplicationController
       format.json { render json: @updateretes }
     end
   end
+  
+  #before getting an new rates i need to update that single rate through web service
+  def update_rates
+   
+    Updaterete.update_single_rate(params)
+    @get_rates = Updaterete.get_rates(params)
+    render :layout=>"gds"
+  end
+  
 
   #this will fetch all the rates availability and just parse and show it in view
   def show_rates
-    p "5555555555555"
-    @get_rates = Updaterete.get_rates
+   
+    @get_rates = Updaterete.get_rates(params)
     render :layout=>"gds"
   end
   
