@@ -13,6 +13,14 @@ class UpdateretesController < ApplicationController
     end
   end
 
+  #this will fetch all the rates availability and just parse and show it in view
+  def show_rates
+    p "5555555555555"
+    @get_rates = Updaterete.get_rates
+    render :layout=>"gds"
+  end
+  
+  
   # GET /updateretes/1
   # GET /updateretes/1.json
   def show

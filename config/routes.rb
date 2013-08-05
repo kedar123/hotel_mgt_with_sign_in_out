@@ -145,6 +145,9 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   
   resources :admins
 
+  
+  get "updateretes/show_rates"
+  
   resources :updateretes
 
   resources :updatehoteltexts
