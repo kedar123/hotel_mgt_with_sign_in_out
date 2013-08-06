@@ -125,62 +125,70 @@
    </td>
 </tr>
 <tr>
-   <td class="todate_fromdateheadingtext">
-       mo
-   </td>
-   <td>
-     <%=text_field_tag "CTAMO"  %>
-   </td>
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       tu
-   </td>
-   <td>
-     <%=text_field_tag "CTATU"  %>
-   </td>
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       we
-   </td>
-   <td>
-     <%=text_field_tag "CTAWE"  %>
-   </td>
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       th
-   </td>
-   <td>
-     <%=text_field_tag "CTATH"  %>
-   </td>
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       fr
-   </td>
-   <td>
-     <%=text_field_tag "CTAFR"  %>
-   </td>
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       st
-   </td>
-   <td>
-     <%=text_field_tag "CTASA"  %>
-   </td>
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       su
-   </td>
-   <td>
-     <%=text_field_tag "CTASU"  %>
-   </td>
-</tr>
+  <td class="todate_fromdateheadingtext"  >
+    Room Checking
+  </td>
+  </tr>
+  </table>
  
+  
+      <table width="200" align="center">
+        <tr>
+            <td class="todate_fromdateheadingtext">
+       Su
+   </td>
+   <td>
+      
+     <%=check_box_tag  "CTASU", 0%>
+   </td>
+          <td class="todate_fromdateheadingtext">
+            Mo
+          </td>
+          <td class="todate_fromdateheadingtext">
+            <%=check_box_tag  "CTAMO", 0%>
+          </td>
+          <td class="todate_fromdateheadingtext">
+       Tu
+   </td>
+   <td>
+      
+     <%=check_box_tag  "CTATU", 0%>
+   </td>
+    <td class="todate_fromdateheadingtext">
+       We
+   </td>
+   <td>
+      
+     <%=check_box_tag  "CTAWE", 0%>
+   </td>
+    <td class="todate_fromdateheadingtext">
+       Th
+   </td>
+   <td>
+     <%=check_box_tag  "CTATH", 0%>
+      
+   </td>
+    <td class="todate_fromdateheadingtext">
+       Fr
+   </td>
+   <td>
+      
+     <%=check_box_tag  "CTAFR", 0%>
+     
+   </td>
+    <td class="todate_fromdateheadingtext">
+       St
+   </td>
+   <td>
+      
+     <%=check_box_tag  "CTASA", 0%>
+   </td>
+  
+        </tr>
+          
+          
+       
+    
 
 
 <tr><td>
@@ -212,14 +220,14 @@
       </th>
     
       <th class="todate_fromdateheadingtext">
-       IOcc
+       I Occ
       
       </th>
       <th class="todate_fromdateheadingtext">
-        IIOcc
+        II Occ
       </th>
       <th class="todate_fromdateheadingtext">
-       IIIOcc
+       III Occ
       </th>
        <th class="todate_fromdateheadingtext">
       II+Child
@@ -231,26 +239,26 @@
        +Child
       </th>
       <th  class="todate_fromdateheadingtext">
-        su
+        Su
       </th>
       <th  class="todate_fromdateheadingtext">
-        mo
+        Mo
       </th>
       <th  class="todate_fromdateheadingtext">
-        tu
+        Tu
       </th>
       <th  class="todate_fromdateheadingtext">
-        wn
+        We
       </th>
       
       <th  class="todate_fromdateheadingtext">
-        th
+        Th
       </th>
       <th  class="todate_fromdateheadingtext">
-        fr
+        Fr
       </th>
       <th  class="todate_fromdateheadingtext">
-        st
+        St
       </th>
       
     
@@ -289,13 +297,39 @@
      $('#QUADRUPLEOCCUPANCY').val($('#'+count+'QUADRUPLEOCCUPANCY').val());
      $('#ROLLAWAYADULT').val($('#'+count+'ROLLAWAYADULT').val());
      $('#ROLLAWAYCHILD').val($('#'+count+'ROLLAWAYCHILD').val());
-     $('#CTAMO').val($('#'+count+'CTAMO').val());
-     $('#CTATU').val($('#'+count+'CTATU').val());
-     $('#CTAWE').val($('#'+count+'CTAWE').val());
-     $('#CTATH').val($('#'+count+'CTATH').val());
-     $('#CTAFR').val($('#'+count+'CTAFR').val());
-     $('#CTASA').val($('#'+count+'CTASA').val());
-     $('#CTASU').val($('#'+count+'CTASU').val());
+     
+     if ($('#'+count+'CTAMO').val() == 1)
+       {
+         $("#CTAMO").prop('checked',true);
+       }
+     if ($('#'+count+'CTATU').val() == 1)
+       {
+         $("#CTATU").prop('checked',true);
+       }
+     if ($('#'+count+'CTAWE').val() == 1)
+       {
+         $("#CTAWE").prop('checked',true);
+       }
+     if ($('#'+count+'CTATH').val() == 1)
+       {
+         $("#CTATH").prop('checked',true);
+       }
+     if ($('#'+count+'CTAFR').val() == 1)
+       {
+         $("#CTAFR").prop('checked',true);
+       }
+     if ($('#'+count+'CTASA').val() == 1)
+       {
+         $("#CTASA").prop('checked',true);
+       }
+     if ($('#'+count+'CTASU').val() == 1)
+       {
+         $("#CTASU").prop('checked',true);
+       }      
+       
+      
+      
+    
       
      $("#todate_fromdatebg1").show();
      

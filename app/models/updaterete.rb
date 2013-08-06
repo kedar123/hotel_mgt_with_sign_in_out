@@ -6,8 +6,18 @@ class Updaterete <  ActiveRecord::Base
   
   def self.update_single_rate(params)
     
-   
-       uri = URI('http://test.reconline.com/recoupdate/update.asmx/UpdateRates')
+    params[:CTAMO] = 1 if params[:CTAMO].blank?
+    params[:CTATU] = 1 if params[:CTATU].blank?
+    params[:CTAWE] = 1 if params[:CTAWE].blank?
+    params[:CTATH] = 1 if params[:CTATH].blank?
+    params[:CTAFR] = 1 if params[:CTAFR].blank?
+    params[:CTASA] = 1 if params[:CTASA].blank?
+    params[:CTASU] = 1 if params[:CTASU].blank?
+    
+    #here i need to check all the checkboxes if they are blank then make it checked
+    
+    
+        uri = URI('http://test.reconline.com/recoupdate/update.asmx/UpdateRates')
    res = Net::HTTP.post_form(uri, 'User'=> 'kedar' ,'Password'=> 'ked2012' ,
   "idHotel"=> '38534'  ,"idSystem"=>'0' ,"ForeignPropCode"=> 'blank' ,
         "IncludeRateLevels"=>'BAR' ,"ExcludeRateLevels"=> '',
@@ -26,20 +36,13 @@ class Updaterete <  ActiveRecord::Base
     logger.info "the paaramsmsmsms"
     logger.info res.inspect
     logger.info res.to_hash
-
   end
   
   
   def self.get_rates(params)
      uri = URI('http://test.reconline.com/recoupdate/update.asmx/GetRates')
-     
-   
-  
-  res = Net::HTTP.post_form(uri,'User'=>'kedar', 'Password'=>'ked2012','idHotel'=>'38534','idSystem'=>'0','ForeignPropCode'=>'blank','IncludeRateLevels'=>'BAR','ExcludeRateLevels'=>'','IncludeRoomTypes'=>params[:room_type]  ,'ExcludeRoomTypes'=>'','RateType'=>'1','StartDate'=>params[:start_date] ,'EndDate'=> params[:end_date] )
-    
-    
-    
-    logger.info "the paaramsmsmsms"
+     res = Net::HTTP.post_form(uri,'User'=>'kedar', 'Password'=>'ked2012','idHotel'=>'38534','idSystem'=>'0','ForeignPropCode'=>'blank','IncludeRateLevels'=>'BAR','ExcludeRateLevels'=>'','IncludeRoomTypes'=>params[:room_type]  ,'ExcludeRoomTypes'=>'','RateType'=>'1','StartDate'=>params[:start_date] ,'EndDate'=> params[:end_date] )
+     logger.info "the paaramsmsmsms"
     logger.info res.inspect
     logger.info res.to_hash
     logger.info res.body.include?("<boolean xmlns=\"http://www.reconline.com/\">true</boolean>")
@@ -51,7 +54,6 @@ class Updaterete <  ActiveRecord::Base
     logger.info res
     logger.info "ressssssssssssssssssss"
     res 
-    
   end
 
   
