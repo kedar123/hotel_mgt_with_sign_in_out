@@ -6,7 +6,7 @@
 
  
 
-<%=form_tag "/reservations/show_dates"%>
+<%=form_tag "/reservations/show_dates" ,:onsubmit=>"return check_company_select();" %>
 <div class="selecthotel_bg">
   <div id="notice" class="invalid">
     <%=flash[:notice]%>

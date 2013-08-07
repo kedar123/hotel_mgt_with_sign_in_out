@@ -36,12 +36,12 @@
   <tr>
     <td height="23" colspan="2"><div align="center" class="todate_fromdateheadingtext"><%=params[:avlfgds]%></div></td>
   </tr>
-  <tr>
+  <tr id="alreadyallocatedrooms">
     <td height="25" colspan="2"><div align="center" class="selectroomtype">Already Allocated Rooms</div></td>
   </tr>
  
 
- 
+ <%show_submit_button = false%>
   <%for el in @gdsconf.line_ids%>
   <%for rn in el.room_number%>
   
@@ -77,7 +77,7 @@
   
   
    <%if viewbookedarray.blank?%>
-        
+        <%show_submit_button = true%>
         <%#now for delete each room number i need a checkbox %>
         <%#in the room name i need to show by underscore which gds configuration is this and which line id is this%>
     <tr>
@@ -100,8 +100,16 @@
  
 <%=text_field_tag "deleteroomc","",:id=>"deleteroomc",:style=>"display:none"%>
 <tr><td width="500" height="50">
+    <%if  show_submit_button  %>
 <%=submit_tag "Delete Rooms",:onclick=>"$('#deleteroomc').val(1)",:class=>'submit_button1'%>
-    <%=submit_tag "Add A Room",:onclick=>"$('#deleteroomc').val(0)",:class=>'submit_button2'%>
+<%=submit_tag "Add A Room",:onclick=>"$('#deleteroomc').val(0)",:class=>'submit_button2'%>
+    <%else%>
+    <script>
+      $("#alreadyallocatedrooms").hide();
+   
+      </script>
+         <%=submit_tag "Add A Room",:onclick=>"$('#deleteroomc').val(0)",:class=>'submit_button2'%>
+    <%end%>
 </td>
  
 </tr>
@@ -119,3 +127,4 @@
 
 
 </div>
+</form>

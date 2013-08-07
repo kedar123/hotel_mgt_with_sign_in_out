@@ -521,7 +521,6 @@ class ReservationsController < ApplicationController
   #here now i need to fetch all the rooms of a particular company id. this is the only change in my previous coding
   #and current coding
   def show_availability_of_rooms
-   
     #here i am making an connection again because i seen one error of uninitialize constant. which should not happen 
     #actually because at first time i am connecting to openerp which according to me should be kept in memory. but still 
     #because of error i am connecting again
@@ -539,7 +538,6 @@ class ReservationsController < ApplicationController
     logger.info @category
     logger.info "rommmmmmmmm@room"
     logger.info @room
-    
     logger.info @room
     logger.info "roommmmmmm"
     #
@@ -588,15 +586,12 @@ class ReservationsController < ApplicationController
           logger.info "55555555544444444441111111222222222"
         end
        end
-       
-        logger.info "adding the rooommm"
+         logger.info "adding the rooommm"
       end
       logger.info "the all roomssssss"
       logger.info @room.inspect
       logger.info @category.inspect
-      
-     
-     #end of extractionnnnnnnnnnnnnnnnnnnnnnnnnn
+      #end of extractionnnnnnnnnnnnnnnnnnnnnnnnnn
     data = []
     booked_room = []   
      HotelRoom.find(:all).each do |roomid|
@@ -655,15 +650,13 @@ logger.info "divvvvvvvvvvv erroooooooooooooooo"
     booked_room.each do |rn|
       name_array << rn.history_id.product_id.id
     end
-   
-    logger.info "returning the array"
+     logger.info "returning the array"
     logger.info name_array    
     name_array    
     #here i need ad.each do d this array that is if the room is allocated to gds then also done show i will get this by 
      paramschecking = Date.new(params['checkin'].split(" ")[0].to_s.split("/")[2].to_i,params['checkin'].split(" ")[0].to_s.split("/")[0].to_i,params['checkin'].split(" ")[0].to_s.split("/")[1].to_i )
      paramschekoutg = Date.new(params['checkout'].split(" ")[0].to_s.split("/")[2].to_i,params['checkout'].split(" ")[0].to_s.split("/")[0].to_i,params['checkout'].split(" ")[0].to_s.split("/")[1].to_i )
-
-    HotelReservationThroughGdsConfiguration.all.each do |ehrtgdsc|
+     HotelReservationThroughGdsConfiguration.all.each do |ehrtgdsc|
       booked = false
       #here i am using a short line of in between of dates
       if paramschecking >= ehrtgdsc.name  and paramschekoutg <= ehrtgdsc.to_date
@@ -684,8 +677,7 @@ logger.info "divvvvvvvvvvv erroooooooooooooooo"
           logger.info "I am here5"
            logger.info paramschecking
       end
-        
-      if booked  
+       if booked  
         logger.info "i think here i should come only 2 times1"
        ehrtgdsc.line_ids.each do |eli|
           for rn in eli.room_number
@@ -695,9 +687,7 @@ logger.info "divvvvvvvvvvv erroooooooooooooooo"
          end
        end
       end 
-       
-    end
+     end
     name_array
   end
-  
 end

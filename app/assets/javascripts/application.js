@@ -111,3 +111,15 @@ function check_validation(){
     return form_valid;
     
 }
+
+function check_company_select(){
+    if ($("#company_id").val()=="")
+        {
+          alert("Please Select A Company" );  
+          return false;   
+        }
+     else{
+          return true;   
+     }   
+    
+}

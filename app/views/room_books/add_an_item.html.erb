@@ -26,13 +26,18 @@
     <td height="33" colspan="2"><div align="center"><span class="selectroomtype">Select Room Type</span> </div></td>
   </tr>
   <tr>
-    <td width="129" height="32">
+    <td width="129" height="32" colspan="2">
      
     <%if params[:commit] == "Show Rooms"%>
 <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "",:disabled=>true %> 
 
 <%else%>
+      
 <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "" %> 
+    </td>
+    </tr>
+    <tr>
+      <td width="129" height="32" colspan="2">
 <%=submit_tag "Show Rooms",:class=>'submit_button' %>
 <%end%>
     </td>
@@ -130,11 +135,18 @@
            end%>
    <%if viewbookedarraya.blank?%>
               <tr>
-                 <td height="31">&nbsp;</td>
-                 <td width="154">  <span class="todate_fromdaterequlartext"><%=arm.name%> </span>
-                     <%=check_box "addroom" , arm.id%>      
-                 </td>
-              </tr>
+                 <td>
+                   <table>
+                     <tr>
+                       <td><%=check_box "addroom" , arm.id%>
+                         </td>
+                         <td>
+                           <span class="todate_fromdaterequlartext"><%=arm.name%> </span>
+                           </td>
+                       </tr>
+                     </table>
+                  </td>
+               </tr>
     <%end%>
      <%end%>
    <tr><td> <%=submit_tag "Add To Gds",:class=>'submit_button'%></td></tr>

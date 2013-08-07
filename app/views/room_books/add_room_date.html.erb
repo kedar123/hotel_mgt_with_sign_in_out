@@ -14,8 +14,13 @@
       <div class="todate_fromdateheadingbg">
           <%if showsubmit%>
     <%=submit_tag 'delete' ,:class=>'submit_button'%>
+        
     <%end%>
-   
+   <table><tr><td>
+ <%= link_to 'Back', room_books_path ,:class=>"submit_button"%>
+  </td>
+  </tr>
+  </table>
       </div>
         <table width="297" height="79" border="0" align="center">
             <tr>

@@ -1,221 +1,186 @@
 <div class="container">
   <div>
-<%=form_tag "/reservations/show_availability_of_rooms",{:onSubmit => 'return check_date()'}%>
-<div class="registerform_bg">
-  <div class="headingbg">
+    <%=form_tag "/reservations/show_availability_of_rooms",{:onSubmit => 'return check_date()'}%>
+    <div class="registerform_bg">
+      <div class="headingbg">
 
-    <div class="headingtext">Please enter the dates of your stay to check availability</div>
-  </div>
+        <div class="headingtext">Please enter the dates of your stay to check availability</div>
+      </div>
 
-  <table width="auto" height="121" border="0" align="center" class="tables" >
-    <tr>
-      <td width="121" height="40" class="listening_eventstext1">Check in Date:</td>
-      <td width="159"><%= text_field_tag "checkin",params[:checkin],:size =>"30" %></td>
-    </tr>
-    <tr>
-      <td height="36" class="listening_eventstext1">Check Out Date: </td>
-      <td><%= text_field_tag "checkout",params[:checkout],:size =>"30" %></td>
-      <%=hidden_field_tag "company_id",params[:company_id]%>
-    </tr>
-    <tr>
-      <td>&nbsp;</td> 
-      <td>  <%=submit_tag "Check Availability",:id=>"Checkavailabilitybutton"%></td>
-    </tr>
-  </table>
-</div>
+      <table width="auto" height="121" border="0" align="center" class="tables" >
+        <tr>
+          <td width="121" height="40" class="listening_eventstext1">Check in Date:</td>
+          <td width="159"><%= text_field_tag "checkin",params[:checkin],:size =>"30" %></td>
+        </tr>
+        <tr>
+          <td height="36" class="listening_eventstext1">Check Out Date: </td>
+          <td><%= text_field_tag "checkout",params[:checkout],:size =>"30" %></td>
+          <%=hidden_field_tag "company_id",params[:company_id]%>
+        </tr>
+        <tr>
+          <td>&nbsp;</td> 
+          <td>  <%=submit_tag "Check Availability",:id=>"Checkavailabilitybutton"%></td>
+        </tr>
+      </table>
+    </div>
 
-</form>
-
-<%=form_tag "/authenticates/sign_in" ,{:onSubmit=>"return checkroomisselected()"}%>
-<div class="roomsavailable_bg">
-  <div class="">
-    <%hidecount=1%>
-    
-    <%if !@category.blank?%>
-      <% for build in @category.uniq!%> 
-        <%hidecount=hidecount + 1%>
-        <fieldset id="hidelabel<%=hidecount%>">
-          <%size=0%>
-          <p> <legend class="rooms_availabilitytext"> Which rooms you want to book in <%= build[0]%></i></b>
-          </legend></p>
-           <div style="width:480px;">      
-
-          <%hidelabel = true%>
+    </form>
+   <!--
+   all this testing is of showing an view of rooms. 
+   the loop is on category . the testing conditions are.
+   1)in one category there will be 1 room
+   2)in one category there will be 2 room
+   3)in one category there will be 3 room
+   4)in one category there will be 4 rooms
+   5)                      above one delete one room means book one room
+   6)from 4 cond gds all room
+   7)from 3 cond book room
+   8)from 2 cond gds alloc room
+   9)from 1 cond book room
+   -->
+    <%=form_tag "/authenticates/sign_in" ,{:onSubmit=>"return checkroomisselected()"}%>
+    <div class="roomsavailable_bg">
+      <div class="">
+        <%hidecount=1%>
+         <%if !@category.blank?%>
+          <% for build in @category.uniq!%> 
+            <%hidecount=hidecount + 1%>
+            <fieldset id="hidelabel<%=hidecount%>">
+              <%size=0%>
+              <p> <legend class="rooms_availabilitytext"> Which rooms you want to book in <%= build[0]%></i></b>
+              </legend></p>
+              <div style="width:480px;">      
+                 <%hidelabel = true%>
     <%#here i need to change an split to an category wise rooms %> 
     <%#but there is one bug here its not actually an category wise splitting . because @room.each slice will%>
     <%#split an array not by considering an category%>
-          <%#here i get confused because @book_room_array is an array with booked room but at down i written every thing is in else%>
-          <%#in this comment else is imp%>
-          <%@room.each_slice(2) do |room|%>
-            <% if room[0][2] == build[1]%>
-          <%logger.info "chhhhhhhhhhhhhhhhhhhhhhhh"%>
-          <%logger.info  room[0][0]%>
-          <%logger.info  @book_room_array.include? room[0][1]%>
-             
-              <%if @book_room_array and  @book_room_array.include? room[0][1]%>
+    <%#here i get confused because @book_room_array is an array with booked room but at down i written every thing is in else%>
+    <%#in this comment else is imp%>
+                <%@room.each_slice(2) do |room|%>
+                  <% if room[0] && room[0][2] == build[1]%>
+                    <%logger.info "chhhhhhhhhhhhhhhhhhhhhhhh"%>
+                    <%logger.info  room[0][0]%>
+                    <%logger.info  @book_room_array.include? room[0][1]%>
+                     <%if @book_room_array and  @book_room_array.include? room[0][1]%>
           <%#here it may happen that the room[1] is not included that is why whatever is in else%>
           <%#i need to put that in if also%>
-          <%logger.info "condition is true"%>
-                <%if room[1]%>
-           <%logger.info "condition is true1"%>
-                  <%if @book_room_array and  @book_room_array.include? room[1][1]%>
-           <%logger.info "condition is true2"%>
-                  <%else%>
-           <%logger.info "condition is true3"%>
-                    <% if room[1][2] == build[1]%>     
+                      <%logger.info "condition is true"%>
+                      <%if room[1]%>
+                        <%logger.info "condition is true1"%>
+                        <%if @book_room_array and  @book_room_array.include? room[1][1]%>
+                          <%logger.info "condition is true2"%>
+                        <%else%>
+                          <%logger.info "condition is true3"%>
+                          <% if room[1][2] == build[1]%>     
                 <%#%>
-           <%logger.info "condition is true4"%>
-                       <%if size == 0%>
-                                 <div style="width:210px;float:left;margin:0px;"> 
-                                   <p>  
-                                    <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label>
-                                    </p>
-                                 </div>
-                        <%size=1%>
-                       <%elsif size == 1%>
-                                <div style="width:300px;"> <p>
-                                     <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label>
-                                     </p>
-                                 </div>
-                       <%size=0%>
-                       <%end%>
-                  <%end%>     
-          
-          
-
-                  <%end%>
-                <%end%>      
-                <!-- <span style="color: red" >
-                 <%logger.info "condition is true5"%>
-                <%=check_box_tag "room[#{room[1]}]", "0", false, :disabled => true%><%= room[0]%>
-                  </span>-->
-              <%else%> 
-                 <%logger.info "condition is true6"%>
-                <%hidelabel = false%>
-               
-                    <%if room[0]%>    
-                       <%if @book_room_array and  @book_room_array.include? room[0][1]%>
-                      <%else%>
-                     <%logger.info "condition is true7"%>
-                    
-                          
-                      
-                      <%if size == 0%>
-                                 <div style="width:210px;float:left;margin:0px;"> <p>
-                                    <%= check_box_tag "room[#{room[0][1]}]","#{room[0][1]}"%><label><%= room[0][0]%></label> 
-                                    </p>
-                                  </div>
-                        <%size=1%>
-                       <%elsif size == 1%>
-                                <div style="width:300px;"> <p>
-                                     <%= check_box_tag "room[#{room[0][1]}]","#{room[0][1]}"%><label><%= room[0][0]%></label> 
-                                     </p>
-                                 </div>
-                       <%size=0%>
-                       <%end%>
-                      
-                      
-                      
-                      
+                            <%logger.info "condition is true4"%>
+                            <%if size == 0%>
+                              <div style="width:210px;float:left;margin:0px;"> 
+                                <p>  
+                                  <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label>
+                                </p>
+                              </div>
+                              <%size=1%>
+                            <%elsif size == 1%>
+                              <div style="width:300px;"> <p>
+                                  <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label>
+                                </p>
+                              </div>
+                              <%size=0%>
+                            <%end%>
+                          <%end%>     
+                         <%end%>
+                      <%end%>      
+                      <!-- <span style="color: red" >
+                      <%logger.info "condition is true5"%>
+                      <%=check_box_tag "room[#{room[1]}]", "0", false, :disabled => true%><%= room[0]%>
+                        </span>-->
+                    <%else%> 
+                      <%logger.info "condition is true6"%>
+                      <%hidelabel = false%>
+                       <%if room[0]%>    
+                        <%if @book_room_array and  @book_room_array.include? room[0][1]%>
+                        <%else%>
+                          <%logger.info "condition is true7"%>
+                           <%if size == 0%>
+                            <div style="width:210px;float:left;margin:0px;"> <p>
+                                <%= check_box_tag "room[#{room[0][1]}]","#{room[0][1]}"%><label><%= room[0][0]%></label> 
+                              </p>
+                            </div>
+                            <%size=1%>
+                          <%elsif size == 1%>
+                            <div style="width:300px;"> <p>
+                                <%= check_box_tag "room[#{room[0][1]}]","#{room[0][1]}"%><label><%= room[0][0]%></label> 
+                              </p>
+                            </div>
+                            <%size=0%>
+                          <%end%>
+                         <%end%>
                       <%end%>
-                     <%end%>
-                      
-                      
-                      
-                      
-                      
-                      
-                      
-                      
           <%#here its because i am showing an room in two columns i need to do add %>
           <%#room conditions again%>
           <%#so i am putting here 2 conditions one in if and same condition for else%>
-                    <%if room[1]%>
-                       <%logger.info "condition is true8"%>
-                      <%if @book_room_array and  @book_room_array.include? room[1][1]%>
-                       <%logger.info "condition is true9"%>
-                      <%else%>
-                       <%logger.info "condition is true10"%>
-                        <% if room[1][2] == build[1]%>
-                        
-                     
-                           <%if size == 0%>
-                                 <div style="width:210px;float:left;margin:0px;"> 
-                                   <p> <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label>
-                                     </p>
-                                  </div>
-                        <%size=1%>
-                       <%elsif size == 1%>
-                                <div style="width:300px;"> 
-                                    <p> <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label></p>
-                                 </div>
-                       <%size=0%>
-                       <%end%>
-              
-              
-              
-                      <%end%>        
+                      <%if room[1]%>
+                        <%logger.info "condition is true8"%>
+                        <%if @book_room_array and  @book_room_array.include? room[1][1]%>
+                          <%logger.info "condition is true9"%>
+                        <%else%>
+                          <%logger.info "condition is true10"%>
+                          <% if room[1][2] == build[1]%>
+                             <%if size == 0%>
+                              <div style="width:210px;float:left;margin:0px;"> 
+                                <p> <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label>
+                                </p>
+                              </div>
+                              <%size=1%>
+                            <%elsif size == 1%>
+                              <div style="width:300px;"> 
+                                <p> <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label></p>
+                              </div>
+                              <%size=0%>
+                            <%end%>
+                           <%end%>        
+                        <%end%>
                       <%end%>
-                    <%end%>
-                  </tr>
-                                                    
-              <%end%>
-                <%else%>
-                  
-                      <% if room[1][2] == build[1]%>
-                           <%if @book_room_array and  @book_room_array.include? room[1][1]%>
-                               <%logger.info "condition is true9"%>
-                           <%else%>
-                    
-                    
-                    
-                                   
-                              
-                                  
-                                  
-                        <%if size == 0%>
-                                 <div style="width:210px;float:left;margin:0px;"> 
-                                   <p> <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label> </p>
-                                  </div>
-                        <%size=1%>
-                       <%elsif size == 1%>
-                                <div style="width:300px;"> 
-                                     <p><%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label> </p>
-                                 </div>
-                       <%size=0%>
+                      </tr>
+                     <%end%>
+                  <%else%>
+                    <% if room &&  room[1] && room[1][2] == build[1]%>
+                      <%if @book_room_array and  @book_room_array.include? room[1][1]%>
+                        <%logger.info "condition is true9"%>
+                      <%else%>
+                         <%if size == 0%>
+                          <div style="width:210px;float:left;margin:0px;"> 
+                            <p> <%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label> </p>
+                          </div>
+                          <%size=1%>
+                        <%elsif size == 1%>
+                          <div style="width:300px;"> 
+                            <p><%= check_box_tag "room[#{room[1][1]}]","#{room[1][1]}"%><label><%= room[1][0]%></label> </p>
+                          </div>
+                          <%size=0%>
+                        <%end%>
                        <%end%>
-                                  
-                                  
-                                  
-                                  
-                           <%end%>
-        
-                      <%end%>  
-                  
-            <% end %>
-  
+                     <%end%>  
+                   <% end %>
+                 <% end %>
+                <%if hidelabel%>
+                  <script>
+                    $("#hidelabel<%=hidecount%>").hide();
+                  </script>
+                <%end%>
+              </div>
+            </fieldset>                
           <% end %>
-          <%if hidelabel%>
-            <script>
-              $("#hidelabel<%=hidecount%>").hide();
-            </script>
-          <%end%>
-            </div>
-        </fieldset>                
-      <% end %>
-    <%end%>
-    <div>                
-      <%= hidden_field_tag "campany_id",params['company_id']%>
-      <%= hidden_field_tag "checkin",params['checkin'] %>
-      <%= hidden_field_tag "checkout",params['checkout']  %>
-      <%= submit_tag "Book Rooms",:id=>"book_rooms"%>                           
-    </div>  
-     
-            
-              
-  
+        <%end%>
+        <div>                
+          <%= hidden_field_tag "campany_id",params['company_id']%>
+          <%= hidden_field_tag "checkin",params['checkin'] %>
+          <%= hidden_field_tag "checkout",params['checkout']  %>
+          <%= submit_tag "Book Rooms",:id=>"book_rooms"%>                           
+        </div>  
+       </div>
+    </div>
+    </form>
   </div>
-</div>
-</form>
-</div>
 </div>

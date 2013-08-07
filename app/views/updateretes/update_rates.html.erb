@@ -49,217 +49,133 @@
 
 </div>
   
-<div class="todate_fromdatebg1" id="todate_fromdatebg1" style="display:none"> 
- <%=form_tag updateretes_update_rates_path ,:onsubmit=>"$('#todate_fromdatebg1').hide();"%>
- <table>
-  <tr>
-   <td class="todate_fromdateheadingtext">
-     Begin Period
-   </td>
+<div class="" id="todate_fromdatebg1" style="display:none">
+<%=form_tag updateretes_update_rates_path ,:onsubmit=>"$('#todate_fromdatebg1').hide();" %>
+<div class="todate_fromdatebg">
+<div class="todate_fromdateheadingbg">
+     
   
-  <td>
-<%=text_field_tag "begin_period","",:readonly=>true  %>
-</td>
-</tr>
+</div>
 
- <tr>
-   <td class="todate_fromdateheadingtext">
-       End Period
-   </td>
-   <td>
-     <%=text_field_tag "end_period" ,"",:readonly=>true %>
+<table width="352" height="181" border="0" style="margin-left:30px; margin-top:20px; float:left;" >
+  <tr span class="todate_fromdateheadingtext">
+    <td width="112"><div align="left">Begin Period</div></td>
+    <td width="159"><form id="form16" name="form16" method="post" action="">
+      <label>
+        <%=text_field_tag "begin_period","",:readonly=>true  %>
+        </label>
+    </form>
+    </td>
+  </tr>
+  <tr span class="todate_fromdateheadingtext">
+    <td><div align="left">End Period</div></td>
+    <td>
+      
+       <%=text_field_tag "end_period" ,"",:readonly=>true %>
      <%=hidden_field_tag "start_date" , params[:start_date] %>
      <%=hidden_field_tag "end_date" , params[:end_date] %>
      <%=hidden_field_tag "room_type" , params[:room_type] %>
      
-     
-     
-   </td>
-
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       IOcc
-   </td>
-   <td>
-     <%=text_field_tag "SINGLEOCCUPANCY"  %>
-   </td>
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       IIOcc
-   </td>
-   <td>
-     <%=text_field_tag "DOUBLEOCCUPANCY"  %>
-   </td>
-</tr>
- <tr>
-   <td class="todate_fromdateheadingtext">
-       IIIOcc
-   </td>
-   <td>
-     <%=text_field_tag "TRIPLEOCCUPANCY"  %>
-   </td>
-</tr>
- <tr>
-   <td class="todate_fromdateheadingtext">
-        II+Child
-   </td>
-   <td>
-     <%=text_field_tag "QUADRUPLEOCCUPANCY"  %>
-   </td>
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       +Adult
-   </td>
-   <td>
-     <%=text_field_tag "ROLLAWAYADULT"  %>
-   </td>
-</tr>
-<tr>
-   <td class="todate_fromdateheadingtext">
-       +Child
-   </td>
-   <td>
-     <%=text_field_tag "ROLLAWAYCHILD"  %>
-   </td>
-</tr>
-<tr>
-  <td class="todate_fromdateheadingtext"  >
-    Room Checking
-  </td>
+    </td>
   </tr>
- </table>
-<table>
-   
-  <table width="200" align="center">
-        <tr>
-              <td class="todate_fromdateheadingtext">
-       Su
-   </td>
-   <td>
-      
-     <%=check_box_tag  "CTASU", 0%>
-   </td>
-          <td class="todate_fromdateheadingtext">
-            Mo
-          </td>
-          <td class="todate_fromdateheadingtext">
-            <%=check_box_tag  "CTAMO", 0%>
-          </td>
-          <td class="todate_fromdateheadingtext">
-       Tu
-   </td>
-   <td>
-      
-     <%=check_box_tag  "CTATU", 0%>
-   </td>
-    <td class="todate_fromdateheadingtext">
-       We
-   </td>
-   <td>
-      
-     <%=check_box_tag  "CTAWE", 0%>
-   </td>
-    <td class="todate_fromdateheadingtext">
-       Th
-   </td>
-   <td>
-     <%=check_box_tag  "CTATH", 0%>
-      
-   </td>
-    <td class="todate_fromdateheadingtext">
-       Fr
-   </td>
-   <td>
-      
-     <%=check_box_tag  "CTAFR", 0%>
-     
-   </td>
-    <td class="todate_fromdateheadingtext">
-       St
-   </td>
-   <td>
-      
-     <%=check_box_tag  "CTASA", 0%>
-   </td>
+  <tr span class="todate_fromdateheadingtext">
+    <td><div align="left">IOcc</div></td>
+    <td><%=text_field_tag "SINGLEOCCUPANCY"  %></td>
+  </tr>
+ <tr span class="todate_fromdateheadingtext">
+    <td><div align="left">IIOcc</div></td>
+    <td><%=text_field_tag "DOUBLEOCCUPANCY"  %></td>
+  </tr>
+  <tr span class="todate_fromdateheadingtext">
+    <td><div align="left">IIIOcc</div></td>
+    <td><%=text_field_tag "TRIPLEOCCUPANCY"  %></td>
+  </tr>
+  <tr span class="todate_fromdateheadingtext">
+    <td><div align="left">II+ Child</div></td>
+    <td><%=text_field_tag "QUADRUPLEOCCUPANCY"  %></td>
+  </tr>
+  <tr span class="todate_fromdateheadingtext">
+    <td><div align="left">+ Adult</div></td>
+    <td>  <%=text_field_tag "ROLLAWAYADULT"  %></td>
+  </tr>
+  <tr span class="todate_fromdateheadingtext">
+    <td><div align="left">+ Child</div></td>
+    <td><%=text_field_tag "ROLLAWAYCHILD"  %></td>
+  </tr>
+</table>
 
-        </tr>
-          
+<table width="418" height="86" border="0" style="margin-left:30px; float:left; margin-top:15px;" >
+  <tr >
+    <td height="23" colspan="7" class="selectroomtype"><div align="left">Room Checking</div></td>
+  </tr>
+  <tr>
+    <td width="62"  class="todate_fromdaterequlartext" height="23">Mon    
+        <%=check_box_tag  "CTAMO", 0%></td>
+    <td width="53" class="todate_fromdaterequlartext">Tu
+     <%=check_box_tag  "CTATU", 0%></td>
+    <td width="56"  class="todate_fromdaterequlartext">We    
+   <%=check_box_tag  "CTAWE", 0%></td>
+    <td width="52"  class="todate_fromdaterequlartext">Th
+   <%=check_box_tag  "CTATH", 0%></td>
+    <td width="44"  class="todate_fromdaterequlartext">Fr
+           <%=check_box_tag  "CTAFR", 0%></td>
+    <td width="50"  class="todate_fromdaterequlartext">Sat
+      <input type="checkbox" name="checkbox13" id="checkbox13" /></td>
+    <td width="55"  class="todate_fromdaterequlartext">Sa
+       <%=check_box_tag  "CTASA", 0%></td>
+  </tr>
+  <tr>
+    <td height="27">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td colspan="4" align="right">
+      <div class="addroombutton">
+         <%=submit_tag "Submit",:class=>"submit_button"%>
+      </div> 
+    </td>
+    
+  </tr>
+</table>
+
  
-<tr><td>
-    <div class="addroombutton">
-    <%=submit_tag "Submit",:class=>"submit_button"%>
-    </div>    
-    </td></tr>
-  </table>
   </form>
 
 </div>
+
+   
+
+
+
+
+
+</div>
+
  
   
-<div class="todate_fromdatebg1"> 
-
-<table border="1">
-  <tr>
-        <th class="todate_fromdateheadingtext">
-      Edit
-      </th>
-    <th class="todate_fromdateheadingtext">
-      Room Type
-      </th>
-    <th class="todate_fromdateheadingtext">
-      Start Date
-      </th>
-    <th class="todate_fromdateheadingtext">
-      End Date
-      </th>
-    
-      <th class="todate_fromdateheadingtext">
-       I Occ
-      
-      </th>
-      <th class="todate_fromdateheadingtext">
-      II Occ
-      </th>
-      <th class="todate_fromdateheadingtext">
-       III Occ
-      </th>
-       <th class="todate_fromdateheadingtext">
-      II+Child
-      </th>
-        <th class="todate_fromdateheadingtext">
-       +Adult
-      </th>
-      <th class="todate_fromdateheadingtext">
-       +Child
-      </th>
-      <th  class="todate_fromdateheadingtext">
-        Su
-      </th>
-      <th  class="todate_fromdateheadingtext">
-        Mo
-      </th>
-      <th  class="todate_fromdateheadingtext">
-        Tu
-      </th>
-      <th  class="todate_fromdateheadingtext">
-        We
-      </th>
-      
-      <th  class="todate_fromdateheadingtext">
-        Th
-      </th>
-      <th  class="todate_fromdateheadingtext">
-        Fr
-      </th>
-      <th  class="todate_fromdateheadingtext">
-        St
-      </th>
-      
-    </tr>
-   
+ <%if ((@get_rates !=nil) &&   (!@get_rates.blank?) && (!@get_rates["diffgram"].blank? ) )%>   
+<table width="884" height="111" border="1" align="center"  style="border-collapse: collapse;float: left;margin-left: 40px;margin-top: 30px;table-layout: fixed;">
+  <tr span class="todate_fromdateheadingtext">
+    <td width="36" rowspan="2">Edit</td>
+    <td width="74" rowspan="2">Room Type</td>
+    <td width="78" rowspan="2">Start Date</td>
+    <td width="78" rowspan="2">End Date</td>
+    <td width="47" rowspan="2">IOcc</td>
+    <td width="51" rowspan="2">IIOcc</td>
+    <td width="50" rowspan="2">IIIOcc</td>
+    <td width="65" rowspan="2">II+Child</td>
+    <td width="55" rowspan="2">+ Adult</td>
+    <td width="55" rowspan="2">+ Child</td>
+    <td colspan="7"><div align="center">Room Categories</div></td>
+  </tr>
+ <tr span class="todate_fromdateheadingtext">
+    <td width="36">Sun</td>
+    <td width="36">Mon</td>
+    <td width="35">Tue</td>
+    <td width="37">Wed</td>
+    <td width="35">Thu</td>
+    <td width="36">Fri</td>
+    <td width="35">Sat</td>
+  </tr>
     <%countperiod = 1%>
     <%if ((@get_rates !=nil) &&   (!@get_rates.blank?) && (!@get_rates["diffgram"].blank? ) )%>
     <%@get_rates["diffgram"][0]["NewDataSet"][0]["Rate"].each do |get_rate|%>
@@ -279,7 +195,7 @@
     <input type="hidden" value="<%=get_rate['CTAFR'][0]%>" id="<%=countperiod%>CTAFR" />
     <input type="hidden" value="<%=get_rate['CTASA'][0]%>" id="<%=countperiod%>CTASA" />
     <input type="hidden" value="<%=get_rate['CTASU'][0]%>" id="<%=countperiod%>CTASU" />
-   
+     
     
     <script>
    function update_values(count)
@@ -290,14 +206,15 @@
      $('#DOUBLEOCCUPANCY').val($('#'+count+'DOUBLEOCCUPANCY').val());
      $('#TRIPLEOCCUPANCY').val($('#'+count+'TRIPLEOCCUPANCY').val());
      $('#QUADRUPLEOCCUPANCY').val($('#'+count+'QUADRUPLEOCCUPANCY').val());
-      $('#ROLLAWAYADULT').val($('#'+count+'ROLLAWAYADULT').val());
+     $('#ROLLAWAYADULT').val($('#'+count+'ROLLAWAYADULT').val());
      $('#ROLLAWAYCHILD').val($('#'+count+'ROLLAWAYCHILD').val());
-      if ($('#'+count+'CTAMO').val() == 1)
+     
+     if ($('#'+count+'CTAMO').val() == 1)
        {
-         $('#CTAMO').prop('checked',true);
+         $("#CTAMO").prop('checked',true);
        }
      if ($('#'+count+'CTATU').val() == 1)
-       { 
+       {
          $("#CTATU").prop('checked',true);
        }
      if ($('#'+count+'CTAWE').val() == 1)
@@ -318,67 +235,82 @@
        }
      if ($('#'+count+'CTASU').val() == 1)
        {
-          
          $("#CTASU").prop('checked',true);
-       } 
-      $("#todate_fromdatebg1").show();
+       }      
+       
+      
+      
+    
+      
+     $("#todate_fromdatebg1").show();
      
      return false;
      
    }
    </script>
-           
-    <tr>
-      <td>
-          <%=link_to "Edit" ,"#",:onclick=>"return update_values(#{countperiod})"%>
-        </td>
-        <td>
-         <%=params[:room_type]%>
-        </td>
-        <td>
-         <%=get_rate['BEGINPERIOD'][0].to_s.split('T')[0]%>
-        </td>
-        <td>
-           <%=get_rate['ENDPERIOD'][0].to_s.split('T')[0]%>
-        </td>
-        <td>
-          <%=get_rate['SINGLEOCCUPANCY'][0]%>
-         </td>
-         <td>
-          <%=get_rate['DOUBLEOCCUPANCY'][0]%>
-         </td>
-          <td>
-          <%=get_rate['TRIPLEOCCUPANCY'][0]%>
-         </td>
-         <td>
-          <%=get_rate['QUADRUPLEOCCUPANCY'][0]%>
-         </td>
-          <td>
-          <%=get_rate['ROLLAWAYADULT'][0]%>
-         </td>
-      <td>
-          <%=get_rate['ROLLAWAYCHILD'][0]%>
-         </td>
-         <td><%=get_rate['CTASU'][0]%>
-          </td>
-          <td><%=get_rate['CTAMO'][0]%>
-          </td>
-          <td><%=get_rate['CTATU'][0]%>
-          </td>
-          <td><%=get_rate['CTAWE'][0]%>
-          </td>
-          <td><%=get_rate['CTATH'][0]%>
-          </td>
-       <td><%=get_rate['CTAFR'][0]%>
-          </td>
-          <td><%=get_rate['CTASA'][0]%>
-          </td>
-          
-      </tr>
-      
-    <%end%>
-    <%end%>
-  </table>
+   <tr span class="todate_fromdaterequlartext">
+    <td><%=link_to  image_tag("pencil.jpg",:size=>"20x20") ,"#",:onclick=>"return update_values(#{countperiod})"%></td>
+    <td> <%=params[:room_type]%></td>
+    <td > <%=get_rate['BEGINPERIOD'][0].to_s.split('T')[0]%></td>
+    <td > <%=get_rate['ENDPERIOD'][0].to_s.split('T')[0]%></td>
+    <td> <%=get_rate['SINGLEOCCUPANCY'][0]%></td>
+    <td> <%=get_rate['DOUBLEOCCUPANCY'][0]%></td>
+    <td> <%=get_rate['TRIPLEOCCUPANCY'][0]%></td>
+    <td> <%=get_rate['QUADRUPLEOCCUPANCY'][0]%></td>
+    <td> <%=get_rate['ROLLAWAYADULT'][0]%></td>
+    <td><%=get_rate['ROLLAWAYCHILD'][0]%></td>
+    <td> <%if get_rate['CTASU'][0] == "1"%>
+                <%=check_box_tag "readonlyCTASU" ,"1",true ,:disabled=>true%>
+           <%else%>
+                <%=check_box_tag "readonlyCTASU" ,"1",false,:disabled=>true %>
+           <%end%>
+</td>
+    <td>             <%if get_rate['CTAMO'][0] == "1"%>
+                <%=check_box_tag "readonlyCTAMO" ,"1",true ,:disabled=>true%>
+           <%else%>
+                <%=check_box_tag "readonlyCTAMO" ,"1",false,:disabled=>true %>
+           <%end%>
+</td>
+    <td>             <%if get_rate['CTATU'][0] == "1"%>
+                <%=check_box_tag "readonlyCTATU" ,"1",true ,:disabled=>true%>
+           <%else%>
+                <%=check_box_tag "readonlyCTATU" ,"1",false,:disabled=>true %>
+           <%end%>
+</td>
+    <td>             <%if get_rate['CTAWE'][0] == "1"%>
+                <%=check_box_tag "readonlyCTAWE" ,"1",true ,:disabled=>true%>
+           <%else%>
+                <%=check_box_tag "readonlyCTAWE" ,"1",false,:disabled=>true %>
+           <%end%>
+</td>
+    <td>             <%if get_rate['CTATH'][0] == "1"%>
+                <%=check_box_tag "readonlyCTATH" ,"1",true ,:disabled=>true%>
+           <%else%>
+                <%=check_box_tag "readonlyCTATH" ,"1",false,:disabled=>true %>
+           <%end%>
+</td>
+    <td>          <%if get_rate['CTAFR'][0] == "1"%>
+                <%=check_box_tag "readonlyCTAFR" ,"1",true ,:disabled=>true%>
+           <%else%>
+                <%=check_box_tag "readonlyCTAFR" ,"1",false,:disabled=>true %>
+           <%end%>
+</td>
+    <td>             <%if get_rate['CTASA'][0] == "1"%>
+                <%=check_box_tag "readonlyCTASA" ,"1",true ,:disabled=>true%>
+           <%else%>
+                <%=check_box_tag "readonlyCTASA" ,"1",false,:disabled=>true %>
+           <%end%>
+</td>
+    
+    
+   
+   
+   <%end%>
+   <%end%>
+  
+  
+</table>
+ <%end%>
  
   
   </div>

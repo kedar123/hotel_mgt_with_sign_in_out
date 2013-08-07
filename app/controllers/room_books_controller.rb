@@ -290,7 +290,7 @@ class RoomBooksController < ApplicationController
      #because here the room is assigned to a particular shop and its assume that one room has only one shop.so in the down loop 
      #there is no need to particularly check the shop id of HotelReservationThroughGdsConfiguration. because in any case if the
      #date is overlapped 
-     if params[:commit] == 'Get Available Rooms'
+     if params[:commit] == 'Get  Rooms'
          allgdsconfgr = GDS::HotelReservationThroughGdsConfiguration.find(:all,:domain=>[['shop_id','=',session[:gds_shop_id].to_i]])
          weatherconfisavlornot = false
          allgdsconfgr.each do |hrtgdsconf|
@@ -358,7 +358,18 @@ class RoomBooksController < ApplicationController
         logger.info "already in thjis catg"
          asrmn = eld.associations['room_number']
          asrmn << addtogdsroom
-         eld.associations['room_number'] = asrmn.flatten!
+         asrmn = asrmn.flatten!
+         logger.info asrmn
+         logger.info "1111111111"
+         logger.info asrmn.uniq
+         
+         asrmn = asrmn.uniq
+         logger.info asrmn
+         logger.info "44444444444444444444455555"
+          
+         #this above condition i am putting because sometimes there is error if user go back and submit a form again.
+         #this is not the case of openerp but in web form it might happen
+         eld.associations['room_number'] = asrmn
          logger.info eld.inspect
          logger.info "888888888888888888"
          eld.save
@@ -383,9 +394,12 @@ class RoomBooksController < ApplicationController
      #redirect_to room_books_add_room_date_path({:room_type=>params[:room_type],:start_date=>params[:start_date],:end_date=>params[:end_date],:gdscid=>hrtgdsconf.id})  
     redirect_to "/room_books/show_type/"+hrtgdsconf.id.to_s,:notice=>"The Room Is Added To A Configuration"  and return
     rescue => e
+      logger.info "1111111111111111111"
       logger.info e.message
+      logger.info "666666666666666666"
       logger.info e.inspect
-      redirect_to gds_auths_path ,:notice=>"Your Session Is Expired Please Login Again" and return
+      logger.info "44444444444444444444444444444444444444444"
+      redirect_to room_books_path ,:notice=>e.message and return
     end
   
   end
@@ -544,7 +558,8 @@ class RoomBooksController < ApplicationController
     end
     #if it is an add an item then i have to redirect it to add an item method.this method will keep the layout
     #same but it will have an drop down box for selecting an room type
-    if params[:commit] == 'Add An Item'
+    #Add Room  need to replace Add An Item
+    if params[:commit] == 'Add Room'
       
           
          redirect_to room_books_add_an_item_path({:gdsid=>params[:gdsid]}) and return
@@ -763,8 +778,17 @@ class RoomBooksController < ApplicationController
          logger.info addtogdsroom
          logger.info "ssssssssssssssssssssssssssssssssssssssssssssssssss"
          asrmn << addtogdsroom
-         eld.associations['room_number'] = asrmn.flatten!
+         logger.info "7777777777"
+         logger.info asrmn
+           
+         asrmn = asrmn.flatten!
+         asrmn = asrmn.uniq
+         
+         logger.info "2222222222"
+          
+         eld.associations['room_number'] = asrmn
          logger.info eld.inspect
+      
          logger.info "888888888888888888"
          eld.save
          catnotmatched = true 

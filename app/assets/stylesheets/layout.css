@@ -241,7 +241,7 @@ body { background-color: #FFFFFF; margin:auto; padding:0px; text-align:center; b
 
 .todate_fromdatebg {width:520px; height:auto; float:left; margin:auto; box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -o-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); margin-left:230px; margin-top:20px; border-radius:8px; }
 
-.todate_fromdatebg1 {width:auto; height:auto; float:left; margin:auto; box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -o-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); margin-left:30px; margin-top:20px; border-radius:8px; }
+.todate_fromdatebg1 {width:900px;overflow: scroll;     height:auto; float:left; margin:auto; box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); -o-box-shadow: 0px 0px 4px rgba(0,0,0,0.3); margin-left:30px; margin-top:20px; border-radius:8px; }
 
 .todate_fromdateheadingbg {width:520px; height:30px; float:left; margin:auto; background-image:url(innerpageheaderbg.png); background-repeat:repeat-x; }
 
