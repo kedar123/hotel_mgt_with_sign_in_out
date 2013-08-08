@@ -7,6 +7,12 @@
 <%###############################%>
 <div class="todate_fromdatebg">
 <div class="todate_fromdateheadingbg">
+  
+     <table><tr><td>
+ <%= link_to 'Back', "#"  ,:class=>"submit_button",:onclick=>" window.history.back();"%>
+  </td>
+  </tr>
+  </table>
 </div>
 
 <table width="297" height="79" border="0" align="center">
@@ -42,7 +48,7 @@
    
 </table>
 
-<table width="297" border="0" align="center">
+<table width="140" border="0" align="center">
   <tr>
     <td height="33" colspan="2"><div align="left"><span class="selectroomtype">Select Room Type</span> </div></td>
   </tr>
@@ -82,7 +88,7 @@
              <tr>
                <td><%=check_box "addroom" , arm.id%>
                  </td>
-                 <td><%=arm.name%>
+                 <td><span class="todate_fromdaterequlartext"><%=arm.name%></span>
                    </td>
                </tr>
              </table>
@@ -92,15 +98,15 @@
     <%end%>
   <%end%>
         <tr>
-         <td>&nbsp;</td>
+          
           <%if @bookedgdsc[0]%>
 <%=hidden_field_tag "gdscid",@bookedgdsc[0].id%>
 <%end%>
  <%=hidden_field_tag "gdscid",params[:gdscid]%>
 <%=hidden_field_tag "checkin",@paramscheckin%>
 <%=hidden_field_tag "checkout",@paramschekout%>
-<td colspan="2">
- <%=submit_tag "Add to gds",:id=>"button",:name=>"button",:class=>'submit_button'%>
+<td colspan="1">
+ <%=submit_tag "Add to gds",:id=>"button",:name=>"button",:class=>'submit_button' %>
         </td>
        </tr>
 </table>

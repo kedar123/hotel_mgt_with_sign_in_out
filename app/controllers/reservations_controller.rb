@@ -93,7 +93,7 @@ class ReservationsController < ApplicationController
   
   
   def room_confirm
-        Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => 'hotel_kedar_1', :username =>'admin', :password   => 'admin')       
+        Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => 'hotel_mgmt_payment_7', :username =>'admin', :password   => 'admin')       
      all_res_room = HotelRoomBookingHistory.find(:all)
       all_res_room.each do |ares|
         p ares.name
@@ -524,7 +524,7 @@ class ReservationsController < ApplicationController
     #here i am making an connection again because i seen one error of uninitialize constant. which should not happen 
     #actually because at first time i am connecting to openerp which according to me should be kept in memory. but still 
     #because of error i am connecting again
-    @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
+    @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_mgmt_payment_7", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
     @resname = ""
     if !session[:user_id_avail].blank?
       @partner_id = ResPartner.find(session[:user_id_avail])

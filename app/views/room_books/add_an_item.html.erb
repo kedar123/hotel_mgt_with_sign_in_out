@@ -4,6 +4,15 @@
 
 <div class="todate_fromdatebg">
 <div class="todate_fromdateheadingbg1" >
+     <table width="50" height="28" border="0" align="Left" >
+  <tr>
+    
+    <td width="71">
+        <!--<input type="submit" name="button4" id="button4" value="Back" />-->
+         <%=link_to "Back","/room_books/show_type/"+params[:gdsid],:class=>'submit_button'%>
+    </td>
+  </tr>
+</table> 
 </div>
 <%=form_tag('/room_books/add_an_item' )%>
 <table width="297" height="79" border="0" align="center">
@@ -23,26 +32,28 @@
   </tr>
  <%=hidden_field_tag :gdsid,params[:gdsid]%>
   <tr>
-    <td height="33" colspan="2"><div align="center"><span class="selectroomtype">Select Room Type</span> </div></td>
+    <td width="104" height="23"><span class="selectroomtype">Room Type</span></td>
+    <td width="177">
+        <%if params[:commit] == "Show Rooms"%>
+            <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "",:disabled=>true %> 
+        <%else%>
+           <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "" %> 
+        <%end%>
+    </td>
   </tr>
-  <tr>
-    <td width="129" height="32" colspan="2">
      
     <%if params[:commit] == "Show Rooms"%>
-<%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "",:disabled=>true %> 
-
+ 
 <%else%>
+  <tr><td width="129" height="32" >&nbsp;</td>
+    <td width="129" height="32" >
       
-<%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "" %> 
-    </td>
-    </tr>
-    <tr>
-      <td width="129" height="32" colspan="2">
-<%=submit_tag "Show Rooms",:class=>'submit_button' %>
-<%end%>
-    </td>
+  <%=submit_tag "Show Rooms",:class=>'submit_button' %>
+      </td>
      
   </tr>
+<%end%>
+    
  
    
   
@@ -134,7 +145,7 @@
       
            end%>
    <%if viewbookedarraya.blank?%>
-              <tr>
+ <tr> <td></td>
                  <td>
                    <table>
                      <tr>
@@ -149,7 +160,9 @@
                </tr>
     <%end%>
      <%end%>
-   <tr><td> <%=submit_tag "Add To Gds",:class=>'submit_button'%></td></tr>
+   <tr>
+     <td> </td>
+     <td> <%=submit_tag "Add To Gds",:class=>'submit_button'%></td></tr>
 <%end%>
   
          

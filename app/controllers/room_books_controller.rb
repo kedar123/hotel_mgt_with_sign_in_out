@@ -873,8 +873,8 @@ class RoomBooksController < ApplicationController
            logger.info "at this time i need to fire a query"
               
                #  server = XMLRPC::Client.new2("http://192.168.1.47:8069/xmlrpc"+"/common")
-               #  content = server.call("login", "hotel_kedar_1" ,"admin","admin")
-               #  database = "hotel_kedar_1"
+               #  content = server.call("login", "hotel_mgmt_payment_7" ,"admin","admin")
+               #  database = "hotel_mgmt_payment_7"
                #  username = "admin"
                #  password = "admin"
 

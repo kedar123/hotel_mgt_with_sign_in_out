@@ -11,13 +11,13 @@
 <%=hidden_field_tag 'room_type',params[:avlfgds]%>
 <%=hidden_field_tag 'gdscid',@gdsconf.id%>
     
-    
+
    <table width="50" height="28" border="0" align="Left" >
   <tr>
     
     <td width="71">
         <!--<input type="submit" name="button4" id="button4" value="Back" />-->
-         <%=link_to "Back",room_books_path,:class=>'submit_button'%>
+         <%=link_to "Back","/room_books/show_type/"+params[:gdsid],:class=>'submit_button'%>
     </td>
   </tr>
 </table> 

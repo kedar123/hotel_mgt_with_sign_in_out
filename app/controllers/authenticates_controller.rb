@@ -92,7 +92,7 @@ class AuthenticatesController < ApplicationController
   end
   
   def select_company
-    @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
+    @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_mgmt_payment_7", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
     @res = ResCompany.all 
     logger.info @res.inspect
     @resname = ""
@@ -154,7 +154,7 @@ class AuthenticatesController < ApplicationController
    
    def forgot_password_auth
      
-     @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
+     @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_mgmt_payment_7", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
      logger.info "ffffffffffffffffffff"
          res = ResPartner.search([["email","=", params[:useremail] ]]) 
           if res.blank?
@@ -172,7 +172,7 @@ class AuthenticatesController < ApplicationController
    #this is an authentication sign up method which will create an respartner record in openerp 
    def sign_up_auth
  
-@ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
+@ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_mgmt_payment_7", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
  
   
       if !params[:email].blank?

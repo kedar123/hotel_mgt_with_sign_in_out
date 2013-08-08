@@ -53,7 +53,7 @@ class GdsAuthsController < ApplicationController
      begin
    server = XMLRPC::Client.new2("http://192.168.1.47:8069/xmlrpc"+"/common")
    #here i am making some fields static 
-   content = server.call("login", "hotel_kedar_1" ,params[:username].to_s,params[:userauth].to_s)  
+   content = server.call("login", "hotel_mgmt_payment_7" ,params[:username].to_s,params[:userauth].to_s)  
      respond_to do |format|
       if  content == 1
         #here i am creating an global variable that is why we can access it into other controller and reload the models 
@@ -62,12 +62,12 @@ class GdsAuthsController < ApplicationController
         #variable. so that there will not be an conflict.
         #what i feel here is lets have a $variable be there because i think that will help me reloading in next methods. but same time
         #keep a scope prefix for the purpose of accessing the openerp tables.
-        $authenticate = Ooor.new(:url => "http://192.168.1.47:8069/xmlrpc" , :database => "hotel_kedar_1", :username => params[:username] , :password => params[:userauth] ,:scope_prefix=>'GDS' ,:reload => true)
+        $authenticate = Ooor.new(:url => "http://192.168.1.47:8069/xmlrpc" , :database => "hotel_mgmt_payment_7", :username => params[:username] , :password => params[:userauth] ,:scope_prefix=>'GDS' ,:reload => true)
         #here i need to keep the values in session as i seen there is a reload issue in showing all list method
         # in updateavails controller. so what i am doing here is keeping this values in session
         #and try to create a new instance with these values
         session[:gerpurl] =  "http://192.168.1.47:8069/xmlrpc"
-        session[:gdatabase] =  "hotel_kedar_1"
+        session[:gdatabase] =  "hotel_mgmt_payment_7"
         session[:gusername] = params[:username]
         session[:userauth] = params[:userauth]
         #here now a flow is little changed as after authenticate i should show a page where an user can select an 

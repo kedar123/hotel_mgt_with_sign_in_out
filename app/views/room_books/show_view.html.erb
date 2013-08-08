@@ -1,23 +1,61 @@
+  
+<div class="">
 
-<div>
-Start Date<%=@hrtgdsconf.name%>
-<br/>
-End Date<%=@hrtgdsconf.to_date%>
-<br/>
+<div class="availableforgdsbg">
+<div class="availableforgdsbgheadingbg">
+
+ <table>
+          <tr>
+            <td>
+            <%=link_to "Back",room_books_path,:class=>"submit_button"%>
+               </td>
+               </tr>
+               </table>
+
+    
+    
+    
+  
+</div>
+
+<table width="590" height="199" border="0">
+  <tr>
+    <td height="32" colspan="2"><div align="center"><span class="todate_fromdateheadingtext">Start Date: -</span>&nbsp; <span class="todate_fromdaterequlartext"><%=@hrtgdsconf.name%></span></div></td>
+  </tr>
+  <tr>
+    <td height="32" colspan="2"><div align="center"><span class="todate_fromdateheadingtext">End Date:-</span><span class="todate_fromdaterequlartext"> &nbsp;&nbsp;&nbsp;<%=@hrtgdsconf.to_date%></span></div></td>
+  </tr>
+ 
+ 
+ 
+  
+   <%for lineid in @hrtgdsconf.line_ids%>
+            <tr><td width="246" height="23">
+                  <span class="todate_fromdateheadingtext"> <%=lineid.categ_id.name%>
+                  </span>
+                  </td>
+              </tr>
+              
+            <tr>
+              <td width="246" height="23"><span class="todate_fromdaterequlartext">
+                   <%    lineid.room_number.each do |rn|%>
+              <%=rn.name%>
+                    <%end%>
+                  </span></td>
+            </tr>  
+
+            <%end%>
+ 
+</table>
+
+
+
+
 
 </div>
 
-<%for lineid in @hrtgdsconf.line_ids%>
-<div>
-       <%=lineid.categ_id.name%>
-</div>  
-<div>
-       <%    lineid.room_number.each do |rn|%>
-  <%=rn.name%>
-        <%end%>
-</div>  
 
-<%end%>
-<span class="logoutbutton1">
-<%=link_to "Back",room_books_path%>
-  </span>
+
+
+</div>
+

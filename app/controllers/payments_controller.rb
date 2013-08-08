@@ -364,7 +364,7 @@ class PaymentsController < ApplicationController
   #here ip addtess means a uniq token return by paypal for each transactions.
   #as there is some problem in keeping the track of session[:database_name]. and also in this current situation the database_name
   # is fixed so i am just removing an session[:database_name] and keeping static name
-  Ipbasesdb.create(:dbname=>"hotel_kedar_1" ,:ipaddress=>setup_response.token) 
+  Ipbasesdb.create(:dbname=>"hotel_mgmt_payment_7" ,:ipaddress=>setup_response.token) 
    logger.info "redirecting to checkout "
   redirect_to gateway.redirect_url_for(setup_response.token)
   end   
