@@ -61,15 +61,7 @@ class RoomBooksController < ApplicationController
  
   end 
   
-  
-  
-  
-  
-
-  
-  
-  
-  
+     
   
   def show_view
     begin
@@ -85,8 +77,7 @@ class RoomBooksController < ApplicationController
 
   def show_type
      logger.info "show typeeeeeeeeee"
-     
-    @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:id])
+     @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:id])
     logger.info "ssssssssssssssss"
     @hrtgdsconf.reload
     logger.info "77777777777777777777"
@@ -109,7 +100,7 @@ class RoomBooksController < ApplicationController
      render :layout=>"gds"
   end
   
-  
+
   
   
   
@@ -520,14 +511,12 @@ class RoomBooksController < ApplicationController
   
   def available_for_gds
       #now here i need to fetch all the rooms allocated in this hrcgds
-    #so again i need to find gds configuration so that in view i can show all the room names by loop
-    
+      #so again i need to find gds configuration so that in view i can show all the room names by loop
     begin
       logger.info GDS
     rescue=>e
       redirect_to gds_auths_path ,:notice=>"Your Session Has Been Expired Please Login Again" and return
     end
-    
       if !params[:id].blank?
         id=''
         if params[:id].include? 'avlfgds'
@@ -536,17 +525,11 @@ class RoomBooksController < ApplicationController
            params[:avlfgds] = avlfgds
            params[:checkin] = params[:id].split('&&')[2].split("=")[1]
            params[:checkout] = params[:id].split('&&')[3].split("=")[1]
-           
         end
         @gdsconf = GDS::HotelReservationThroughGdsConfiguration.find(id)
-        
       else
-        
         @gdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:gdsid])
-        
-       end
-      
-     
+      end
     if params[:commit]=='Save'
        paramscheckin = "#{params[:start_date].split('/')[2]}-#{params[:start_date].split('/')[1]}-#{params[:start_date].split('/')[0]}"
        paramschekout = "#{params[:end_date].split('/')[2]}-#{params[:end_date].split('/')[1]}-#{params[:end_date].split('/')[0]}"
@@ -570,6 +553,17 @@ class RoomBooksController < ApplicationController
     
      render :layout=>"gds"
   end
+  
+    
+    #this is just a view rooms 
+    def view_rooms
+      p params
+      p "555555555555555555555"
+      @gdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:id])
+       render :layout=>"gds"
+       
+    
+    end
   
   
   #this method is get called after creation of rooms that is why the gdsconfid is available so there is no need to check anything

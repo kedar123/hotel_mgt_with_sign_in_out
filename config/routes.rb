@@ -7,6 +7,10 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   
   post "room_books/add_room"
   get  "room_books/add_room"
+  post  "room_books/view_rooms"
+  
+  
+  
   post "room_books/add_room_date"
   post "room_books/index_with_pag"
   

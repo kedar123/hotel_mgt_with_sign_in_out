@@ -340,12 +340,15 @@ class PaymentsController < ApplicationController
    logger.info request.remote_ip
    logger.info url_for(:action => 'confirm', :only_path => false)
    logger.info url_for(:action => 'index', :only_path => false)
-   
+   #here i need to show a dynamic currency . following are the available currency type available in paypal so if the
+   #openerp currency is matched with this array then assign it else convert it in usd and send it as usd.
+   available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF","USD"]
   setup_response = gateway.setup_purchase(params[:amount].to_i * 100,
     :items => [{:name => "Openerp Module", :quantity => 1,:description => "All Modules",:amount=> params[:amount].to_i * 100}], 
     :ip                => request.remote_ip,
     :return_url        => url_for(:action => 'confirm', :only_path => false),
-    :cancel_return_url => url_for(:action => 'cancel', :only_path => false)
+    :cancel_return_url => url_for(:action => 'cancel', :only_path => false),
+    :currency => 'LKR'
   )
  logger.info "this is set up responseaaa"
  logger.info setup_response.inspect
@@ -366,7 +369,9 @@ class PaymentsController < ApplicationController
   # is fixed so i am just removing an session[:database_name] and keeping static name
   Ipbasesdb.create(:dbname=>"hotel_mgmt_payment_7" ,:ipaddress=>setup_response.token) 
    logger.info "redirecting to checkout "
+   
   redirect_to gateway.redirect_url_for(setup_response.token)
+  
   end   
     
     
@@ -436,36 +441,43 @@ class PaymentsController < ApplicationController
      #call_voucher_create(hotelres,hf)
   end
   
+     #here an timeout error can occure if internet is slow then i will redirect it to root_url and note this error in log
+     #and a special log file
   def confirm
-    redirect_to :action => 'index' unless params[:token]
-   
-  session[:database_name] = Ipbasesdb.find_by_ipaddress(params[:token]).dbname 
-  logger.info "i just seen one error where the constant is uninitialize for session[:database_name] that is why makking "
-  logger.info "an connection again"
-  @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => session[:database_name], :username =>'admin', :password   => 'admin',:scope_prefix => session[:database_name].to_s.upcase.to_s)      #p "Connected to opererp database"
- 
-  @hotel = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.find(session[:newlysavedreservationid])
-  #i am taking this into another variables because sometimes in view this ooor @hotel object is not availabel
-  @checkin = @hotel.checkin
-  @checkout = @hotel.checkout
-  @room = []
-  @hotel.reservation_line.each do |ersl|
-       @room <<   ersl.room_number.name
-  end
-  @resname = @hotel.partner_id.name
-   
-  
-  session[:newlysavedreservationid]
-  details_response = gateway.details_for(params[:token])
-  
-  if !details_response.success?
-    @message = details_response.message
-    render :action => 'error'
-    return
-  end
-    
-  @address = details_response.address
-  
+     begin
+       
+       @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
+       
+     redirect_to :action => 'index' unless params[:token]
+     session[:database_name] = Ipbasesdb.find_by_ipaddress(params[:token]).dbname 
+     logger.info "i just seen one error where the constant is uninitialize for session[:database_name] that is why makking "
+     logger.info "an connection again"
+     @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => session[:database_name], :username =>'admin', :password   => 'admin',:scope_prefix => session[:database_name].to_s.upcase.to_s)      #p "Connected to opererp database"
+     @hotel = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.find(session[:newlysavedreservationid])
+     #i am taking this into another variables because sometimes in view this ooor @hotel object is not availabel
+     @checkin = @hotel.checkin
+     @checkout = @hotel.checkout
+     @room = []
+     @hotel.reservation_line.each do |ersl|
+        @room <<   ersl.room_number.name
+     end
+     @resname = @hotel.partner_id.name
+     session[:newlysavedreservationid]
+     details_response = gateway.details_for(params[:token])
+     if !details_response.success?
+        @message = details_response.message
+        render :action => 'error'
+        return
+     end
+     @address = details_response.address
+     raise error
+     rescue => e
+        logger.info e
+        logger.info e.inspect
+        logger.info e.message
+        @my_logger.info "gds and web error log"
+        
+     end
   end
   
   

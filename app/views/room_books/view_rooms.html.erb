@@ -1,0 +1,73 @@
+ 
+
+<div class="">
+
+<div class="availableforgdsbg">
+<div class="availableforgdsbgheadingbg">
+
+
+ 
+    
+
+   <table width="50" height="28" border="0" align="Left" >
+  <tr>
+    
+    <td width="71">
+        <!--<input type="submit" name="button4" id="button4" value="Back" />-->
+        <%= link_to 'Back', "#"  ,:class=>"submit_button",:onclick=>" window.history.back();"%>
+    </td>
+  </tr>
+</table> 
+  
+</div>
+
+<table width="590" height="199" border="0">
+  <tr>
+    <td height="32" colspan="2"><div align="center"><span class="todate_fromdateheadingtext">Start Date: -</span>&nbsp; 
+        <span class="todate_fromdaterequlartext"><%=params[:start_date]%></span></div></td>
+  </tr>
+  <tr>
+    <td height="32" colspan="2"><div align="center"><span class="todate_fromdateheadingtext">End Date:-</span>
+        <span class="todate_fromdaterequlartext"> &nbsp;&nbsp;&nbsp;<%=params[:end_date]%></span></div></td>
+  </tr>
+  <tr>
+    <td height="23" colspan="2"><div align="center" class="todate_fromdateheadingtext"><%=params[:avlfgds]%></div></td>
+  </tr>
+  <tr id="alreadyallocatedrooms">
+    <td height="25" colspan="2"><div align="center" class="selectroomtype">Already Allocated Rooms</div></td>
+  </tr>
+ 
+
+ 
+  <%for el in @gdsconf.line_ids%>
+  <%for rn in el.room_number%>
+  
+     <%if rn.categ_id.name == params[:avlfgds] %>
+       <tr>
+          <td width="500" height="23">
+             <div align="left" style="margin-left:220px;">
+               
+              <span class="todate_fromdaterequlartext"><%=rn.name%></span>
+            </div>
+          </td>
+       </tr>       
+    <%end%>
+    <%end%>
+  <%end%>
+   
+  
+ 
+   
+  
+</table>
+
+
+
+ 
+</div>
+
+
+
+
+</div>
+ 

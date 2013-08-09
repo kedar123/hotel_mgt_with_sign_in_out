@@ -1,4 +1,29 @@
-  
+
+<script>
+  function check_radio_button()
+  {
+    mylastreturn = true;
+    if($('#showallocateclick').val()=='1')
+     {
+     var checked = false, radios  = document.getElementsByName( 'avlfgds' );
+    for(var i = 0, radio; radio = radios[i]; i++) {
+        if (radio.checked) {
+            checked = true;
+            break;
+        }
+       }
+     if(!checked) {
+        alert("Please select room type");
+        mylastreturn = false;
+
+     }
+else
+     {
+     }
+      }
+      return mylastreturn;
+  }
+ </script>     
 <div class="">
 
 <div class="availableforgdsbg">
@@ -18,40 +43,47 @@
   
 </div>
 
-<table width="590" height="199" border="0">
+<table width="590"   border="0">
   <tr>
     <td height="32" colspan="2"><div align="center"><span class="todate_fromdateheadingtext">Start Date: -</span>&nbsp; <span class="todate_fromdaterequlartext"><%=@hrtgdsconf.name%></span></div></td>
   </tr>
   <tr>
     <td height="32" colspan="2"><div align="center"><span class="todate_fromdateheadingtext">End Date:-</span><span class="todate_fromdaterequlartext"> &nbsp;&nbsp;&nbsp;<%=@hrtgdsconf.to_date%></span></div></td>
   </tr>
- 
- 
- 
+</table>
   
-   <%for lineid in @hrtgdsconf.line_ids%>
-            <tr><td width="246" height="23">
-                  <span class="todate_fromdateheadingtext"> <%=lineid.categ_id.name%>
-                  </span>
-                  </td>
-              </tr>
-              
-            <tr>
-              <td width="246" height="23"><span class="todate_fromdaterequlartext">
-                   <%    lineid.room_number.each do |rn|%>
-              <%=rn.name%>
-                    <%end%>
-                  </span></td>
-            </tr>  
-
-            <%end%>
+  <%=form_tag('/room_books/view_rooms',:onsubmit=>"return check_radio_button()" )%> 
+<table width="50"  align="center"  border="0">
  
+
+   <%for lineid in @hrtgdsconf.line_ids%>
+  
+            <tr>  <td width="246" height="23"  >
+                   <%=radio_button_tag "avlfgds",lineid.categ_id.name %>
+                            </td>
+                         <td  class="todate_fromdaterequlartext" width="20" align="left">
+                          <span class="todate_fromdaterequlartext"> <%=lineid.categ_id.name%>
+                          </span>
+                          </td>
+                        </tr>
+     <%end%>
+</table>                        
+      <tr>
+        <td align="center">
+          <%=submit_tag "show rooms" ,:class=>"submit_button3"%>
+        </td>
+      </tr>
+    
 </table>
 
+<%=hidden_field_tag "start_date", @hrtgdsconf.name %>
+<%=hidden_field_tag "end_date", @hrtgdsconf.to_date %>
+<%=hidden_field_tag "id", @hrtgdsconf.id.to_s %>
 
 
 
 
+</form>
 </div>
 
 
