@@ -353,7 +353,6 @@ class PaymentsController < ApplicationController
   end
   
   def checkout
-    
    logger.info "amoint"
    logger.info params[:amount].to_i * 100
    logger.info request.remote_ip
@@ -367,7 +366,6 @@ class PaymentsController < ApplicationController
    #if its come to else then i need to convert the amount to usd as its default
    #when it goes to paypal i am multiplying it by 100 . 
    paypal_amount = params[:amount].to_i
-   
    if  available_paypal_array.include?(base_currency.name)
        paypal_currency = base_currency.name
        paypal_amount = params[:amount].to_i * 100
@@ -380,15 +378,11 @@ class PaymentsController < ApplicationController
        logger.info "paypal amount5555555544444444"
        logger.info ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate
        logger.info paypal_amount
-       
-       
-       paypal_amount = paypal_amount  * ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate
-       paypal_amount = paypal_amount  
+        paypal_amount = paypal_amount  * ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate
+        paypal_amount = paypal_amount  * 100
      end
    end
-    
-    
-  setup_response = gateway.setup_purchase(paypal_amount,
+   setup_response = gateway.setup_purchase(paypal_amount,
     :items => [{:name => "Openerp Module", :quantity => 1,:description => "All Modules",:amount=> paypal_amount}], 
     :ip                => request.remote_ip,
     :return_url        => url_for(:action => 'confirm', :only_path => false),
