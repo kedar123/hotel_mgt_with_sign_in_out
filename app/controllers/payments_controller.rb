@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
    include ActiveMerchant::Billing
+   require 'net/http'
    layout 'web_layout'
   # GET /payments
   # GET /payments.json
@@ -12,6 +13,20 @@ class PaymentsController < ApplicationController
     end
   end
 
+  def convert_currency(from_curr = "INR", to_curr = "USD", amount = 1000)
+    host = "www.google.com"
+    http = Net::HTTP.new(host, 80)
+    url = "/finance/converter?a=#{amount}&from=#{from_curr}&to=#{to_curr}"
+    response = http.get(url)
+    # puts response.body
+    result = response.body
+    regexp = Regexp.new("(\\d+\\.{0,1}\\d*)\\s+#{to_curr}")
+    regexp.match result
+    return $1.to_f
+ end
+ 
+
+  
   # GET /payments/1
   # GET /payments/1.json
   def show
@@ -230,6 +245,10 @@ class PaymentsController < ApplicationController
         #so i will create a 
         logger.info @newres
         logger.info "newressssssssssssss"
+        #now here i need to add a code for currency converter. so here first i need to check with paypal if that 
+        #currency code matches if yes then there is no need to change.otherwise change it to usd.
+        @resname = ResCurrency.find(:all,:domain=>[['base','=',true]])[0].name     
+        
    end
    
    
@@ -342,13 +361,39 @@ class PaymentsController < ApplicationController
    logger.info url_for(:action => 'index', :only_path => false)
    #here i need to show a dynamic currency . following are the available currency type available in paypal so if the
    #openerp currency is matched with this array then assign it else convert it in usd and send it as usd.
-   available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF","USD"]
-  setup_response = gateway.setup_purchase(params[:amount].to_i * 100,
-    :items => [{:name => "Openerp Module", :quantity => 1,:description => "All Modules",:amount=> params[:amount].to_i * 100}], 
+   available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF"]
+   paypal_currency = "USD"
+   base_currency = ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
+   #if its come to else then i need to convert the amount to usd as its default
+   #when it goes to paypal i am multiplying it by 100 . 
+   paypal_amount = params[:amount].to_i
+   
+   if  available_paypal_array.include?(base_currency.name)
+       paypal_currency = base_currency.name
+       paypal_amount = params[:amount].to_i * 100
+       #when its different currency then no need to translate it to * by 100
+   else
+     #i assume that if its not included in paypal array and if the currency is not usd then convert it to usd
+     if base_currency.name == "USD"
+       paypal_amount = paypal_amount  * 100#usd 
+     else
+       logger.info "paypal amount5555555544444444"
+       logger.info ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate
+       logger.info paypal_amount
+       
+       
+       paypal_amount = paypal_amount  * ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate
+       paypal_amount = paypal_amount  
+     end
+   end
+    
+    
+  setup_response = gateway.setup_purchase(paypal_amount,
+    :items => [{:name => "Openerp Module", :quantity => 1,:description => "All Modules",:amount=> paypal_amount}], 
     :ip                => request.remote_ip,
     :return_url        => url_for(:action => 'confirm', :only_path => false),
     :cancel_return_url => url_for(:action => 'cancel', :only_path => false),
-    :currency => 'LKR'
+    :currency => paypal_currency
   )
  logger.info "this is set up responseaaa"
  logger.info setup_response.inspect
@@ -367,7 +412,7 @@ class PaymentsController < ApplicationController
   #here ip addtess means a uniq token return by paypal for each transactions.
   #as there is some problem in keeping the track of session[:database_name]. and also in this current situation the database_name
   # is fixed so i am just removing an session[:database_name] and keeping static name
-  Ipbasesdb.create(:dbname=>"hotel_mgmt_payment_7" ,:ipaddress=>setup_response.token) 
+  Ipbasesdb.create(:dbname=>"hotel_kedar_1" ,:ipaddress=>setup_response.token) 
    logger.info "redirecting to checkout "
    
   redirect_to gateway.redirect_url_for(setup_response.token)

@@ -26,9 +26,10 @@
   </tr>
    <tr>
     <td height="45" class="listening_eventstext">Amount </td>
-    <td> 
-    <%=text_field_tag :amount,session[:amount],:readonly=>true%>
+    <td class="listening_eventstext"> 
+    <%=text_field_tag :amount,session[:amount],:readonly=>true%><%=@resname%>
     </td>
+ 
   </tr>
   <tr>
     <td height="31">&nbsp; </td>
