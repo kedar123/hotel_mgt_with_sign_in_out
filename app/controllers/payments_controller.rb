@@ -101,6 +101,7 @@ class PaymentsController < ApplicationController
   #this page is same as 4000 page of paypal. so here i am putting all the code which is same as in my last controller
   #room type. now here i need to cp[y the code just for the purpose of creating an amount.so just check line by line.
   #here in preview what i need to show is user name and checkin and checkout and price and room names
+  
   def preview_payment
     #just check an dates
     #check dummy
@@ -118,15 +119,6 @@ class PaymentsController < ApplicationController
         @newres.pricelist_id = 1
         @newres.printout_group_id = 1
         @newres.source = 'through_web'
-        p session[:checkin]
-        p "555555555"
-        p session[:checkin].to_s.split('/')[2].split(' ')[0]
-        p "555555555555"
-        p session[:checkin].to_s.split('/')[0]
-        p "11111111111111111"
-        p session[:checkin].to_s.split('/')[1]
-        p "5555555555"
-        p session[:checkin].to_s.split('/')[2].split(' ')[1]
         checkindate = DateTime.new(session[:checkin].split(' ')[0].to_s.split('/')[2].to_i,session[:checkin].split(' ')[0].to_s.split('/')[0].to_i,session[:checkin].split(' ')[0].to_s.split('/')[1].to_i,session[:checkin].split(' ')[1].to_s.split(':')[0].to_i,session[:checkin].split(' ')[1].to_s.split(':')[1].to_i )
         checkoutdate = DateTime.new(session[:checkout].split(' ')[0].to_s.split('/')[2].to_i,session[:checkout].split(' ')[0].to_s.split('/')[0].to_i,session[:checkout].split(' ')[0].to_s.split('/')[1].to_i,session[:checkout].split(' ')[1].to_s.split(':')[0].to_i,session[:checkout].split(' ')[1].to_s.split(':')[1].to_i )
         zone = ActiveSupport::TimeZone.new("Asia/Kolkata")
@@ -134,18 +126,10 @@ class PaymentsController < ApplicationController
         tmzco=Time.new(session[:checkout].split(' ')[0].to_s.split('/')[2].to_i,session[:checkout].split(' ')[0].to_s.split('/')[0].to_i,session[:checkout].split(' ')[0].to_s.split('/')[1].to_i,session[:checkout].split(' ')[1].to_s.split(':')[0].to_i,session[:checkout].split(' ')[1].to_s.split(':')[1].to_i)
         tmzutcin= tmzci.in_time_zone("UTC")
         tmzutcout= tmzco.in_time_zone("UTC")
-     
-        #p checkoutdate.zone.name
-        p checkoutdate.zone
-        p Time.zone.name 
-        p "eeeeeeeeeeeeeeeeee"
-       
         @newres.checkin =  tmzutcin
         @newres.checkout = tmzutcout
         @newres.dummy = session[:checkout]
-        p "sssssssssssssssssssssssss"
-        p session[:checkin]#mm-dd-yy
-         DateTime.new#ymdh
+        DateTime.new#ymdh
         if session[:checkin].blank?
           redirect_to root_url ,:notice=>'Your Session Is Expired Please Select Room Again' and return;
         end
@@ -185,16 +169,13 @@ class PaymentsController < ApplicationController
            #so the total is  3000
            #here i need to first find out which shop is this i can find that by the company available
            #here in an session i need to find out which co is there and take the first 
-           
-           cknp = CheckoutConfiguration.find(:all,:domain=>[['shop_id','=',1]]).first.name
+            cknp = CheckoutConfiguration.find(:all,:domain=>[['shop_id','=',1]]).first.name
            if cknp == "24hour"
              #here i am copying checkin and checkout variables so that it will not make any conflict in its current flow
              checkindfortd = checkindate
              checkoutdfortd = checkoutdate
-             
-             #dtd = Time.diff(checkindfortd,checkoutdfortd)
-             
-             #here i need to do a calculation as follows.
+              #dtd = Time.diff(checkindfortd,checkoutdfortd)
+              #here i need to do a calculation as follows.
              #if its a month then get that much days in month and multiply by that much with price
              #here i need to take current date and find out the days remaining in that particular month
              #ultimetly what i need to do is get every day and month in houres so i use the logic that each day is of 24 hrs
@@ -251,6 +232,18 @@ class PaymentsController < ApplicationController
         if ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
           @currencyname = ResCurrency.find(:all,:domain=>[['base','=',true]])[0].name     
         end
+        #here also i need to add one more conditions.if the conversion takes place then show it in view
+        available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF"]
+        #if the currency is not included in this array and its also not as usd then show the usd conversion rate
+        if available_paypal_array.include?(@currencyname)
+        elsif @currencyname == "USD"
+        else
+          #here is a transferred rate
+          usdr = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+          @convert_amount = session[:amount].to_i * usdr.rate
+        end
+         
+ 
    end
    
    
@@ -554,13 +547,11 @@ class PaymentsController < ApplicationController
      #and a special log file
   def confirm
      begin
-       
-       @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
-       
-     redirect_to :action => 'index' unless params[:token]
-     session[:database_name] = Ipbasesdb.find_by_ipaddress(params[:token]).dbname 
-     logger.info "i just seen one error where the constant is uninitialize for session[:database_name] that is why makking "
-     logger.info "an connection again"
+        @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
+        redirect_to :action => 'index' unless params[:token]
+        session[:database_name] = Ipbasesdb.find_by_ipaddress(params[:token]).dbname 
+        logger.info "i just seen one error where the constant is uninitialize for session[:database_name] that is why makking "
+        logger.info "an connection again"
      @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => session[:database_name], :username =>'admin', :password   => 'admin',:scope_prefix => session[:database_name].to_s.upcase.to_s)      #p "Connected to opererp database"
      @hotel = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.find(session[:newlysavedreservationid])
      #i am taking this into another variables because sometimes in view this ooor @hotel object is not availabel
@@ -579,7 +570,21 @@ class PaymentsController < ApplicationController
         return
      end
      @address = details_response.address
-     
+       @currencyname = "USD"
+        if ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
+          @currencyname = ResCurrency.find(:all,:domain=>[['base','=',true]])[0].name     
+        end
+        #here also i need to add one more conditions.if the conversion takes place then show it in view
+        available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF"]
+        #if the currency is not included in this array and its also not as usd then show the usd conversion rate
+        if available_paypal_array.include?(@currencyname)
+        elsif @currencyname == "USD"
+        else
+          #here is a transferred rate
+          usdr = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+          @convert_amount = session[:amount].to_i * usdr.rate
+        end
+         
      rescue => e
         logger.info e
         logger.info e.inspect

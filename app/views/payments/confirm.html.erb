@@ -39,6 +39,15 @@
     <td height="45" class="listening_eventstext">Amount</td>
     <td class="listening_eventstext"><%= session[:amount] %></td>
   </tr>
+    <%if !@convert_amount.blank?%>
+  <tr>
+    <td height="45" class="listening_eventstext">USD Conversion </td>
+    <td class="listening_eventstext"> 
+    <%=@convert_amount%>&nbsp;&nbsp;&nbsp;&nbsp;<%="USD" %>
+    </td>
+ 
+  </tr>
+  <%end%>
   <tr>
     <td height="45" class="listening_eventstext">Check In </td>
     <td class="listening_eventstext"><%= session[:checkin] %></td>

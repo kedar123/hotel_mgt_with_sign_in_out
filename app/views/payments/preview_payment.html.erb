@@ -31,6 +31,16 @@
     </td>
  
   </tr>
+  <%if !@convert_amount.blank?%>
+  <tr>
+    <td height="45" class="listening_eventstext">USD Conversion </td>
+    <td class="listening_eventstext"> 
+    <%=text_field_tag :convertedusd,@convert_amount,:readonly=>true%><%="USD" %>
+    </td>
+ 
+  </tr>
+  <%end%>
+  
   <tr>
     <td height="31">&nbsp; </td>
     <td><%=image_submit_tag("btn_xpressCheckout.gif")%></td>
