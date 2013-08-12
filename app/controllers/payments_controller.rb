@@ -390,7 +390,9 @@ class PaymentsController < ApplicationController
         paypal_amount = paypal_amount  * 100
      end
    end
-   
+   logger.info "the paypal currency defined"
+   logger.info paypal_currency
+   logger.info "the paypal currency defined12333333333333333333333"
    setup_response = gateway.setup_purchase(paypal_amount,
     :items => [{:name => "Openerp Module", :quantity => 1,:description => "All Modules",:amount=> paypal_amount}], 
     :ip                => request.remote_ip,
@@ -454,17 +456,50 @@ class PaymentsController < ApplicationController
      acml.credit = hotelres.total_cost1
      acml.debit = 0
      acml.status = 'draft'
+     base_currency = ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
+     
+     if base_currency
+        acml.currency_id = base_currency.id
+        acml.amount_currency = "-"+(hotelres.total_cost1 * base_currency.rate).to_s
+     else
+       default_cur =  ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+       acml.currency_id = default_cur.id
+       acml.amount_currency = "-"+(hotelres.total_cost1 * default_cur.rate).to_s
+     end
+     
      acml.save
      #now need to copy for second lineeeeeeeeee
      acml = eval(session[:database_name].to_s.upcase.to_s)::AccountMoveLine.new
      acml.move_id = acm.id
      acml.name = hotelres.reservation_no
      acml.partner_id = hotelres.partner_id.id
+     
       
      acml.account_id =  eval(session[:database_name].to_s.upcase.to_s)::AccountJournal.find(eval(session[:database_name].to_s.upcase.to_s)::AccountJournal.search([['type','=','bank']])[0]).default_debit_account_id.id
    
      acml.debit = hotelres.total_cost1
      acml.credit = 0
+      
+      
+     if base_currency
+        acml.currency_id = base_currency.id
+        acml.amount_currency = hotelres.total_cost1 * base_currency.rate
+     else
+       default_cur =  ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+       acml.currency_id = default_cur.id
+       acml.amount_currency = hotelres.total_cost1 * default_cur.rate
+     end
+  
+       
+       
+       
+   
+       
+       
+       
+       
+     
+     
      acml.status = 'draft'
      acml.save
      
@@ -518,7 +553,7 @@ class PaymentsController < ApplicationController
         return
      end
      @address = details_response.address
-     raise error
+     
      rescue => e
         logger.info e
         logger.info e.inspect
@@ -535,10 +570,18 @@ class PaymentsController < ApplicationController
     
   
    def complete
+      base_currency = ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
+     
+     if base_currency
+        base_currency = base_currency.name
+     else
+       base_currency = "USD"
+     end
     purchase = gateway.purchase(session[:amount].to_i * 100,
     :ip       => request.remote_ip,
     :payer_id => params[:payer_id],
-    :token    => params[:token]
+    :token    => params[:token],
+    :currency => base_currency
   )
   logger.info "purchasing amount"
   logger.info session[:amount]
