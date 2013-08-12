@@ -379,9 +379,14 @@ class PaymentsController < ApplicationController
        paypal_amount = paypal_amount  * 100#usd 
      else
        logger.info "paypal amount5555555544444444"
+       logger.info "base currency is not defined"
        logger.info ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate
        logger.info paypal_amount
-        paypal_amount = paypal_amount  * ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate
+       #here it will come in 2 situations.1)when there is no base currency is defined.and 2)
+       #when e.g. there is inr currency
+       if base_currency
+         paypal_amount = paypal_amount  * ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate
+       end 
         paypal_amount = paypal_amount  * 100
      end
    end
