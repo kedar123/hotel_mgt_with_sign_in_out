@@ -247,8 +247,10 @@ class PaymentsController < ApplicationController
         logger.info "newressssssssssssss"
         #now here i need to add a code for currency converter. so here first i need to check with paypal if that 
         #currency code matches if yes then there is no need to change.otherwise change it to usd.
-        @resname = ResCurrency.find(:all,:domain=>[['base','=',true]])[0].name     
-        
+        @resname = "USD"
+        if ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
+          @resname = ResCurrency.find(:all,:domain=>[['base','=',true]])[0].name     
+        end
    end
    
    
@@ -366,13 +368,14 @@ class PaymentsController < ApplicationController
    #if its come to else then i need to convert the amount to usd as its default
    #when it goes to paypal i am multiplying it by 100 . 
    paypal_amount = params[:amount].to_i
-   if  available_paypal_array.include?(base_currency.name)
+   
+   if base_currency &&  available_paypal_array.include?(base_currency.name)
        paypal_currency = base_currency.name
        paypal_amount = params[:amount].to_i * 100
        #when its different currency then no need to translate it to * by 100
    else
      #i assume that if its not included in paypal array and if the currency is not usd then convert it to usd
-     if base_currency.name == "USD"
+     if base_currency && base_currency.name == "USD"
        paypal_amount = paypal_amount  * 100#usd 
      else
        logger.info "paypal amount5555555544444444"
@@ -382,6 +385,7 @@ class PaymentsController < ApplicationController
         paypal_amount = paypal_amount  * 100
      end
    end
+   
    setup_response = gateway.setup_purchase(paypal_amount,
     :items => [{:name => "Openerp Module", :quantity => 1,:description => "All Modules",:amount=> paypal_amount}], 
     :ip                => request.remote_ip,
