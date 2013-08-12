@@ -247,9 +247,9 @@ class PaymentsController < ApplicationController
         logger.info "newressssssssssssss"
         #now here i need to add a code for currency converter. so here first i need to check with paypal if that 
         #currency code matches if yes then there is no need to change.otherwise change it to usd.
-        @resname = "USD"
+        @currencyname = "USD"
         if ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
-          @resname = ResCurrency.find(:all,:domain=>[['base','=',true]])[0].name     
+          @currencyname = ResCurrency.find(:all,:domain=>[['base','=',true]])[0].name     
         end
    end
    
@@ -385,9 +385,10 @@ class PaymentsController < ApplicationController
        #here it will come in 2 situations.1)when there is no base currency is defined.and 2)
        #when e.g. there is inr currency
        if base_currency
-         paypal_amount = paypal_amount  * ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate
+         paypal_amount = (paypal_amount  * ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate)*100
+       else
+         paypal_amount = paypal_amount  * 100
        end 
-        paypal_amount = paypal_amount  * 100
      end
    end
    logger.info "the paypal currency defined"
@@ -457,16 +458,39 @@ class PaymentsController < ApplicationController
      acml.debit = 0
      acml.status = 'draft'
      base_currency = ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
-     
+     #when actually its a usd transaction then there is no need to convert it again.as the explanation is as follows
+     #base currency is usd then transfered to paypal as usd return value as usd.so no need to conversion
+     #when base currency is inr transfered to paypal as usd .return value as usd . so for jouirnal entry need to convert
+     #when base currency is aud transfered to paypal as aud  return value as aud . so for journal entry no need to convert
+     #the conversion is only required when paypal dosent support currency and for that its converted manually here.
+     available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF"]
+ 
      if base_currency
+       logger.info "11111111111111111"
         acml.currency_id = base_currency.id
-        acml.amount_currency = "-"+(hotelres.total_cost1 * base_currency.rate).to_s
+         if  available_paypal_array.include?(base_currency.name)
+           logger.info "222222222222222222"
+            acml.amount_currency = "-"+(hotelres.total_cost1).to_s
+        elsif base_currency.name == "USD"
+          logger.info "3333333333333333333333333333"
+            acml.amount_currency = "-"+(hotelres.total_cost1).to_s
+        else
+          logger.info "44444444444444444444444444444"
+                convertrateusd = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+                acml.currency_id = convertrateusd.id
+                logger.info hotelres.total_cost1
+                logger.info convertrateusd.rate
+                acml.amount_currency = "-"+(hotelres.total_cost1 * convertrateusd.rate).to_s
+        end
      else
-       default_cur =  ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
-       acml.currency_id = default_cur.id
-       acml.amount_currency = "-"+(hotelres.total_cost1 * default_cur.rate).to_s
+      convertrateusd = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+      logger.info "5555555555555555555555555"
+      logger.info convertrateusd.id
+      acml.currency_id = convertrateusd.id
+      logger.info "666666666666666666666"
+      logger.info  
+      acml.amount_currency = "-"+(hotelres.total_cost1 ).to_s
      end
-     
      acml.save
      #now need to copy for second lineeeeeeeeee
      acml = eval(session[:database_name].to_s.upcase.to_s)::AccountMoveLine.new
@@ -482,31 +506,33 @@ class PaymentsController < ApplicationController
       
       
      if base_currency
+       logger.info "777777777777777777777777"
         acml.currency_id = base_currency.id
-        acml.amount_currency = hotelres.total_cost1 * base_currency.rate
-     else
+        
+         if available_paypal_array.include?(base_currency.name)
+           logger.info "8888888888888888888888888888888"
+            acml.amount_currency = hotelres.total_cost1
+        elsif base_currency.name == "USD"
+          logger.info "9999999999999999999999999999999"
+            acml.amount_currency = hotelres.total_cost1
+        else
+          logger.info "1000000000000000000"
+          logger.info hotelres.total_cost1 * convertrateusd.rate
+               convertrateusd = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+                acml.currency_id = convertrateusd.id
+              acml.amount_currency = hotelres.total_cost1 * convertrateusd.rate
+         end
+      else
        default_cur =  ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
        acml.currency_id = default_cur.id
-       acml.amount_currency = hotelres.total_cost1 * default_cur.rate
+       logger.info "111111111111111111111111111111"
+        
+       acml.amount_currency = hotelres.total_cost1 
      end
-  
        
-       
-       
-   
-       
-       
-       
-       
-     
-     
      acml.status = 'draft'
      acml.save
-     
-    
-    
-    
-    
+        
     
      #hf.wkf_action("order_confirm")
      #logger.info "twoooooooooo"
@@ -571,11 +597,16 @@ class PaymentsController < ApplicationController
   
    def complete
       base_currency = ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
-     
+      available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF"]
+ 
      if base_currency
-        base_currency = base_currency.name
-     else
-       base_currency = "USD"
+       #here one condition is need to be added and that is if the currency is not available in paypal array.
+       #then i am sending it as usd so the currency name is usd
+       if available_paypal_array.include?(base_currency.name)
+           base_currency = base_currency.name
+       else
+          base_currency = "USD"
+       end
      end
     purchase = gateway.purchase(session[:amount].to_i * 100,
     :ip       => request.remote_ip,
