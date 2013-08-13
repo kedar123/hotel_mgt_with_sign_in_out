@@ -1,6 +1,7 @@
 class GdsAuthsController < ApplicationController
    require 'xmlrpc/client'
    layout 'gdsauth'
+   before_filter :check_connection 
    #i am keeping the layout different because there is no need to show a link for going back pages.
    
   #this controller i am creating for the purpose of authentication for gds purpose so that there will not be an conflict
@@ -67,7 +68,7 @@ class GdsAuthsController < ApplicationController
         # in updateavails controller. so what i am doing here is keeping this values in session
         #and try to create a new instance with these values
         session[:gerpurl] =  "http://192.168.1.47:8069/xmlrpc"
-        session[:gdatabase] =  "hotel_mgmt_payment_7"
+        session[:gdatabase] =  "hotel_kedar_1"
         session[:gusername] = params[:username]
         session[:userauth] = params[:userauth]
         #here now a flow is little changed as after authenticate i should show a page where an user can select an 
@@ -132,4 +133,27 @@ class GdsAuthsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+  def check_connection 
+    @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
+   begin 
+   server = XMLRPC::Client.new2("http://192.168.1.47:8069/xmlrpc"+"/common")
+   #here i am making some fields static 
+   content = server.call("login", "hotel_kedar_1" , "test1","test1") 
+   rescue=>e
+      logger.info "there is problem in connection"
+       logger.info e
+       logger.info e.message
+       logger.info e.inspect
+       @my_logger.info "this is new error"
+       @my_logger.info Time.now
+       
+       @my_logger.info e.message
+       @my_logger.info e.inspect
+       
+       render :action => "error"
+   end
+  end
+  
 end

@@ -91,7 +91,7 @@ class GetbookingsController < ApplicationController
         format.json { render json: @getbooking.errors, status: :unprocessable_entity }
        else
          logger.info "77777777777777777777777"
-        format.html { render :text=>"some rooms are already booked. means room booked in reconline but not available to book in openerp so create a room and assign it to gds"}
+        format.html { render :text=>"some rooms are already booked. means room booked in reconline but not available to book in openerp so create a room and assign it to gds. or no bookings are get"}
        end
     end
   end
@@ -138,6 +138,23 @@ class GetbookingsController < ApplicationController
         redirect_to gds_auths_path,:notice=>"Your Session Has Been Expired Please Login Again" and return
      end
     
+      begin
+        #only checking an GDS is not sufficient actually need an fire a query so that a connection can occure
+      GDS::SaleShop.find(:all,:domain=>[['company_id','=',session[:gds_company_id].to_i ]])
+      rescue=>e
+        @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
+         logger.info "there is problem in connection"
+       logger.info e
+       logger.info e.message
+       logger.info e.inspect
+       @my_logger.info "this is new error"
+       @my_logger.info Time.now
+       
+       @my_logger.info e.message
+       @my_logger.info e.inspect
+       
+       render :action => "error" ,:layout=>false
+      end
     
   end
   

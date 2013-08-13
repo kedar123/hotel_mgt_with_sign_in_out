@@ -184,7 +184,7 @@ class Getbooking   <  ActiveRecord::Base
     # skip 
     #logger.info config["diffgram"][0]["NewDataSet"][0]["Bookings"]
     #here the actual loop get starts but for testing i am using one 
-    logger.info config["diffgram"][0]["NewDataSet"][0]["Bookings"][0]["MOBILE"]
+   if config && config["diffgram"] && config["diffgram"][0] && config["diffgram"][0]["NewDataSet"] && config["diffgram"][0]["NewDataSet"][0] && config["diffgram"][0]["NewDataSet"][0]["Bookings"]
     config["diffgram"][0]["NewDataSet"][0]["Bookings"].each do |eachbkg|
       logger.info "this is email i got"
       logger.info eachbkg["EMAIL"]
@@ -371,6 +371,9 @@ class Getbooking   <  ActiveRecord::Base
           logger.info "this reservation is already exist"
         end
    end
+   else
+   retval = "no bookings got"
+   end
    # the above is the do end
    logger.info "here all the process ends"
     
@@ -385,13 +388,16 @@ class Getbooking   <  ActiveRecord::Base
     config = XmlSimple.xml_in(getbooking.body)
     
     logger.info "is this get parseddddddd as xmlllllllllllll"
-    logger.info config
+    logger.info config.inspect
     logger.info "i need to get bookings array lets see"
     logger.info "let see first step"
      
     #logger.info config["diffgram"][0]["NewDataSet"][0]["Bookings"]
     #here the actual loop get starts but for testing i am using one 
-    logger.info config["diffgram"][0]["NewDataSet"][0]["Bookings"][0]["MOBILE"]
+    logger.info "is there any bookingss"
+ 
+    logger.info "55555555555555555"
+    if config && config["diffgram"] && config["diffgram"][0] && config["diffgram"][0]["NewDataSet"] && config["diffgram"][0]["NewDataSet"][0] && config["diffgram"][0]["NewDataSet"][0]["Bookings"]
     config["diffgram"][0]["NewDataSet"][0]["Bookings"].each do |eachbkg|
       
     logger.info "i need to check"
@@ -484,7 +490,7 @@ class Getbooking   <  ActiveRecord::Base
       
       
     end
-    
+    end
        
     
  
@@ -504,6 +510,10 @@ class Getbooking   <  ActiveRecord::Base
     logger.info res.to_hash
      logger.info res.body.include?("<boolean xmlns=\"http://www.reconline.com/\">true</boolean>")
     logger.info res.body
+    
+    logger.info "sssssssssssssssssssssssssssssssssssss"
+   
+    
     res.to_hash
     res  
   end

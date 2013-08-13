@@ -628,16 +628,18 @@ class RoomBooksController < ApplicationController
     #assign an room to multiple shops. this is an conditions i put through an web interface . i am not sure what is 
     #happened in openerp for the same
     #selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true]])
+    logger.info "is this shopidddddddddd"
+    logger.info session[:gds_shop_id].to_i
     selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true],['shop_id','=',session[:gds_shop_id].to_i]])
     logger.info "just checking here what shoukld be an class2222222"
     selectedallprd.each do |sp|
       logger.info sp.id
       logger.info sp.class
       logger.info sp.name
-      
+      logger.info "6666666666666"
       
     end
-      
+    logger.info "7777777777777777777"  
       
     @filteredroomarray = []
       @paramscheckin = paramscheckin
@@ -979,8 +981,12 @@ class RoomBooksController < ApplicationController
   private
   def check_gds_availability
     begin
+      logger.info "some gdssssssssssssssss"
       logger.info GDS
-    rescue
+      logger.info "555555555555555555555555"
+      
+    rescue 
+      logger.info "no rescueeeeeeeee"
       redirect_to gds_auths_path ,:notice=>"Your Session Has Been Expired Please Login Again" and return
     end
     #here i also need to check an session for gusername is available or not for logged in user purpose.
@@ -988,7 +994,23 @@ class RoomBooksController < ApplicationController
      if session[:gusername].blank?
         redirect_to gds_auths_path,:notice=>"Your Session Has Been Expired Please Login Again" and return
      end
-    
+      begin
+        #only checking an GDS is not sufficient actually need an fire a query so that a connection can occure
+      GDS::SaleShop.find(:all,:domain=>[['company_id','=',session[:gds_company_id].to_i ]])
+      rescue=>e
+        @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
+         logger.info "there is problem in connection"
+       logger.info e
+       logger.info e.message
+       logger.info e.inspect
+       @my_logger.info "this is new error"
+       @my_logger.info Time.now
+       
+       @my_logger.info e.message
+       @my_logger.info e.inspect
+       
+       render :action => "error" ,:layout=>false
+      end
     
   end
  
