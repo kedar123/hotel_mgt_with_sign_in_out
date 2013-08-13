@@ -2,6 +2,7 @@ class PaymentsController < ApplicationController
    include ActiveMerchant::Billing
    require 'net/http'
    layout 'web_layout'
+    before_filter :check_connection
   # GET /payments
   # GET /payments.json
   def index
@@ -724,6 +725,26 @@ class PaymentsController < ApplicationController
           :signature => 'ACLa8jsQN8TPFLDY57dLNb5-3qq.AgN5u20e33t3nrXP3uDzoZTGNERk'
         )
   end
-
+   
+   def check_connection
+     @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
+     begin
+       @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
+ 
+     rescue=>e
+       logger.info "there is problem in connection"
+       logger.info e
+       logger.info e.message
+       logger.info e.inspect
+       @my_logger.info "this is new error"
+       @my_logger.info Time.now
+       
+       @my_logger.info e.message
+       @my_logger.info e.inspect
+       
+       render :action => "error"
+     end
+     
+   end
 
 end

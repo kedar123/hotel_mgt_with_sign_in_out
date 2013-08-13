@@ -1,6 +1,9 @@
 class AuthenticatesController < ApplicationController
   # GET /authenticates
   # GET /authenticates.json
+  
+  before_filter :check_connection
+  
   layout 'web_layout'
   def index
     @authenticates = Authenticate.all
@@ -11,6 +14,10 @@ class AuthenticatesController < ApplicationController
     end
   end
 
+  
+   
+  
+  
   
   def sign_out
     session[:user_id_avail] = nil
@@ -211,6 +218,31 @@ class AuthenticatesController < ApplicationController
      
      
    end
+   
+   
+   private
+   def check_connection
+     @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
+     begin
+       @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => "hotel_kedar_1", :username =>'admin', :password   => 'admin')      #p "Connected to opererp database"
+ 
+     rescue=>e
+       logger.info "there is problem in connection"
+       logger.info e
+       logger.info e.message
+       logger.info e.inspect
+       @my_logger.info "this is new error"
+       @my_logger.info Time.now
+       
+       @my_logger.info e.message
+       @my_logger.info e.inspect
+       
+       render :action => "error"
+     end
+     
+   end
+    
+   
    
   
 end
