@@ -349,6 +349,7 @@ class PaymentsController < ApplicationController
   end
   
   def checkout
+    begin
    logger.info "amoint"
    logger.info params[:amount].to_i * 100
    logger.info request.remote_ip
@@ -416,7 +417,20 @@ class PaymentsController < ApplicationController
    logger.info "redirecting to checkout "
    
   redirect_to gateway.redirect_url_for(setup_response.token)
-  
+    rescue =>e
+       @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
+    
+        logger.info "there is problem in connection"
+       logger.info e
+       logger.info e.message
+       logger.info e.inspect
+       @my_logger.info "this is new error"
+       @my_logger.info Time.now
+       
+       @my_logger.info e.message
+       @my_logger.info e.inspect
+       redirect_to root_url ,:notice=>"Error in network connection"
+    end
   end   
     
     
@@ -548,7 +562,7 @@ class PaymentsController < ApplicationController
      #and a special log file
   def confirm
      begin
-        @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
+         
         redirect_to :action => 'index' unless params[:token]
         session[:database_name] = Ipbasesdb.find_by_ipaddress(params[:token]).dbname 
         logger.info "i just seen one error where the constant is uninitialize for session[:database_name] that is why makking "
@@ -587,12 +601,19 @@ class PaymentsController < ApplicationController
         end
          
      rescue => e
-        logger.info e
-        logger.info e.inspect
-        logger.info e.message
-        @my_logger.info "gds and web error log"
-        
-     end
+         @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
+    
+        logger.info "there is problem in connection"
+       logger.info e
+       logger.info e.message
+       logger.info e.inspect
+       @my_logger.info "this is new error"
+       @my_logger.info Time.now
+       
+       @my_logger.info e.message
+       @my_logger.info e.inspect
+       redirect_to root_url ,:notice=>"Error In Network Connection"
+      end
   end
   
   
@@ -602,6 +623,7 @@ class PaymentsController < ApplicationController
     
   
    def complete
+     
       base_currency = ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
       available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF"]
  
@@ -675,14 +697,22 @@ class PaymentsController < ApplicationController
          #redirect_to :controller=>"reservation",:action=>"room_type"
          
        rescue => e
-         logger.info "is this error"
-         logger.info e.message
-        # @already_created_sales_order = true if  e.message.include? "Order Reference must be unique per Company!"
-         #raise e
-         flash[:notice] =  e.message
-         # here i need to check the error and ask him to contact us and also tell him that u r payment is done
-         logger.info "redirecting back from rescue"
-      redirect_to :back
+     @my_logger ||= Logger.new("#{Rails.root}/log/onlygdsandweb.log")
+    
+        logger.info "there is problem in connection"
+       logger.info e
+       logger.info e.message
+       logger.info e.inspect
+       @my_logger.info "this is new error"
+       @my_logger.info Time.now
+       
+       @my_logger.info e.message
+       @my_logger.info e.inspect
+       #params[:token]
+       #session[:newlysavedreservationid] hotel reservation id stored in session
+       Notifier.paypal_error_message(session[:newlysavedreservationid]).deliver  
+      
+       redirect_to root_url ,:notice=>"Error In Network Connection"
        end
   end
   

@@ -520,6 +520,40 @@ class Getbooking   <  ActiveRecord::Base
   
   
   
+  #here the logic is i should put a loop on openerps gds conf date.so that i will fetch only that much reservations
+  #which are required by our allocated dates.then in this loop i will fetch the reservations from reconline
+  #after that create a partner and create a reservation
+  
+  def self.rake_task_booking
+     authenticate = Ooor.new(:url => "http://192.168.1.47:8069/xmlrpc" , :database => "hotel_kedar_1", :username =>  "admin" , :password => "admin"  ,:scope_prefix=>'GDS' ,:reload => true)
+     logger.info "this is from rake task"
+     
+     hrtgc = GDS::HotelReservationThroughGdsConfiguration.all
+     logger.info "this is from rake task11"
+     logger.info hrtgc.count
+     
+     hrtgc.each do |ehrc|
+        #now fetch an reservations from reconline
+        #currently i am creating an static params hash here
+        params = {}
+        params[:User] = "kedar"
+        params[:Password] = "ked2012"
+        params[:idHotel] = "38534"
+        params[:idSystem] = "0"
+        params[:ForeignPropCode] = "blank"
+        params[:idRSV] = ""
+        params[:StartDate] = ehrc.name.strftime("%d.%m.%Y")
+        params[:EndDate] = ehrc.to_date.strftime("%d.%m.%Y")
+        params[:StartCreationDate] = ""
+        params[:EndCreationDate] = ""
+        logger.info "this params is get created for each request"
+        logger.info params
+        getbooking = Getbooking.get_bookings(params)
+        Getbooking.create_partner_if_not_created(getbooking) 
+        retv = Getbooking.create_hotel_reservation(getbooking,ehrc.shop_id.id,ehrc.company_id.id)
+      end
+  end
+  
   
   
 end

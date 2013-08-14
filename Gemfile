@@ -42,3 +42,4 @@ gem 'xml-simple'
 #gem 'savon'
 gem 'savon_model'
 gem 'time_diff'
+gem 'whenever', :require => false

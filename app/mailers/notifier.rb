@@ -22,5 +22,10 @@ class Notifier < ActionMailer::Base
     mail(to: emailaddr)
   end
   
+  def paypal_error_message(reserid)
+    @reserid = reserid
+    mail(to:  "admin@example.com")
+  end
+  
   
 end
