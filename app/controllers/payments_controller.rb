@@ -389,13 +389,34 @@ class PaymentsController < ApplicationController
    logger.info "the paypal currency defined"
    logger.info paypal_currency
    logger.info "the paypal currency defined12333333333333333333333"
+   hores  =  HotelReservation.find(params[:newlysavedreservationid])
+   room_name = []
+   item_hash_array = []
+   hores.reservation_line.each do |hrs|
+       
+    
+     ch={
+       :name=>hrs.room_number.name,
+       :description => hrs.room_number.name,
+       :amount=>hrs.room_number
+     }
+     logger.info "chhhhhhhhhhhhhhh"
+     logger.info ch
+     item_hash_array << ch 
+   end
+   logger.info item_hash_array
+   
+   
+   logger.info "itemmmmmmmmmmmmmmmmmmm111111111111111111111111"
+   
+  
    setup_response = gateway.setup_purchase(paypal_amount,
-    :items => [{:name => "Openerp Module", :quantity => 1,:description => "All Modules",:amount=> paypal_amount}], 
+    :items => item_hash_array, 
     :ip                => request.remote_ip,
     :return_url        => url_for(:action => 'confirm', :only_path => false),
     :cancel_return_url => url_for(:action => 'cancel', :only_path => false),
     :currency => paypal_currency
-  )
+    )
  logger.info "this is set up responseaaa"
  logger.info setup_response.inspect
   session[:amount] = params[:amount]

@@ -867,7 +867,11 @@ class RoomBooksController < ApplicationController
           if hrtglrn.blank?
            logger.info "this is blankkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
            logger.info "at this time i need to fire a query"
-              
+                hrtgl.room_number  = [[6, false, []]]
+          
+         logger.info "assigned room number"
+       
+         hrtgl.save
                #  server = XMLRPC::Client.new2("http://192.168.1.47:8069/xmlrpc"+"/common")
                #  content = server.call("login", "hotel_mgmt_payment_7" ,"admin","admin")
                #  database = "hotel_mgmt_payment_7"
