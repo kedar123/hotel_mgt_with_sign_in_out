@@ -474,126 +474,66 @@ class PaymentsController < ApplicationController
     
     #this code i am keeping as it is because there is no need to hide anything
      def call_create_saleorder_and_invoice(hotelres)
-    logger.info "oneeeeeeeee7777777777777777777"
-    logger.info "this is blankkkkkkkkkkkkkkkk"
-    logger.info hotelres.inspect
-    logger.info "222222222222222222222222222222222"
-     hotelres.call("confirmed_reservation",[hotelres.id])
-     logger.info "oneeeeeeeee+++++++++++++" 
-    # hotelres.call("create_folio",[hotelres.id])
-     logger.info "oneeeeeeeee----------" 
-     #hf = eval(session[:database_name].to_s.upcase.to_s)::HotelFolio.search([["reservation_id","=",hotelres.id]])[0]
-     #hf =  eval(session[:database_name].to_s.upcase.to_s)::HotelFolio.find(hf)
-     logger.info "oneeeeeeeee"
-     
-     #i am commenting this because now need to change the payment to journal entries.
-     acm = eval(session[:database_name].to_s.upcase.to_s)::AccountMove.new
-     acm.journal_id = eval(session[:database_name].to_s.upcase.to_s)::AccountJournal.search([['type','=','bank']])[0]
-     acm.company_id = hotelres.company_id.id
-     acm.ref = hotelres.reservation_no
-     acm.save
-     acm.reload
-     #now need to create 2 lines one for debit and one for credit 
-     acml = eval(session[:database_name].to_s.upcase.to_s)::AccountMoveLine.new
-     acml.move_id = acm.id
-     acml.name = hotelres.reservation_no
-     acml.partner_id = hotelres.partner_id.id
-     acml.account_id = hotelres.partner_id.property_account_receivable.id
-     acml.credit = hotelres.total_cost1
-     acml.debit = 0
-     acml.status = 'draft'
-     base_currency = ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
-     #when actually its a usd transaction then there is no need to convert it again.as the explanation is as follows
-     #base currency is usd then transfered to paypal as usd return value as usd.so no need to conversion
-     #when base currency is inr transfered to paypal as usd .return value as usd . so for jouirnal entry need to convert
-     #when base currency is aud transfered to paypal as aud  return value as aud . so for journal entry no need to convert
-     #the conversion is only required when paypal dosent support currency and for that its converted manually here.
-     available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF"]
- 
-     if base_currency
-       logger.info "11111111111111111"
-        acml.currency_id = base_currency.id
+      hotelres.call("confirmed_reservation",[hotelres.id])
+      acm = eval(session[:database_name].to_s.upcase.to_s)::AccountMove.new
+      acm.journal_id = eval(session[:database_name].to_s.upcase.to_s)::AccountJournal.search([['type','=','bank']])[0]
+      acm.company_id = hotelres.company_id.id
+      acm.ref = hotelres.reservation_no
+      acm.save
+      acm.reload
+      acml = eval(session[:database_name].to_s.upcase.to_s)::AccountMoveLine.new
+      acml.move_id = acm.id
+      acml.name = hotelres.reservation_no
+      acml.partner_id = hotelres.partner_id.id
+      acml.account_id = hotelres.partner_id.property_account_receivable.id
+      acml.credit = hotelres.total_cost1
+      acml.debit = 0
+      acml.status = 'draft'
+      base_currency = ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
+      available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF"]
+      if base_currency
+         acml.currency_id = base_currency.id
          if  available_paypal_array.include?(base_currency.name)
-           logger.info "222222222222222222"
-            acml.amount_currency = "-"+(hotelres.total_cost1).to_s
+             acml.amount_currency = "-"+(hotelres.total_cost1).to_s
         elsif base_currency.name == "USD"
-          logger.info "3333333333333333333333333333"
-            acml.amount_currency = "-"+(hotelres.total_cost1).to_s
+             acml.amount_currency = "-"+(hotelres.total_cost1).to_s
         else
-          logger.info "44444444444444444444444444444"
-                convertrateusd = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
-                acml.currency_id = convertrateusd.id
-                logger.info hotelres.total_cost1
-                logger.info convertrateusd.rate
-                acml.amount_currency = "-"+(hotelres.total_cost1 * convertrateusd.rate).to_s
+                 convertrateusd = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+                 acml.currency_id = convertrateusd.id
+                 acml.amount_currency = "-"+(hotelres.total_cost1 * convertrateusd.rate).to_s
         end
      else
       convertrateusd = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
-      logger.info "5555555555555555555555555"
-      logger.info convertrateusd.id
       acml.currency_id = convertrateusd.id
-      logger.info "666666666666666666666"
-      logger.info  
       acml.amount_currency = "-"+(hotelres.total_cost1 ).to_s
      end
      acml.save
-     #now need to copy for second lineeeeeeeeee
      acml = eval(session[:database_name].to_s.upcase.to_s)::AccountMoveLine.new
      acml.move_id = acm.id
      acml.name = hotelres.reservation_no
      acml.partner_id = hotelres.partner_id.id
-     
-      
      acml.account_id =  eval(session[:database_name].to_s.upcase.to_s)::AccountJournal.find(eval(session[:database_name].to_s.upcase.to_s)::AccountJournal.search([['type','=','bank']])[0]).default_debit_account_id.id
-   
      acml.debit = hotelres.total_cost1
      acml.credit = 0
-      
-      
-     if base_currency
-       logger.info "777777777777777777777777"
-        acml.currency_id = base_currency.id
-        
-         if available_paypal_array.include?(base_currency.name)
-           logger.info "8888888888888888888888888888888"
-            acml.amount_currency = hotelres.total_cost1
+      if base_currency
+         acml.currency_id = base_currency.id
+          if available_paypal_array.include?(base_currency.name)
+             acml.amount_currency = hotelres.total_cost1
         elsif base_currency.name == "USD"
-          logger.info "9999999999999999999999999999999"
-            acml.amount_currency = hotelres.total_cost1
+             acml.amount_currency = hotelres.total_cost1
         else
-          logger.info "1000000000000000000"
-          logger.info hotelres.total_cost1 * convertrateusd.rate
-               convertrateusd = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+                convertrateusd = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
                 acml.currency_id = convertrateusd.id
-              acml.amount_currency = hotelres.total_cost1 * convertrateusd.rate
+                acml.amount_currency = hotelres.total_cost1 * convertrateusd.rate
          end
       else
        default_cur =  ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
        acml.currency_id = default_cur.id
-       logger.info "111111111111111111111111111111"
-        
-       acml.amount_currency = hotelres.total_cost1 
+        acml.amount_currency = hotelres.total_cost1 
      end
-       
-     acml.status = 'draft'
-     acml.save
-        
-    
-     #hf.wkf_action("order_confirm")
-     #logger.info "twoooooooooo"
-     #hf.wkf_action("manual_invoice")
-     #logger.info "threeeeeeeeeeee"
-     #hf.invoice_ids.each do |inv|
-     #  inv.wkf_action("invoice_open")
-     #  inv.call("invoice_pay_customer",[inv.id])
-     #end
-     #logger.info "is this object is static"
-     #logger.info hotelres.inspect
-     #logger.info "need to call twice" 
-     #hotelres = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.find(hotelres.id)
-     #logger.info hotelres.inspect
-     #call_voucher_create(hotelres,hf)
-  end
+      acml.status = 'draft'
+      acml.save
+   end
   
      #here an timeout error can occure if internet is slow then i will redirect it to root_url and note this error in log
      #and a special log file

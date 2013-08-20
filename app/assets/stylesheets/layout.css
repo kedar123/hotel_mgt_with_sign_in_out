@@ -252,6 +252,7 @@ body { background-color: #FFFFFF; margin:auto; padding:0px; text-align:center; b
 
 
 .todate_fromdateheadingtext {text-align:center;color: #333333; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:20px; font-weight:bold;}
+.todate_fromdateheadingtext1 {text-align:justify;color: #333333; font-family:Arial, Helvetica, sans-serif; font-size:13px; line-height:20px; font-weight:bold;}
 
 .todate_fromdaterequlartext {color: #333333; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:20px; }
 

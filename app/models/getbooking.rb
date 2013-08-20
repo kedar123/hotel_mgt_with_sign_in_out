@@ -308,65 +308,67 @@ class Getbooking   <  ActiveRecord::Base
    logger.info newres
    #newres.call("confirmed_reservation",[newres.id])
    newres.call("confirmed_reservation",[newres.id])
-   newres.call("create_folio",[newres.id])
-   
-     logger.info "oneeeeeeeee+++++++++++++" 
-  #   newres.call("create_folio",[newres.id])
-     hf =  GDS::HotelFolio.search([["reservation_id","=",newres.id]])[0]
-     hf =  GDS::HotelFolio.find(hf)
-     hf.wkf_action("order_confirm")
-     hf.wkf_action("manual_invoice")
-     hf.invoice_ids.each do |inv|
-       inv.wkf_action("invoice_open")
-       inv.call("invoice_pay_customer",[inv.id])
-     end
- 
-   newres = GDS::HotelReservation.find(newres.id)
-     
-      
-   logger.info "here now the process get starts for creating an voucher"
-   logger.info "calling account voucher"
-     acv =  GDS::AccountVoucher.new
-     acv.partner_id = newres.partner_id.id
-     acv.pay_now = "pay_later"
-     acv.state = "draft"
-     acv.type = "receipt"
-     acv.pre_line = true
-     acv.payment_option = "without_writeoff"
-     acv.comment = "Write-Off"
-     acv.payment_rate = "1.000000"
-     acv.payment_rate_currency_id = 1
-     acv.is_multi_currency = true
-     acv.account_id = 7
-     acv.period_id = 10
-     acv.journal_id = 8
-     acv.company_id = company_id
-     acv.amount =  newres.total_cost1
-     acv.date = Date.today
-     acv.save
-     #acv.wkf_action("proforma_voucher")
-     acvln = GDS::AccountVoucherLine.new
-     acvln.reconcile = true
-     acvln.voucher_id = acv.id
-     acvln.amount_unreconciled =  newres.total_cost1
-     acvln.account_id = 8
-     acvln.amount = newres.total_cost1
-     acvln.amount_original =  newres.total_cost1.to_f
-     acvln.type =  "cr"
-     if !hf.invoice_ids.blank?
-        if !hf.invoice_ids.first.move_id.blank?
-            if !hf.invoice_ids.first.move_id.line_id.blank?
-            acvln.move_line_id = hf.invoice_ids.first.move_id.line_id.first.id 
-           end
+    acm = GDS::AccountMove.new
+    acm.journal_id = GDS::AccountJournal.search([['type','=','bank']])[0]
+    acm.company_id = newres.company_id.id
+    acm.ref = newres.reservation_no
+    acm.save
+    acm.reload  
+    acml = GDS::AccountMoveLine.new
+    acml.move_id = acm.id
+    acml.name = newres.reservation_no
+    acml.partner_id = newres.partner_id.id
+    acml.account_id = newres.partner_id.property_account_receivable.id
+    acml.credit = newres.total_cost1
+    acml.debit = 0
+    acml.status = 'draft'
+      base_currency = GDS::ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
+      available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF"]
+      if base_currency
+         acml.currency_id = base_currency.id
+         if  available_paypal_array.include?(base_currency.name)
+             acml.amount_currency = "-"+(newres.total_cost1).to_s
+        elsif base_currency.name == "USD"
+             acml.amount_currency = "-"+(newres.total_cost1).to_s
+        else
+                 convertrateusd = GDS::ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+                 acml.currency_id = convertrateusd.id
+                 acml.amount_currency = "-"+(newres.total_cost1 * convertrateusd.rate).to_s
         end
+     else
+      convertrateusd = GDS::ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+      acml.currency_id = convertrateusd.id
+      acml.amount_currency = "-"+(newres.total_cost1 ).to_s
      end
-     acvln.name = hf.invoice_ids.first.number if !hf.invoice_ids.blank?
-     acvln.save
-      #acv.on_change('onchange_journal_voucher', :line_ids, tax_id, amount, partner_id, journal_id, type)
-     acv.on_change('onchange_journal_voucher',[acv.id],newres.total_cost1) 
-     acv.wkf_action("proforma_voucher")
-
-      end
+     acml.save
+      acml = GDS::AccountMoveLine.new
+     acml.move_id = acm.id
+     acml.name = newres.reservation_no
+     acml.partner_id = newres.partner_id.id
+     acml.account_id =  GDS::AccountJournal.find(GDS::AccountJournal.search([['type','=','bank']])[0]).default_debit_account_id.id
+     acml.debit = newres.total_cost1
+     acml.credit = 0
+      if base_currency
+         acml.currency_id = base_currency.id
+          if available_paypal_array.include?(base_currency.name)
+             acml.amount_currency = newres.total_cost1
+        elsif base_currency.name == "USD"
+             acml.amount_currency = newres.total_cost1
+        else
+                convertrateusd = GDS::ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+                acml.currency_id = convertrateusd.id
+                acml.amount_currency = newres.total_cost1 * convertrateusd.rate
+         end
+      else
+       default_cur =  GDS::ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+       acml.currency_id = default_cur.id
+        acml.amount_currency = newres.total_cost1 
+     end
+      acml.status = 'draft'
+      acml.save
+   ##########i am copying here the codeeeee for payment like web formsssss         
+    
+       end
         else
           logger.info "this reservation is already exist"
         end

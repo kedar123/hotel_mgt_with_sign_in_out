@@ -16,7 +16,16 @@
   Select Type
  </td>
  <td>
-<%=select_tag "room_type", "<option value='DBL' >DBL</option><option value='KING'>KING</option>".html_safe%>
+   <%if params[:room_type] == "DBL"%>
+        <%=select_tag "room_type", "<option value='DBL' selected='selected'>DBL</option><option value='KING'>KING</option>".html_safe%>
+
+   <%elsif params[:room_type] == "KING"%>
+        <%=select_tag "room_type", "<option value='DBL' >DBL</option><option value='KING' selected='selected'>KING</option>".html_safe%>
+   <%else%>
+        <%=select_tag "room_type", "<option value='DBL' >DBL</option><option value='KING'>KING</option>".html_safe%>
+   
+   <%end%>
+   
    </td>
  </tr>
  <tr>
