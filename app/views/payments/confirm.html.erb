@@ -70,11 +70,11 @@
     <td>
       <%= form_tag :action => 'complete', :token => params[:token], :payer_id => params[:PayerID] do %>
       <%= token_tag(nil) %>
-      <%= submit_tag 'Complete Payment' ,:id=>"Checkavailabilitybutton"%>
+      <%= submit_tag 'Complete Payment' ,:id=>"Checkavailabilitybuttons2"%>
        <div class="viewbutton">
                 <ul>
                 <li>
-      <%= link_to 'Reject Payment' ,payments_rejected_payment_path({:token=>params[:token]}),:class=>"reject_payment"%>
+      <%= link_to 'Reject Payment' ,payments_rejected_payment_path({:token=>params[:token]}),:class=>"Checkavailabilitybutton"%>
                   </li>
                   </ul>
          </div>

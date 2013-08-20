@@ -148,6 +148,8 @@ class PaymentsController < ApplicationController
         logger.info "sessionnnnnnnnnnnnnnnnnn"
         if session["selectedroom"]
            session["selectedroom"].each do |roomid|
+             
+           
            resline = HotelReservationLine.new
            resline.line_id = @newres.id 
            hrm = HotelRoom.search([["product_id","=",roomid[0].to_i]])[0]
@@ -157,6 +159,7 @@ class PaymentsController < ApplicationController
            resline.price =  ProductProduct.find(roomid[0].to_i).product_tmpl_id.list_price.to_f
            resline.reservation_id = @newres.id 
            logger.info resline.save
+           session["#{resline.room_number.name}"] = 0
            logger.info "an reservation lineeeeeeeeeeeeeeeeeeeee"
            logger.info checkoutdate
            logger.info checkindate
@@ -189,10 +192,11 @@ class PaymentsController < ApplicationController
              #checkout dateand each day i should increase an amount
                     
                    #if the difference between months start and end date is 0 then consider it as 1 day price
-                    while checkindfortd < checkoutdfortd
-                          session[:amount] = session[:amount].to_i + resline.price.to_i 
-                          checkindfortd = checkindfortd.next_day
-                    end  
+            while checkindfortd < checkoutdfortd
+                 session[:amount] = session[:amount].to_i + resline.price.to_i 
+                 session["#{resline.room_number.name}"] = session["#{resline.room_number.name}"].to_i + resline.price.to_i
+                 checkindfortd = checkindfortd.next_day
+            end  
                     
                  
               
@@ -202,9 +206,12 @@ class PaymentsController < ApplicationController
             if ((checkoutdate - checkindate).to_i == 0) 
                  logger.info "some errporrrrrrrrrrrrrrrr as value is zero"
                   session[:amount] = session[:amount].to_i +   resline.price.to_i    
+                  session["#{resline.room_number.name}"] = session["#{resline.room_number.name}"].to_i + resline.price.to_i
+            
                   logger.info session[:amount]
              else
-                session[:amount] = session[:amount].to_i +  (resline.price.to_i * (checkoutdate - checkindate).to_i )  
+                session[:amount] = session[:amount].to_i +  (resline.price.to_i * (checkoutdate - checkindate).to_i )
+                session["#{resline.room_number.name}"] = session["#{resline.room_number.name}"].to_i + (resline.price.to_i * (checkoutdate - checkindate).to_i )
                 logger.info session[:amount].to_i
                 logger.info "sssssssssss"
                 logger.info resline.price.to_i
@@ -363,7 +370,7 @@ class PaymentsController < ApplicationController
    #if its come to else then i need to convert the amount to usd as its default
    #when it goes to paypal i am multiplying it by 100 . 
    paypal_amount = params[:amount].to_i
-   
+   multiplybyusrates = false
    if base_currency &&  available_paypal_array.include?(base_currency.name)
        paypal_currency = base_currency.name
        paypal_amount = params[:amount].to_i * 100
@@ -380,6 +387,7 @@ class PaymentsController < ApplicationController
        #here it will come in 2 situations.1)when there is no base currency is defined.and 2)
        #when e.g. there is inr currency
        if base_currency
+         multiplybyusrates = true
          paypal_amount = (paypal_amount  * ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate)*100
        else
          paypal_amount = paypal_amount  * 100
@@ -393,12 +401,17 @@ class PaymentsController < ApplicationController
    room_name = []
    item_hash_array = []
    hores.reservation_line.each do |hrs|
-       
-    
+   amttsd = 0    
+    if multiplybyusrates
+      amttsd = session["#{hrs.room_number.name}"].to_i * ResCurrency.find(:all,:domain=>[['name','=', 'USD']])[0].rate * 100
+    else
+      amttsd = session["#{hrs.room_number.name}"].to_i * 100 
+    end
+        
      ch={
        :name=>hrs.room_number.name,
        :description => hrs.room_number.name,
-       :amount=>hrs.room_number
+       :amount=> amttsd
      }
      logger.info "chhhhhhhhhhhhhhh"
      logger.info ch
@@ -409,7 +422,10 @@ class PaymentsController < ApplicationController
    
    logger.info "itemmmmmmmmmmmmmmmmmmm111111111111111111111111"
    
-  
+   logger.info paypal_amount
+   logger.info "paypal amounttttttttttt"
+   logger.info multiplybyusrates
+   logger.info "multiplybyusrates"
    setup_response = gateway.setup_purchase(paypal_amount,
     :items => item_hash_array, 
     :ip                => request.remote_ip,
