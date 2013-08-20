@@ -262,7 +262,7 @@ body { font-size: 62.5%; }
     margin-right: 20px;
     color: #FFFFFF;
 }
-.viewbutton { margin:auto; float:right; }
+.viewbutton { margin:auto; float:right;margin-top:10px; }
 
 .viewbutton ul { margin:auto; float:right; }
 
