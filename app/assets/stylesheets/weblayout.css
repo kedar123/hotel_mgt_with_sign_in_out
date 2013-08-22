@@ -286,3 +286,11 @@ body { font-size: 62.5%; }
 .logoutbutton1 a { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #F22222; margin:auto; margin-top:10px; font-weight:bold; }
 
 .logoutbutton1 a:hover { font-family:Arial, Helvetica, sans-serif; font-size:12px; color: #aecffb ; margin:auto; margin-top:10px; font-weight:bold; }
+
+ 
+.failure_message{
+    color:red;
+    text-align:center;
+    font-size:20px;
+    
+}

@@ -757,7 +757,7 @@ class PaymentsController < ApplicationController
   
        Notifier.paypal_error_message(partner_name,checkindate,checkoutdate,roomname.join(', '),amount,converted_amt,paypal_transaction_id,@currencyname).deliver  
       
-       redirect_to root_url ,:notice=>"Error In Network Connection"
+       redirect_to payments_server_connection_error_path  
        end
   end
   

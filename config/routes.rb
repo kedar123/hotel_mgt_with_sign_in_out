@@ -61,7 +61,7 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   
   
   get "payments/preview_payment"
-  
+  get "payments/server_connection_error"
   #post "payment/payment_check"
   post "payments/checkout"
   get "payments/confirm"
