@@ -56,6 +56,9 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   
   resources :reservations
   
+  get "payments/get_transaction_details"
+  post "payments/get_transaction_details"
+  
   
   get "payments/preview_payment"
   

@@ -1,0 +1,17 @@
+ <div style="padding:10px">
+   Enter A Transaction Id To Get Details Of Paypal History
+   </div>
+<div style="padding:10px">
+<%=form_tag payments_get_transaction_details_path%>
+<%=text_field_tag "transaction_id"%>
+  <div style="padding:5px">
+<%=submit_tag "Check Details" ,:class=>'Checkavailabilitybutton'%>
+    </div>
+  </div>
+<div style="padding:50px">
+  <%=@transactiodetails%>
+  </div>
+<div>
+  <br/><br/><br/>
+  <%=@transactiodetailss%>
+  </div>

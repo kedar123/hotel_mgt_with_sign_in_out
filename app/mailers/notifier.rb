@@ -21,10 +21,18 @@ class Notifier < ActionMailer::Base
     @message = message
     mail(to: emailaddr)
   end
-  
-  def paypal_error_message(reserid)
-    @reserid = reserid
-    mail(to:  "admin@example.com")
+        
+  def paypal_error_message(partner_name,checkindate,checkoutdate,roomname,amount,converted_amt,paypal_transaction_id,currencyname)
+    @partner_name = partner_name
+    @checkindate = checkindate
+    @checkoutdate = checkoutdate
+    @roomname = roomname
+    @amount = amount
+    @converted_amt = converted_amt
+    @paypal_transaction_id = paypal_transaction_id
+    @currencyname = currencyname  
+   
+    mail(to:  "parikshit.bapat@pragtech.co.in", subject: 'Booking Failure Message')
   end
   
   

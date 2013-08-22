@@ -1,5 +1,22 @@
-<%=@reserid%>
-<br/>
-<div>
- this email is for payment is done but openerp connection is lost.here is the reservation id :- <%=@reserid%>
-  </div>
+  Following booking transaction is unsuccessfull . Transaction details are as follows
+  <br/>
+   partner name = <%=@partner_name%>
+   <br/>
+   
+   checkin date = <%=@checkindate%>
+   <br/>
+   checkouty date <%=@checkoutdate%>
+   <br/>
+   room name <%=@roomname%>
+   <br/>
+   amount = <%=@amount%> <%=@currencyname%>
+   <br/>
+    <%if !@converted_amt.blank?%>
+         converted amt = <%=@converted_amt%>
+    <%end%>
+   <br/>
+   paypal transaction id  = <%=@paypal_transaction_id%>
+   <br/>
+   
+   
+   
