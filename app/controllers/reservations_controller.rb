@@ -548,143 +548,83 @@ class ReservationsController < ApplicationController
   
   # here i just need to change everything in datetime format so that when storing a data i can see a a check in and checkout
   # date time
+  #here i need to add one more condition that is when its allocated to gds then done show it. it should not be displayed
+  #here on web page
+
    def check_book_room_search(params)
-     logger.info "what are paramssssssssssssssssssss"
-     logger.info params
-     #extracting some code from room_type method
-     @category = []
-     @room = []
-     @hotelroom = HotelRoom.find(:all)  
-     #here i need to add one more condition that is when its allocated to gds then done show it. it should not be displayed
-     #here on web page
+      @category = []
+      @room = []
+      created_array_forhrbhf = []
+      @hotelroom = HotelRoom.find(:all)  
       @hotelroom.each do |hr|
-        logger.info "not herererererer"
-        logger.info hr
-        logger.info hr.product_id
-        #as per discussion i need to change this code to compare with company id
-        logger.info "there are some conflicts"
-        logger.info hr.company_id.id.to_s
-        logger.info hr.company_id.id.to_s
-        logger.info "888888888888888888888888"
-        logger.info params["company_id"].to_s
-        logger.info "55555555555555"
-        #so here checking of company id is proper because its related to room and not of respartner
+         #so here checking of company id is proper because its related to room and not of respartner
        if hr.company_id.id.to_s ==  params["company_id"].to_s
-         logger.info "inside a company is sameeeeeeeeeeeee"
-        if hr.product_id
-          logger.info "inside a product iddddddddddddddddd"
-          logger.info "inside the room"
-          logger.info hr.product_id.categ_id.name
-          logger.info hr.product_id.categ_id.id
-          #category array is of category name and category id
-          @category << [hr.product_id.categ_id.name,hr.product_id.categ_id.id]  
-          logger.info hr.product_id.name
-          logger.info hr.product_id.id
-          logger.info hr.product_id.categ_id.id
-          #room array is of product name , product id, product category id
-          @room << [hr.product_id.name,hr.product_id.id,hr.product_id.categ_id.id]
+         if hr.product_id
+           @category << [hr.product_id.categ_id.name,hr.product_id.categ_id.id]  
+            #room array is of product name , product id, product category id
+           @room << [hr.product_id.name,hr.product_id.id,hr.product_id.categ_id.id]
+           created_array_forhrbhf << hr.id
         else
-          logger.info "55555555544444444441111111222222222"
+          logger.info "elseeeeee55555555544444444441111111222222222"
         end
        end
          logger.info "adding the rooommm"
       end
-      logger.info "the all roomssssss"
-      logger.info @room.inspect
-      logger.info @category.inspect
-      #end of extractionnnnnnnnnnnnnnnnnnnnnnnnnn
-    data = []
-    booked_room = []   
-     HotelRoom.find(:all).each do |roomid|
-       if roomid.company_id.id.to_s == params["company_id"].to_s
-         logger.info "ijijijijijij"
-            hrbh = HotelRoomBookingHistory.search([["name","=","#{roomid.product_id.name}"]])
-             if !hrbh.blank?
-              data << hrbh
-             end
-       end
-      end
-     data.flatten!  if !data.blank?
-     data = HotelRoomBookingHistory.find(data)
-     data.each do |dd|
+       logger.info @room.inspect
+       logger.info @category.inspect
+       data = []
+       booked_room = []   
+       
+       #@hotelroom.each do |roomid|
+       #  if roomid.company_id.id.to_s == params["company_id"].to_s
+              #here i am searching all the hotelroombookinghistory with a particular room id
+               data = HotelRoomBookingHistory.find(:all,:domain=>[["history_id","=",created_array_forhrbhf]])
+       #         if !hrbh.blank?
+                 #data << hrbh
+        #        end
+        # end
+        #end
+      name_array = []
+      data.each do |dd|
       ####2012-09-04   2012-09-13   from params
-      ### 2012-09-01   2012-09-15
-      ###4   params
-      ####1
-      if !params['checkin'].blank? 
-        #here i need to do a date time object 
-        logger.info params
-        logger.info "this is the format of date and time i am getting"
-        #"07/12/2013 03:13"  this string i need to parse
-logger.info params['checkin'].split(" ")[1].to_s.split(":")[0]
-logger.info params['checkin'].split(" ")[1].to_s.split(":")[1]       
-logger.info "divvvvvvvvvvv erroooooooooooooooo"
-        paramscheckin = DateTime.new(params['checkin'].split(" ")[0].to_s.split("/")[2].to_i,params['checkin'].split(" ")[0].to_s.split("/")[0].to_i,params['checkin'].split(" ")[0].to_s.split("/")[1].to_i,params['checkin'].split(" ")[1].to_s.split(":")[0].to_i,params['checkin'].split(" ")[1].to_s.split(":")[1].to_i )
-        paramschekout = DateTime.new(params['checkout'].split(" ")[0].to_s.split("/")[2].to_i,params['checkout'].split(" ")[0].to_s.split("/")[0].to_i,params['checkout'].split(" ")[0].to_s.split("/")[1].to_i,params['checkout'].split(" ")[1].to_s.split(":")[0].to_i,params['checkout'].split(" ")[1].to_s.split(":")[1].to_i )
-        logger.info "Date validationnnnnnnnnnnnnnnnnnnnn"
-        logger.info paramscheckin.inspect
-        logger.info paramschekout.inspect
-        logger.info dd.check_in_date.inspect
-        logger.info dd.check_out_date.inspect
-        if paramscheckin >= dd.check_in  and paramschekout <= dd.check_out
-          logger.info "I am her88e4"
-          booked_room << dd
-        elsif paramscheckin >= dd.check_in  and paramschekout >= dd.check_out  and paramscheckin <= dd.check_out  and dd.check_in >  paramschekout
-          logger.info "I am here744"
-          booked_room << dd
-        elsif  paramscheckin <= dd.check_in  and paramschekout <= dd.check_out  and paramschekout >= dd.check_in    
-          booked_room << dd
-          logger.info "I am here4"
-        elsif  paramscheckin <= dd.check_in  and paramschekout >= dd.check_out   
-          booked_room << dd
-          logger.info "I am here4"
-          logger.info paramscheckin
-        elsif  dd.check_in <= paramscheckin and dd.check_out <= paramschekout  and paramscheckin <= dd.check_out
-          booked_room << dd
-          logger.info "I am here5"
-           logger.info paramscheckin
-        end
+       if !params['checkin'].blank? 
+         #"07/12/2013 03:13"  this string i need to parse
+         paramscheckin = DateTime.new(params['checkin'].split(" ")[0].to_s.split("/")[2].to_i,params['checkin'].split(" ")[0].to_s.split("/")[0].to_i,params['checkin'].split(" ")[0].to_s.split("/")[1].to_i,params['checkin'].split(" ")[1].to_s.split(":")[0].to_i,params['checkin'].split(" ")[1].to_s.split(":")[1].to_i )
+         paramschekout = DateTime.new(params['checkout'].split(" ")[0].to_s.split("/")[2].to_i,params['checkout'].split(" ")[0].to_s.split("/")[0].to_i,params['checkout'].split(" ")[0].to_s.split("/")[1].to_i,params['checkout'].split(" ")[1].to_s.split(":")[0].to_i,params['checkout'].split(" ")[1].to_s.split(":")[1].to_i )
+         if paramscheckin >= dd.check_in  and paramschekout <= dd.check_out
+             name_array << dd.history_id.product_id.id
+         elsif paramscheckin >= dd.check_in  and paramschekout >= dd.check_out  and paramscheckin <= dd.check_out  and dd.check_in >  paramschekout
+             name_array << dd.history_id.product_id.id
+          elsif  paramscheckin <= dd.check_in  and paramschekout <= dd.check_out  and paramschekout >= dd.check_in    
+             name_array << dd.history_id.product_id.id
+          elsif  paramscheckin <= dd.check_in  and paramschekout >= dd.check_out   
+             name_array << dd.history_id.product_id.id
+          elsif  dd.check_in <= paramscheckin and dd.check_out <= paramschekout  and paramscheckin <= dd.check_out
+             name_array << dd.history_id.product_id.id
+          end
       end
     end
-    name_array = []
-     #actually here i need the the array should be of room id or product id.
-    booked_room.each do |rn|
-      name_array << rn.history_id.product_id.id
-    end
-     logger.info "returning the array"
-    logger.info name_array    
-    name_array    
-    #here i need ad.each do d this array that is if the room is allocated to gds then also done show i will get this by 
+      #here i need ad.each do d this array that is if the room is allocated to gds then also done show i will get this by 
      paramschecking = Date.new(params['checkin'].split(" ")[0].to_s.split("/")[2].to_i,params['checkin'].split(" ")[0].to_s.split("/")[0].to_i,params['checkin'].split(" ")[0].to_s.split("/")[1].to_i )
      paramschekoutg = Date.new(params['checkout'].split(" ")[0].to_s.split("/")[2].to_i,params['checkout'].split(" ")[0].to_s.split("/")[0].to_i,params['checkout'].split(" ")[0].to_s.split("/")[1].to_i )
      HotelReservationThroughGdsConfiguration.all.each do |ehrtgdsc|
       booked = false
       #here i am using a short line of in between of dates
       if paramschecking >= ehrtgdsc.name  and paramschekoutg <= ehrtgdsc.to_date
-          logger.info "I am her88e4"
-          booked = true
+           booked = true
         elsif paramschecking >= ehrtgdsc.name  and paramschekoutg >= ehrtgdsc.to_date  and paramschecking <= ehrtgdsc.to_date  and ehrtgdsc.name >  paramschekoutg
-          logger.info "I am here744"
-          booked = true
+           booked = true
         elsif  paramschecking <= ehrtgdsc.name  and paramschekoutg <= ehrtgdsc.to_date  and paramschekoutg >= ehrtgdsc.name    
           booked = true
-          logger.info "I am here4"
-        elsif  paramschecking <= ehrtgdsc.name  and paramschekoutg >= ehrtgdsc.to_date  
+         elsif  paramschecking <= ehrtgdsc.name  and paramschekoutg >= ehrtgdsc.to_date  
           booked = true
-          logger.info "I am here4"
-          logger.info paramschecking
-        elsif  ehrtgdsc.name <= paramschecking and ehrtgdsc.to_date <= paramschekoutg  and paramschecking <= ehrtgdsc.to_date
+         elsif  ehrtgdsc.name <= paramschecking and ehrtgdsc.to_date <= paramschekoutg  and paramschecking <= ehrtgdsc.to_date
           booked = true
-          logger.info "I am here5"
-           logger.info paramschecking
-      end
+       end
        if booked  
-        logger.info "i think here i should come only 2 times1"
-       ehrtgdsc.line_ids.each do |eli|
+        ehrtgdsc.line_ids.each do |eli|
           for rn in eli.room_number
-            logger.info rn.id
-            logger.info "i think here i should come only 2 times12"
-              name_array << rn.id
+               name_array << rn.id
          end
        end
       end 
