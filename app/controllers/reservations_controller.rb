@@ -574,17 +574,8 @@ class ReservationsController < ApplicationController
        logger.info @category.inspect
        data = []
        booked_room = []   
-       
-       #@hotelroom.each do |roomid|
-       #  if roomid.company_id.id.to_s == params["company_id"].to_s
-              #here i am searching all the hotelroombookinghistory with a particular room id
-               data = HotelRoomBookingHistory.find(:all,:domain=>[["history_id","=",created_array_forhrbhf]])
-       #         if !hrbh.blank?
-                 #data << hrbh
-        #        end
-        # end
-        #end
-      name_array = []
+                data = HotelRoomBookingHistory.find(:all,:domain=>[["history_id","=",created_array_forhrbhf]])
+       name_array = []
       data.each do |dd|
       ####2012-09-04   2012-09-13   from params
        if !params['checkin'].blank? 
