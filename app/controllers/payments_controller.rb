@@ -618,7 +618,8 @@ class PaymentsController < ApplicationController
   end
    
   def create_hotel_reservation
-      @roombarname = []
+     @room = []
+      
       @respartner = eval(session[:database_name].to_s.upcase.to_s)::ResPartner.find(session[:user_id_avail])
       @hotel = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.new
       @hotel.partner_id = session[:user_id_avail]
@@ -650,6 +651,7 @@ class PaymentsController < ApplicationController
         @room = []
          if session["selectedroom"]
            session["selectedroom"].each do |roomid|
+             
             resline = eval(session[:database_name].to_s.upcase.to_s)::HotelReservationLine.new
             resline.line_id = @hotel.id
             hrm = eval(session[:database_name].to_s.upcase.to_s)::HotelRoom.search([["product_id","=",roomid[0].to_i]])[0]
@@ -658,7 +660,7 @@ class PaymentsController < ApplicationController
            resline.price = eval(session[:database_name].to_s.upcase.to_s)::ProductProduct.find(roomid[0].to_i).product_tmpl_id.list_price.to_f
            resline.reservation_id = @hotel.id
            logger.info resline.save
-                  
+             @room << ProductProduct.find(roomid[0].to_i).name
            end
         end
    
