@@ -532,15 +532,7 @@ class ReservationsController < ApplicationController
       @resname = @partner_id.name
     end
     @book_room_array =  check_book_room_search(params)
-    #this will return an rooms which are booked in that period
-    logger.info "888888888888@book_room_array"
-    logger.info @book_room_array
-    logger.info "some category@category"
-    logger.info @category
-    logger.info "rommmmmmmmm@room"
-    logger.info @room
-    logger.info @room
-    logger.info "roommmmmmm"
+  
     #
     render :layout=>"show_dates"
   end
@@ -550,29 +542,26 @@ class ReservationsController < ApplicationController
   # date time
   #here i need to add one more condition that is when its allocated to gds then done show it. it should not be displayed
   #here on web page
-
+   #so first condition here is finding all the rooms of a particular company
+   #then finding all the HotelRoomBookingHistory with the rooms id created
+   #then taking an ids of rooms which are booked and which are not allocated to gds. this code can not be reduced
    def check_book_room_search(params)
       @category = []
       @room = []
       created_array_forhrbhf = []
-      @hotelroom = HotelRoom.find(:all)  
+      @hotelroom = HotelRoom.find(:all,:domain=>[['company_id','=',params["company_id"].to_i]])
+      #the above query can not be make shorten as there is no such a column 
       @hotelroom.each do |hr|
          #so here checking of company id is proper because its related to room and not of respartner
-       if hr.company_id.id.to_s ==  params["company_id"].to_s
-         if hr.product_id
+          if hr.product_id
            @category << [hr.product_id.categ_id.name,hr.product_id.categ_id.id]  
             #room array is of product name , product id, product category id
            @room << [hr.product_id.name,hr.product_id.id,hr.product_id.categ_id.id]
            created_array_forhrbhf << hr.id
         else
-          logger.info "elseeeeee55555555544444444441111111222222222"
-        end
+         end
        end
-         logger.info "adding the rooommm"
-      end
-       logger.info @room.inspect
-       logger.info @category.inspect
-       data = []
+        data = []
        booked_room = []   
                 data = HotelRoomBookingHistory.find(:all,:domain=>[["history_id","=",created_array_forhrbhf]])
        name_array = []
@@ -611,7 +600,7 @@ class ReservationsController < ApplicationController
           booked = true
          elsif  ehrtgdsc.name <= paramschecking and ehrtgdsc.to_date <= paramschekoutg  and paramschecking <= ehrtgdsc.to_date
           booked = true
-       end
+      end
        if booked  
         ehrtgdsc.line_ids.each do |eli|
           for rn in eli.room_number
