@@ -144,113 +144,16 @@ class PaymentsController < ApplicationController
         end
          available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF"]
          if available_paypal_array.include?(@currencyname)
-        elsif @currencyname == "USD"
-        else
-           usdr = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
-          @convert_amount = session[:amount].to_i * usdr.rate
-        end
+         elsif @currencyname == "USD"
+         else
+             usdr = ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+            @convert_amount = session[:amount].to_i * usdr.rate
+         end
     end
    
    
   
-    def call_create_hotel_reservation_with_reservation_line()
-    #need to find values from database and need to create hotel reservation and reservation lines
-    logger.info "inserting the record in Hotel reservation"
-    logger.info "i am nillll"
-    logger.info session[:newlysavedreservationid].inspect
-    logger.info "i am nillll123"
-    #@ooor = Ooor.new(:url => 'http://144.76.6.143:8069/xmlrpc', :database => session[:database_name], :username =>'admin', :password => 'praghotel',:scope_prefix => session[:database_name].to_s.upcase.to_s) #p "Connected to opererp database"
-     logger.info "this is wrong constant nameeeee"
-     logger.info session[:database_name]
-     logger.info "this is infooooooooooooooooooooo"
-      @ooor = Ooor.new(:url => 'http://192.168.1.47:8069/xmlrpc', :database => session[:database_name], :username =>'admin', :password => 'admin',:scope_prefix => session[:database_name].to_s.upcase.to_s) #p "Connected to opererp database"
- 
-    #resv = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.find(session[:newlysavedreservationid])
-    #i am wrong here somewhere in my last coding as i think here there is no need to create another object of hotel reservation
-    #if its already done in previous method or flow.
-    #@hotel = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.new
-    #@hotel.partner_id = resv.partner_id.id
-    #@hotel.partner_order_id = resv.partner_invoice_id.id
-    logger.info "inserting the record in Hotel reservation5855"
-    #@hotel.shop_id = 1
-    #@hotel.partner_invoice_id = resv.partner_invoice_id.id
-    #@hotel.partner_shipping_id = resv.partner_shipping_id.id
-    #@hotel.date_order = Date.today
-    logger.info "inserting the record in Hotel reserva7844tion"
-    #@hotel.pricelist_id = 1
-    #@hotel.printout_group_id = 1
-    
-    #@hotel.checkin = resv.checkin
-    #@hotel.checkout = resv.checkout
-    #@hotel.source = 'through_web'
    
-    
-    logger.info "this is checkout date"
-    
-    logger.info "inserting the record in Hotel reserva78542tion"
-    #@hotel.dummy = resv.dummy
-     
-    #@hotel.note = resv.note
-    #@hotel.state = 'done'
-    logger.info "inserting the record in Hotel reservati87452on"
-    #@hotel.percentage = "10"
-    #@hotel.deposit_policy = "percentage"
-    #@hotel.deposit_cost1 = "0.00"
-    #@hotel.total_service_amount = "0.00"
-    #@hotel.untaxed_amt = "0.00"
-    
-    #@hotel.doc_date = resv.doc_date
-            
-    logger.info "Before hotel reservation save data"
-    #logger.info @hotel.save
-    logger.info "after save check the @hotel"
-    
-    
-    #session[:newlysavedreservationid] = nil
-    #the hotel reservation is get created and then the reservation line is i am creating
-    #also i am commenting here because these code is also i think is unnecessary.because its already done.
-  # resv.reservation_line.each do |resline|
-       logger.info "ddddddddddd"
- # hotlreservationline = eval(session[:database_name].to_s.upcase.to_s)::HotelReservationLine.new
-      logger.info "6854646as"
-       
-     
- # hotlreservationline.line_id = @hotel.id
-      logger.info "685dddadas4646as"
- # hrm = eval(session[:database_name].to_s.upcase.to_s)::HotelRoom.search([["product_id","=",resline.room_number.id]])[0]
-       
-      
-# hotlreservationline.categ_id = eval(session[:database_name].to_s.upcase.to_s)::HotelRoom.find(hrm).product_id.product_tmpl_id.categ_id.id
-      logger.info "56s46sa4d654d65"
-# hotlreservationline.checkin = resline.checkin
-  
-# hotlreservationline.checkout = resline.checkout
-   
-      
-   
-# hotlreservationline.room_number = resline.room_number.id
-      
-# hotlreservationline.price = resline.price
- # hotlreservationline.discount = 0
-     
-      
-      logger.info "after call to hotlreservationline.wkf_action('confirm')"
-      logger.info "before save of hotel reservation line method"
- # logger.info hotlreservationline.save
-      #hotel = HotelReservation.find(hotel)
-      #hotel.wkf_action('confirm')
-     
-      logger.info "after call to hotel.wkf_action('confirm')"
-      #here need to get the total amount for payment
-       
-      
-      logger.info "after reservation line saved"
- # end
-              
-              
-    logger.info "After successful hotel reservation data saved"
-
-  end
   
   def checkout
     begin
