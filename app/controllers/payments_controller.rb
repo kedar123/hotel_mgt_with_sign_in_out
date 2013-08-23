@@ -488,6 +488,8 @@ class PaymentsController < ApplicationController
       session[:database_name] = Ipbasesdb.find_by_ipaddress(params[:token]).dbname
          logger.info "12344444444444444444444"
           create_hotel_reservation()
+          logger.info "the purchaseeeeeeeeeee"
+          logger.info purchase.inspect
        #@hotel = eval(session[:database_name].to_s.upcase.to_s)::HotelReservation.find(@hotel.id)
        @resname = @hotel.partner_id.name
          logger.info @hotel.inspect
