@@ -9,7 +9,7 @@
 <div class="todate_fromdateheadingbg">
   
      <table><tr><td>
- <%= link_to 'Back', "#"  ,:class=>"submit_button",:onclick=>" window.history.back();"%>
+ <%= link_to 'Back', room_books_add_room_date_path({:start_date=>params[:start_date],:end_date=>params[:end_date]})  ,:class=>"submit_button" %>
   </td>
   </tr>
   </table>

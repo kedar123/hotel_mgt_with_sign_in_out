@@ -38,7 +38,7 @@
   </tr>
  
 
- 
+ <%allocated=true%>
   <%for el in @gdsconf.line_ids%>
   <%for rn in el.room_number%>
   
@@ -46,7 +46,7 @@
        <tr>
           <td width="500" height="23">
              <div align="left" style="margin-left:220px;">
-               
+ <%allocated=false%>              
               <span class="todate_fromdaterequlartext"><%=rn.name%></span>
             </div>
           </td>
@@ -54,7 +54,16 @@
     <%end%>
     <%end%>
   <%end%>
-   
+   <%if allocated%>
+       <tr>
+          <td width="500" height="23">
+            <div align="left" class="todate_fromdateheadingtext">
+              No Room Allocated
+              
+            </div>
+            </td>
+            </tr>
+       <%end%>
   
  
    

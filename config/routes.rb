@@ -12,6 +12,7 @@ HotelMgtWithWorkflowChanged::Application.routes.draw do
   
   
   post "room_books/add_room_date"
+  get "room_books/add_room_date"
   post "room_books/index_with_pag"
   
   
