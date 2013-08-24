@@ -74,7 +74,7 @@ class GdsAuthsController < ApplicationController
         #here now a flow is little changed as after authenticate i should show a page where an user can select an 
         #company . so i am just creating an method named select_company
           #format.html { redirect_to admins_path, notice: 'Authenticate was successfully created.' }
-          format.html { redirect_to gds_select_company_path, notice: 'Authenticate was successfully created.' }
+          format.html { redirect_to gds_select_company_path, notice: '' }
           
           format.json { render json: $authenticate, status: :created, location: $authenticate }
       else
@@ -102,6 +102,7 @@ class GdsAuthsController < ApplicationController
   #as this is just a second step
   def gds_select_company
     @all_companies = GDS::ResCompany.all
+    render :layout=> 'gds'
   end
   
   

@@ -230,6 +230,17 @@ body { background-color: #FFFFFF; margin:auto; padding:0px; text-align:center; b
 .leftsidemenu ul li a:hover {width:150px;  float:left; margin:auto; font-family:Arial, Helvetica, sans-serif; font-size:13px; color: #FFFFFF; text-align:left; line-height:30px; display:block; list-style:none; text-decoration: none; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; background-color:#2d589b; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); margin-top:1px; padding:5px; border-right:solid; border-right-color:#FFFFFF; border-right-width:1px; }
 
 
+.leftsidemenudisable { width:250px; float:left; margin:auto; }
+
+.leftsidemenudisable ul { width:150px; float:left; margin:auto;  margin-top:10px; margin-left:50px;  }
+
+.leftsidemenudisable ul li {width:150px; float:left; margin:auto; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#666666; text-align:left; line-height:30px; list-style:none; text-decoration:none; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; padding:5px; margin-top:1px;      }
+
+.leftsidemenudisable ul li a {width:150px;  float:left; margin:auto; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#666666; text-align:left; line-height:30px; list-style:none; text-decoration:none; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; margin-top:1px; padding:5px;     }
+
+.leftsidemenuselected {width:150px;  float:left; margin:auto; font-family:Arial, Helvetica, sans-serif; font-size:13px; color: #FFFFFF; text-align:left; line-height:30px; display:block; list-style:none; text-decoration: none; text-shadow: rgba(0,0,0,0.2) 0px 1px 1px; background-color:#2d589b; box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); -o-box-shadow: 0px 0px 6px rgba(0,0,0,0.4); margin-top:1px; padding:5px; border-right:solid; border-right-color:#FFFFFF; border-right-width:1px;color: #ffffff !important }
+
+
 
 
 /*....................................................................Roomallocation.................................................................*/

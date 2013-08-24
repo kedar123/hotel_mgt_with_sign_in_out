@@ -9,7 +9,9 @@
  <p>&nbsp;</p>
  <table width="240" height="117" border="0" align="center">
      <td width="98" height="66" class="listening_eventstext">Select Hotel</td>
-    <td width="122"><%= select_tag  "company_id", options_from_collection_for_select(@all_companies,"id", "name" ),  :prompt => "",:class=>"drop_down" %></td>
+    <td width="122">
+ 
+<%= select_tag  "company_id", options_from_collection_for_select(@all_companies,"id", "name" ),  :prompt => "",:class=>"drop_down" %></td>
   </tr>
  <tr>
   <td colspan="2">  <%=submit_tag "Go",:id=>'go'%></td>
@@ -18,6 +20,23 @@
 </div>
 </form>
 </div>
+<script>
+$(function() {
+    $('.disablelink').click(function () {alert('Please Select  Hotel First') ; return false;});  
+    $('#overlay').removeClass('leftsidemenu');
+    $('#overlay').addClass('leftsidemenudisable');
+    $("#overlay")
+       .css({
+         'opacity' : 0.4,
+         'position': 'relative',
+         'top': 0,
+         'left': 0,
+         'background-color': 'black',
+         'width': '100%',
+         'z-index': 5000
+      });
+});
+</script>
 
 
 

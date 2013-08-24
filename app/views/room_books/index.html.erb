@@ -4,8 +4,9 @@
         <table width="130" height="28" border="0" align="right">
           <tr>
             <td width="72" height="28">
-                
-                 <%=  select_tag "page", "<option value=''></option><option value='2'>2</option><option value='4'>4</option><option value='unlimited'>unlimited</option>".html_safe,:onchange=>"this.form.submit()"%>
+                 <%selected = params[:page] || "20" %>
+                 
+                 <%=  select_tag "page",options_for_select([["Select" , "" ],["20" , "20" ],["40" , "40" ],["unlimited","unlimited"]],:selected=>selected),:onchange=>"this.form.submit()"%>
             </td>
             <td width="72" height="28">
                 <%=  submit_tag "Add",:onclick=>"$('#deleteroom').val(0)" ,:class=>'submit_button'%>
@@ -45,17 +46,17 @@
                       <%=session[:gds_shop_id_name]%>
                     <%end%></div>
                 </td>
-                <td>
-                <div class="viewbutton">
+                <td align="center" valign="center">
+                <div class="">
                 <ul>
-                <li><a href="#"><%=  link_to  "View" , "/room_books/show_view/#{gdshc.id}"%></a></li>
+                <li style="list-style: none"><a href="#"><%=  link_to  image_tag("bonobo-browser.png",:size=>"20x20") , "/room_books/show_view/#{gdshc.id}"%></a></li>
                 </ul>
                 </div>
 
                 </td>
-                <td><div class="viewbutton">
+                <td align="center"><div  >
                 <ul>
-                <li><a href="#"><%=  link_to  "Edit" , "/room_books/show_type/#{gdshc.id}"%></a></li>
+                <li style="list-style: none"><a href="#"><%=  link_to  image_tag("pencil.jpg",:size=>"20x20") , "/room_books/show_type/#{gdshc.id}"%></a></li>
                 </ul>
                 </div></td>
               </tr> 

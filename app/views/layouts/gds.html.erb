@@ -50,23 +50,34 @@
 <span class="username"><a  style="  float:right; margin-right:20px;">Welcome <%=session[:gusername]%> </a></span>
 </div>
 </div>
-<div class="leftsidemenubg">
+<div class="leftsidemenubg" >
 
 <div class="reservation_text">GDS Configuration</div>
 
-<div class="leftsidemenu">
+<div class="leftsidemenu" id="overlay">
 
 
 <ul>
  
   <li>
-<%=link_to "GDS Room Allocation",room_books_select_shop_path %>
+  <%if params[:action] == "select_shop"%>  
+   <%=link_to "GDS Room Allocation",room_books_select_shop_path,:class=>"disablelink leftsidemenuselected" %>
+  <%else%>
+   <%=link_to "GDS Room Allocation",room_books_select_shop_path,:class=>"disablelink" %>
+  <%end%>
   </li>
 <li>
   <%#=link_to "Update Room Count",count_rooms_path %>
   <!--this will update a count on reconline.com-->
 </li>  
-  <li><%=link_to "Get Bookings",new_getbooking_path %>
+  
+  <li>
+      <%if params[:controller] == 'getbookings' && params[:action] == 'new'%>
+        <%=link_to "Get Bookings",new_getbooking_path ,:class=>"disablelink leftsidemenuselected"%>
+      <%else%>
+        <%=link_to "Get Bookings",new_getbooking_path ,:class=>"disablelink"%>
+    
+       <%end%>
  <!--
  This Link Is For Getting All The Rooms Booked In Reconline To Openerp
  -->
@@ -81,8 +92,26 @@
   -->
   
   
-<li> <%=link_to "Update Rates",new_updaterete_path %></li>
-<li> <%=link_to "View For Gds Rates",updateretes_show_rates_path %></li>
+<li> 
+ 
+ <%if params[:controller] == 'updateretes' && params[:action] == 'new'%>
+   <%=link_to "Update Rates",new_updaterete_path ,:class=>"disablelink leftsidemenuselected"%>
+ <%else%>
+   <%=link_to "Update Rates",new_updaterete_path ,:class=>"disablelink"%>
+ <%end%> 
+
+</li>
+
+
+<li>  
+<%if params[:controller] == 'updateretes' && params[:action] == 'show_rates'%>
+ 
+  <%=link_to "View For Gds Rates",updateretes_show_rates_path ,:class=>"disablelink leftsidemenuselected"%>
+  <%else%>
+  <%=link_to "View For Gds Rates",updateretes_show_rates_path ,:class=>"disablelink"%>
+  
+  <%end%>
+</li>
  
   
  </ul>

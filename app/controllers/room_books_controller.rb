@@ -26,13 +26,13 @@ class RoomBooksController < ApplicationController
     logger.info "gds shop idddddddd"
     logger.info session[:gds_shop_id]
     if params[:page].blank?
-      @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.search([['shop_id','=',session[:gds_shop_id].to_i]],0,2)
+      @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.search([['shop_id','=',session[:gds_shop_id].to_i]],0,20)
     else
-      if params[:page].to_i == 2
-         @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.search([['shop_id','=',session[:gds_shop_id].to_i]],0,2)
+      if params[:page].to_i == 20
+         @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.search([['shop_id','=',session[:gds_shop_id].to_i]],0,20)
       end
-      if params[:page].to_i == 4
-         @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.search([['shop_id','=',session[:gds_shop_id].to_i]],0,4)
+      if params[:page].to_i == 40
+         @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.search([['shop_id','=',session[:gds_shop_id].to_i]],0,40)
       end
       if params[:page] ==  'unlimited'
          @hrtgdsconf = GDS::HotelReservationThroughGdsConfiguration.search([['shop_id','=',session[:gds_shop_id].to_i]])
