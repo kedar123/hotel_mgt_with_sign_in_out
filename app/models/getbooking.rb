@@ -207,7 +207,7 @@ class Getbooking   <  ActiveRecord::Base
         newres.source = 'through_gds'
         newres.adults = eachbkg["ADULTS"][0].to_s
         newres.childs = eachbkg["CHILDREN"][0].to_s
-        
+       
         newres.gds_id = eachbkg["IDRSV"][0].to_s
         newres.partner_invoice_id = respart
         newres.partner_shipping_id = respart
@@ -319,51 +319,35 @@ class Getbooking   <  ActiveRecord::Base
     acml.name = newres.reservation_no
     acml.partner_id = newres.partner_id.id
     acml.account_id = newres.partner_id.property_account_receivable.id
-    acml.credit = newres.total_cost1
-    acml.debit = 0
-    acml.status = 'draft'
-      base_currency = GDS::ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
-      available_paypal_array = ["AUD","CAD","CZK","DKK","EUR","HKD","HUF","JPY","NOK","NZD","PLN","GBP","SGD","SEK","CHF"]
-      if base_currency
-         acml.currency_id = base_currency.id
-         if  available_paypal_array.include?(base_currency.name)
-             acml.amount_currency = "-"+(newres.total_cost1).to_s
-        elsif base_currency.name == "USD"
-             acml.amount_currency = "-"+(newres.total_cost1).to_s
-        else
-                 convertrateusd = GDS::ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
-                 acml.currency_id = convertrateusd.id
-                 acml.amount_currency = "-"+(newres.total_cost1 * convertrateusd.rate).to_s
-        end
-     else
-      convertrateusd = GDS::ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
-      acml.currency_id = convertrateusd.id
-      acml.amount_currency = "-"+(newres.total_cost1 ).to_s
-     end
+     
+     base_currency = GDS::ResCurrency.find(:all,:domain=>[['base','=',true]])[0]
+     convertrateusd = GDS::ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
+      acml.amount_currency = "-"+(eachbkg["REVENUE"][0].to_s).to_s
+        acml.debit = 0
+        acml.status = 'draft'
+        acml.currency_id = convertrateusd.id       
+    if base_currency.name == "USD"        
+       
+        acml.credit = eachbkg["REVENUE"][0].to_i
+    else
+        acml.credit = eachbkg["REVENUE"][0].to_i   / convertrateusd.rate
+    end
      acml.save
       acml = GDS::AccountMoveLine.new
      acml.move_id = acm.id
      acml.name = newres.reservation_no
      acml.partner_id = newres.partner_id.id
      acml.account_id =  GDS::AccountJournal.find(GDS::AccountJournal.search([['type','=','bank']])[0]).default_debit_account_id.id
-     acml.debit = newres.total_cost1
-     acml.credit = 0
-      if base_currency
-         acml.currency_id = base_currency.id
-          if available_paypal_array.include?(base_currency.name)
-             acml.amount_currency = newres.total_cost1
-        elsif base_currency.name == "USD"
-             acml.amount_currency = newres.total_cost1
-        else
-                convertrateusd = GDS::ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
-                acml.currency_id = convertrateusd.id
-                acml.amount_currency = newres.total_cost1 * convertrateusd.rate
-         end
-      else
-       default_cur =  GDS::ResCurrency.find(:all,:domain=>[['name','=','USD' ]])[0]
-       acml.currency_id = default_cur.id
-        acml.amount_currency = newres.total_cost1 
-     end
+        acml.amount_currency = (eachbkg["REVENUE"][0].to_s).to_s
+        acml.credit = 0
+        acml.status = 'draft'
+        acml.currency_id = convertrateusd.id
+   if base_currency.name == "USD"        
+      
+        acml.debit = eachbkg["REVENUE"][0].to_i
+    else
+        acml.debit = eachbkg["REVENUE"][0].to_i   / convertrateusd.rate
+    end
       acml.status = 'draft'
       acml.save
    ##########i am copying here the codeeeee for payment like web formsssss         

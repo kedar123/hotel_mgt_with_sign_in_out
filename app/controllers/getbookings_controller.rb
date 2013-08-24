@@ -91,7 +91,7 @@ class GetbookingsController < ApplicationController
         format.json { render json: @getbooking.errors, status: :unprocessable_entity }
        else
          logger.info "77777777777777777777777"
-        format.html { render :text=>"some rooms are already booked. means room booked in reconline but not available to book in openerp so create a room and assign it to gds. or no bookings are get"}
+        format.html { render :text=>"Rooms Are Not Allocated To GDS For Given Period Or No Booking Were Made Through Gds"}
        end
     end
   end
