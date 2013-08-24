@@ -64,9 +64,11 @@
    <%#here also need to put an condition about already reserved room and showing an add to room%>  
  
   <% hrbha = GDS::HotelRoomBookingHistory.all%>
+ <%allblank=true%>
  <%for arm in @filteredroomarray%>
     <%viewbookedarraya = []
-             hrbha.each do |ebr|  
+             hrbha.each do |ebr| 
+                
              if ebr.history_id.product_id.id == arm.id
                 if @paramscheckin >= ebr.check_in_date  and @paramschekout <= ebr.check_out_date
                viewbookedarraya << ebr 
@@ -82,6 +84,7 @@
             end  
            end%>
      <%if viewbookedarraya.blank?%>
+       <%allblank=false%>
       <tr>
          <td>
            <table>
@@ -97,6 +100,12 @@
       </tr>
     <%end%>
   <%end%>
+      <%if allblank%>
+      <tr><td colspan="5" class="todate_fromdateheadingtext">
+           No Room Is Available  
+          </td>
+        </tr>
+       <%end%> 
         <tr>
           
           <%if @bookedgdsc[0]%>

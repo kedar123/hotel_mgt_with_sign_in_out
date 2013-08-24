@@ -3,8 +3,7 @@
   function check_radio_button()
   {
     mylastreturn = true;
-    if($('#showallocateclick').val()=='1')
-     {
+ 
      var checked = false, radios  = document.getElementsByName( 'avlfgds' );
     for(var i = 0, radio; radio = radios[i]; i++) {
         if (radio.checked) {
@@ -17,10 +16,7 @@
         mylastreturn = false;
 
      }
-else
-     {
-     }
-      }
+ 
       return mylastreturn;
   }
  </script>     
@@ -70,7 +66,7 @@ else
 </table>                        
       <tr>
         <td align="center">
-          <%=submit_tag "show rooms" ,:class=>"submit_button3"%>
+          <%=submit_tag "Show Rooms" ,:class=>"submit_button3"%>
         </td>
       </tr>
     
