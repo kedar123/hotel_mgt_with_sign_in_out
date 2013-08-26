@@ -85,16 +85,12 @@ class RoomBooksController < ApplicationController
     logger.info @paramscheckin
     @paramscheckout = @hrtgdsconf.to_date
     logger.info @paramscheckout
-    #from this i need to fetch 
-    @hrtgdsconf.line_ids.each do |elid|
-             
-             elid.reload
-             elid.categ_id.reload
-             
-    end
+ 
     all_cat_name = []
     @hrtgdsconf.line_ids.each do |elid|
-           all_cat_name << elid.categ_id.name
+           if elid.categ_id
+             all_cat_name << elid.categ_id.name
+           end
     end
     @all_cat_name = all_cat_name.uniq
      render :layout=>"gds"
@@ -307,7 +303,7 @@ class RoomBooksController < ApplicationController
   end
   
   def add_to_gds
-    begin
+    #begin
     #its because when showing an rooms that is products i am showing only that particular shop id products.
     #so again here there is no need to check again
     logger.info "1111111111111111111111111"
@@ -341,11 +337,8 @@ class RoomBooksController < ApplicationController
     end
     catnotmatched = false
      hrtgdsconf.line_ids.each do |eld|
-      #need to test this
-      logger.info "is this blankkkkkkkkkkkkk"
-      logger.info eld.categ_id.id.to_i
-      logger.info catid.to_i
-      if eld.categ_id.id.to_i == catid.to_i
+       
+      if eld.categ_id && eld.categ_id.id.to_i == catid.to_i
         logger.info "already in thjis catg"
          asrmn = eld.associations['room_number']
          asrmn << addtogdsroom
@@ -366,6 +359,7 @@ class RoomBooksController < ApplicationController
          eld.save
          catnotmatched = true
       end
+      
     end
     #if the line ids are not present then i need to create here
     alllineids = hrtgdsconf.line_ids
@@ -384,14 +378,14 @@ class RoomBooksController < ApplicationController
     
      #redirect_to room_books_add_room_date_path({:room_type=>params[:room_type],:start_date=>params[:start_date],:end_date=>params[:end_date],:gdscid=>hrtgdsconf.id})  
     redirect_to "/room_books/show_type/"+hrtgdsconf.id.to_s,:notice=>"The Room Is Added To A Configuration"  and return
-    rescue => e
-      logger.info "1111111111111111111"
-      logger.info e.message
-      logger.info "666666666666666666"
-      logger.info e.inspect
-      logger.info "44444444444444444444444444444444444444444"
-      redirect_to room_books_path ,:notice=>e.message and return
-    end
+   # rescue => e
+   #   logger.info "1111111111111111111"
+   #   logger.info e.message
+   #   logger.info "666666666666666666"
+   #   logger.info e.inspect
+   #   logger.info "44444444444444444444444444444444444444444"
+   #   redirect_to room_books_path ,:notice=>e.message and return
+    #end
   
   end
   
@@ -566,8 +560,9 @@ class RoomBooksController < ApplicationController
     end
   
   
-  #this method is get called after creation of rooms that is why the gdsconfid is available so there is no need to check anything
-  #for gdsshopid
+  #this method is get called after creation of rooms that is why the gdsconfid is available so there is no need to check 
+  #anything for gdsshopid
+  #this method is to show a room which admin can add to this gdsconfigurarion. 
   def add_an_item
       @gdsconf = GDS::HotelReservationThroughGdsConfiguration.find(params[:gdsid])
       @prgcat = GDS::ProductCategory.find(:all,:domain=>[['isroomtype','=',true]])
@@ -612,51 +607,32 @@ class RoomBooksController < ApplicationController
     #
     if params[:commit] == 'Show Rooms'
       #here i need to create an array of all the available rooms of that particular type
-       
-    #fetch all the product whoes isroom is true and category is according to params
-    #here what i need to check is is the date range is already there in hotelreservationconfiguration or not
- 
-    
-    paramscheckin = Date.civil(params[:start_date].split("/")[2].to_i,params[:start_date].split("/")[1].to_i,params[:start_date].split("/")[0].to_i)
-    paramschekout = Date.civil(params[:end_date].split("/")[2].to_i,params[:end_date].split("/")[1].to_i,params[:end_date].split("/")[0].to_i)
-  
-    
-    #here i need to change this line as i am showing here all the rooms of that particular shop. means one room can be 
-    #assigned to one shop that is to one hotel. so if the hotel means shop is different then conceptually one room can 
-    #not be assign by gdsconf to different shops. and that is why when showing an room i am checking an shop id. so 
-    #ultimetly i am showing only rooms which are allocated to a particular shop and that is why there is no way to 
-    #assign an room to multiple shops. this is an conditions i put through an web interface . i am not sure what is 
-    #happened in openerp for the same
-    #selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true]])
-    logger.info "is this shopidddddddddd"
-    logger.info session[:gds_shop_id].to_i
-    selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true],['shop_id','=',session[:gds_shop_id].to_i]])
-    logger.info "just checking here what shoukld be an class2222222"
-    selectedallprd.each do |sp|
-      logger.info sp.id
-      logger.info sp.class
-      logger.info sp.name
-      logger.info "6666666666666"
-      
-    end
-    logger.info "7777777777777777777"  
-      
-    @filteredroomarray = []
-      @paramscheckin = paramscheckin
-    @paramschekout = paramschekout
-    #ymd
-    
-     selectedallprd.each do |er|
+      #fetch all the product whoes isroom is true and category is according to params
+      #here what i need to check is is the date range is already there in hotelreservationconfiguration or not
+      paramscheckin = Date.civil(params[:start_date].split("/")[2].to_i,params[:start_date].split("/")[1].to_i,params[:start_date].split("/")[0].to_i)
+      paramschekout = Date.civil(params[:end_date].split("/")[2].to_i,params[:end_date].split("/")[1].to_i,params[:end_date].split("/")[0].to_i)
+     #here i need to change this line as i am showing here all the rooms of that particular shop. means one room can be 
+     #assigned to one shop that is to one hotel. so if the hotel means shop is different then conceptually one room can 
+     #not be assign by gdsconf to different shops. and that is why when showing an room i am checking an shop id. so 
+     #ultimetly i am showing only rooms which are allocated to a particular shop and that is why there is no way to 
+     #assign an room to multiple shops. this is an conditions i put through an web interface . i am not sure what is 
+     #happened in openerp for the same
+     #selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true]])
+     selectedallprd = GDS::ProductProduct.find(:all,:domain=>[['isroom','=',true],['shop_id','=',session[:gds_shop_id].to_i]])
+     @filteredroomarray = []
+     @paramscheckin = paramscheckin
+     @paramschekout = paramschekout
+     #ymd
+      selectedallprd.each do |er|
        if er.categ_id.name == params[:room_type]
          @filteredroomarray  << er
       end
     end
-    
-    #now from this array i need to delete all the rooms which are already allocated. for creating an array
-    #but that should be datewise. so first i need a loop on gdsline then get its booked date. then compare this date to
-    #params date . and check if this date range makes some conflict. if yes then remove it else keep it.
-    pcid = GDS::ProductCategory.search([['name','=',params[:room_type]]])[0]
-    allgdsconfgr = GDS::HotelReservationThroughGdsConfiguration.all
+     #now from this array i need to delete all the rooms which are already allocated. for creating an array
+     #but that should be datewise. so first i need a loop on gdsline then get its booked date. then compare this date to
+     #params date . and check if this date range makes some conflict. if yes then remove it else keep it.
+     pcid = GDS::ProductCategory.search([['name','=',params[:room_type]]])[0]
+     allgdsconfgr = GDS::HotelReservationThroughGdsConfiguration.all
     #this allgdsconfgr is fine for finding all because there is no need to see an shop id because this i am doing for the purpose of
     #compare and to see weather the room is booked or not.so if i got 
     #here GDS::HotelReservationThroughGdsConfiguration.all  will work for following reason
@@ -684,8 +660,6 @@ class RoomBooksController < ApplicationController
            @bookedgdsc << hrc 
        end 
     end
-     logger.info "do i am nillllllllll"
-     logger.info @bookedgdsc
     bookedroom = []
  
     @bookedgdsc.each do |bgds|
@@ -698,46 +672,16 @@ class RoomBooksController < ApplicationController
        end
      end
     #and lastly just removing the rooms
-    logger.info "the array before doing a transactions"
-    logger.info @filteredroomarray
-    logger.info "brrrrrrrrrrrrrrrrrrrrr"
-    logger.info bookedroom
-    logger.info "checking the deletion of array"
-    bookedroom.each do |br|
-      logger.info br.id
-      logger.info br.name
-      logger.info br.class
-    end
-    logger.info "testing ends here"
-    
-    logger.info "555555555544444444444444444111111111111111"
-     @filteredroomarray.each do |fa|
-       logger.info fa.id
-       logger.info fa.name
-       logger.info fa.class
-       
-     end
-     logger.info "where is breaked" 
-    #34,35 product class is in   bookedroom
+     #34,35 product class is in   bookedroom
     bookedroom.each do |br|
       if @filteredroomarray.include?(br)
-        logger.info "yes this is include"
-        logger.info br.id
-        logger.info br.name
+        
          @filteredroomarray.delete(br)
       else
-        logger.info "not included"
-        logger.info br.id
-        logger.info br.name
+         
       end
     end
-    logger.info "last output"
-    @filteredroomarray.each do |fa|
-       logger.info fa.id
-       logger.info fa.name
-       logger.info fa.class
-       
-     end
+ 
       
       ##################################################################################3
     end

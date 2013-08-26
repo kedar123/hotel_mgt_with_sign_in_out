@@ -1,6 +1,28 @@
 <%######################################################################################%>
 
- 
+ <script>
+   function check_delete_and_add_checkbox(){
+      
+     if($("#checkcheclbox").val() == "1")
+       {
+          var checkedAtLeastOne = false;
+          $('input[type="checkbox"]').each(function() {
+           if ($(this).is(":checked")) {
+                     checkedAtLeastOne = true;
+                 }
+               });
+           if( checkedAtLeastOne == false )
+             {
+               alert("Please Select At Least One Room");
+             }
+          return checkedAtLeastOne;
+         
+       }
+      else{
+        return true;
+      } 
+   }
+   </script>
 
 <div class="todate_fromdatebg">
 <div class="todate_fromdateheadingbg1" >
@@ -14,7 +36,7 @@
   </tr>
 </table> 
 </div>
-<%=form_tag('/room_books/add_an_item' )%>
+<%=form_tag('/room_books/add_an_item',:onsubmit=>"return check_delete_and_add_checkbox();" )%>
 <table width="297" height="79" border="0" align="center">
   <tr>
     <td width="104" height="23" class="todate_fromdateheadingtext">Start Date: -</td>
@@ -33,7 +55,7 @@
  <%=hidden_field_tag :gdsid,params[:gdsid]%>
   <tr>
     <td width="104" height="23"><span class="selectroomtype">Room Type</span></td>
-    <td width="177">
+    <td width="177" align="left">
         <%if params[:commit] == "Show Rooms"%>
             <%= select_tag  "room_type", options_from_collection_for_select(@prgcat,"name", "name",params[:room_type]),  :prompt => "",:disabled=>true %> 
         <%else%>
@@ -43,16 +65,13 @@
   </tr>
      
     <%if params[:commit] == "Show Rooms"%>
- 
-<%else%>
-  <tr><td width="129" height="32" >&nbsp;</td>
-    <td width="129" height="32" >
-      
-  <%=submit_tag "Show Rooms",:class=>'submit_button' %>
-      </td>
-     
-  </tr>
-<%end%>
+     <%else%>
+      <tr><td width="129" height="32" >&nbsp;</td>
+        <td width="129" height="32" >
+           <%=submit_tag "Show Rooms",:class=>'submit_button',:onclick=>"$('#checkcheclbox').val(0)" %>
+        </td>
+      </tr>
+     <%end%>
     
  
    
@@ -107,7 +126,7 @@
      <%end%>
   <%end%>
 <%end%>
- <tr><td><%=submit_tag "Delete Allocated Rooms",:class=>'submit_button'%></td></tr>
+ <tr><td><%=submit_tag "Delete Allocated Rooms",:class=>'submit_button',:onclick=>"$('#checkcheclbox').val(1)"%></td></tr>
 <%end%>
   
   
@@ -121,11 +140,9 @@
 <%#allowed here to add it%>
  <% hrbha = GDS::HotelRoomBookingHistory.all%>  
   <%for arm in @filteredroomarray%>
-
-    <%#so this div will not be shown unless its not in room booking history%>
+     <%#so this div will not be shown unless its not in room booking history%>
     <%viewbookedarraya = []
-    
-            hrbha.each do |ebr| 
+             hrbha.each do |ebr| 
               if ebr.history_id.product_id.id == arm.id        
                 if paramscheckin >= ebr.check_in_date  and paramschekout <= ebr.check_out_date
                viewbookedarraya << ebr 
@@ -139,8 +156,7 @@
                  viewbookedarraya << ebr 
                end
               end 
-      
-           end%>
+            end%>
    <%if viewbookedarraya.blank?%>
  <tr> <td></td>
                  <td>
@@ -159,10 +175,16 @@
      <%end%>
    <tr>
      <td> </td>
-     <td> <%=submit_tag "Add To Gds",:class=>'submit_button'%></td></tr>
+     <td> <%=submit_tag "Add To Gds",:class=>'submit_button',:onclick=>"$('#checkcheclbox').val(1)"%></td></tr>
+   <!--
+   here i am putting some logic as i used somewhere else one time and that is submit tag click i am keeping a hidden text field value
+   as 1 and on show rooms keep the value as 0. so that a javascript function can be called and in that just check what is this hidden 
+   text field value and according to that checking is done   
+   -->
 <%end%>
   
-         
+         <input type="hidden" name="checkcheclbox" value="0" id="checkcheclbox"/>
+
 </table>
   </form>
  </div>
