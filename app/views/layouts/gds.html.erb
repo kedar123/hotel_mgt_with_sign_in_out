@@ -73,9 +73,9 @@
   
   <li>
       <%if params[:controller] == 'getbookings' && params[:action] == 'new'%>
-        <%=link_to "Get Bookings",new_getbooking_path ,:class=>"disablelink leftsidemenuselected"%>
+        <%=link_to "Import Bookings",new_getbooking_path ,:class=>"disablelink leftsidemenuselected"%>
       <%else%>
-        <%=link_to "Get Bookings",new_getbooking_path ,:class=>"disablelink"%>
+        <%=link_to "Import Bookings",new_getbooking_path ,:class=>"disablelink"%>
     
        <%end%>
  <!--
@@ -83,17 +83,18 @@
  -->
  </li> 
 
-  
+  <!--
 <li>  
   <%#=link_to "Update  Rooms",updateavails_all_list_path %>
 </li>  
+  -->
   <!--this method expects to do 2 things one is add a room in a particular date or it may delete a record in a 
   particular date. then need to call update count method to update an count in reconline.com
   -->
   
+<!-- 
   
 <li> 
- 
  <%if params[:controller] == 'updateretes' && params[:action] == 'new'%>
    <%=link_to "Update Rates",new_updaterete_path ,:class=>"disablelink leftsidemenuselected"%>
  <%else%>
@@ -101,7 +102,7 @@
  <%end%> 
 
 </li>
-
+-->
 
 <li>  
 <%if params[:controller] == 'updateretes' && params[:action] == 'show_rates'%>
