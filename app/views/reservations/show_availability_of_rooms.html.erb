@@ -40,7 +40,8 @@
       <div class="">
         <%hidecount=1%>
          <%if !@category.blank?%>
-          <% for build in @category.uniq!%> 
+         
+          <% for build in @category.uniq%> 
             <%hidecount=hidecount + 1%>
             <fieldset id="hidelabel<%=hidecount%>">
               <%size=0%>
