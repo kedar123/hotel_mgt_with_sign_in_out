@@ -6,7 +6,9 @@
             <td width="72" height="28">
                  <%selected = params[:page] || "20" %>
                  
-                 <%=  select_tag "page",options_for_select([["Select" , "" ],["20" , "20" ],["40" , "40" ],["unlimited","unlimited"]],:selected=>selected),:onchange=>"this.form.submit()"%>
+                 <%=  select_tag "page",options_for_select([["Select" , "" ],["20" , "20" ],["40" , "40" ],["unlimited","unlimited"]],:selected=>selected),:onchange=>"submit_this_form(this);"%>
+              
+             
             </td>
             <td width="72" height="28">
                 <%=  submit_tag "Add",:onclick=>"$('#deleteroom').val(0)" ,:class=>'submit_button'%>
@@ -66,5 +68,18 @@
      </div>
  
  
- 
+  <script>
+                   function submit_this_form(thisselect)
+                   {
+                      
+                     if(thisselect.value == "")
+                       {
+                         
+                       }
+                       else{
+                         thisselect.form.submit(); 
+                       }
+                     
+                   }
+               </script>
  
