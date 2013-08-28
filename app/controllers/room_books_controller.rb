@@ -530,7 +530,15 @@ class RoomBooksController < ApplicationController
     
          @gdsconf.to_date = paramschekout
          @gdsconf.name =   paramscheckin
+         #here there might be an date overlapping error 
+         #so i am putting this code in begin rescue 
+         begin
          @gdsconf.save
+         rescue=>e
+           logger.info e.inspect
+           logger.info e.message
+           redirect_to room_books_path ,:notice=>e.message and return
+         end
          redirect_to room_books_path ,:notice=>"The Values Has Been Updated" and return
     end
     #if it is an add an item then i have to redirect it to add an item method.this method will keep the layout

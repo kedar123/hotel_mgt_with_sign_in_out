@@ -66,11 +66,13 @@
    <%=link_to "GDS Room Allocation",room_books_select_shop_path,:class=>"disablelink" %>
   <%end%>
   </li>
+<!--
 <li>
   <%#=link_to "Update Room Count",count_rooms_path %>
-  <!--this will update a count on reconline.com-->
-</li>  
   
+</li>  
+<!--this will update a count on reconline.com-->
+   
   <li>
       <%if params[:controller] == 'getbookings' && params[:action] == 'new'%>
         <%=link_to "Import Bookings",new_getbooking_path ,:class=>"disablelink leftsidemenuselected"%>
